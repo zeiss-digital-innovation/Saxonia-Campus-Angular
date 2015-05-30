@@ -13,7 +13,7 @@
     {{slot.description}}
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="register()" type="submit">Buchen</button>
-    <button class="btn btn-danger" ng-click="register()" type="submit">Entfernen</button>
+    <button class="btn btn-primary" ng-click="register()" type="submit" ng-show="!userInSlot">Buchen</button>
+    <button class="btn btn-danger" ng-click="unregister()" type="submit" ng-show="userInSlot">Entfernen</button>
   </div>
 </form>

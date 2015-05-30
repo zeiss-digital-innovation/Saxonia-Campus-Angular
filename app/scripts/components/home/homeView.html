@@ -11,7 +11,7 @@
       <div ng-repeat="room in rooms" ng-init="slot = slotsInRooms[room.id][slotIndex]">
         <div class="col-md-1">
           <div ng-if="slot">
-            <div class="panel panel-primary" ng-click="showDetails(slot)">
+            <div ng-class="{'panel panel-primary': !userInSlot(slot.id), 'panel panel-success': userInSlot(slot.id)}" ng-click="showDetails(slot)">
               <div class="panel-heading">
                 <h3 class="panel-title"></h3>
               </div>
