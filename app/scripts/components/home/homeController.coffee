@@ -27,7 +27,6 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
           userInSlot: () ->
             $scope.userInSlot(singleSlot.id)
 
-
       modalInstance.result.then (result) ->
         init() if result
 
