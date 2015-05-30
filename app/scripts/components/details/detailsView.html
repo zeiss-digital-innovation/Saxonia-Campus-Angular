@@ -1,0 +1,19 @@
+<form name="form" novalidate>
+  <div class="modal-header">
+    <h4>{{slot.title}}</h4>
+  </div>
+  <div class="modal-body">
+    <strong>
+      {{slot.starttime}} - {{slot.endtime}}
+    </strong>
+    <span ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
+      {{slot.participants}}/{{slot.capacity}}
+    </span><br/>
+    <br/>
+    {{slot.description}}
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="register()" type="submit">Buchen</button>
+    <button class="btn btn-danger" ng-click="register()" type="submit">Entfernen</button>
+  </div>
+</form>

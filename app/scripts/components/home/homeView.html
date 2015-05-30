@@ -1,0 +1,41 @@
+<div ng-controller="HomeController">
+  <div class="row">
+    <div ng-repeat="room in rooms">
+      <div class="col-md-1">
+        <div class="well well-sm text-center"><strong>{{room.roomnumber}}</strong></div>
+      </div>
+    </div>
+  </div>
+  <div ng-repeat="slotIndex in slotIndices">
+    <div class="row">
+      <div ng-repeat="room in rooms" ng-init="slot = slotsInRooms[room.id][slotIndex]">
+        <div class="col-md-1">
+          <div ng-if="slot">
+            <div class="panel panel-primary" ng-click="showDetails(slot)">
+              <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+              </div>
+              <div class="panel-body">
+                <strong>
+                  {{slot.starttime}} - {{slot.endtime}}
+                </strong>
+                <span ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
+                  {{slot.participants}}/{{slot.capacity}}
+                </span><br/>
+                <br/>
+                <div popover="{{slot.title}}" popover-trigger="mouseenter">
+                  {{ slot.title | limitTo: 40 }}{{slot.title.length > 40 ? '...' : ''}}
+                </div>
+              </div>
+              <div class="panel-footer">
+                <div popover="{{slot.speaker}}" popover-trigger="mouseenter">
+                  {{ slot.speaker | limitTo: 20 }}{{slot.speaker.length > 20 ? '...' : ''}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

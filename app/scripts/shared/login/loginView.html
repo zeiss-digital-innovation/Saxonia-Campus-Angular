@@ -1,0 +1,18 @@
+<form name="form" novalidate class="login-form">
+  <div class="modal-header">
+    <h4>Anmeldung</h4>
+  </div>
+  <div class="modal-body">
+    <p>
+      <label>Benutzername</label>
+      <input class="form-control" type="text" placeholder="Benutzername" ng-model="username" required autofocus>
+    </p>
+    <p><label>Passwort</label>
+      <input class="form-control" type="password" placeholder="Passwort" ng-model="password" required>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="clearForm()" type="button">Leeren</button>
+    <button class="btn btn-primary" ng-click="login()" ng-disabled='form.$invalid' type="submit">Anmelden</button>
+  </div>
+</form>
