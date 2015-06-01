@@ -6,9 +6,9 @@
       </div>
     </div>
   </div>
-  <div ng-repeat="slotIndex in slotIndices">
+  <div ng-repeat="timeIndex in timeIndices">
     <div class="row">
-      <div ng-repeat="room in rooms" ng-init="slot = slotsInRooms[room.id][slotIndex]">
+      <div ng-repeat="room in rooms" ng-init="slot = slotMatrix[timeIndex][room.id]">
         <div class="col-md-1">
           <div ng-if="slot">
             <div ng-class="{'panel panel-primary': !userInSlot(slot.id), 'panel panel-success': userInSlot(slot.id)}" ng-click="showDetails(slot)">

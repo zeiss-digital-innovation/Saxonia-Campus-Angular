@@ -33,46 +33,57 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
   init = () ->
     $scope.currentUser = {}
     $scope.currentUserSlots = {}
-    $scope.slotsInRooms = {}
+    $scope.slotMatrix = {}
     $scope.rooms = {}
-    $scope.slots = {}
-    $scope.slotIndices = {0: 0}
+    $scope.timeIndices = []
 
     # load current user data
     $scope.apiRoot.then (apiRoot) ->
-      apiRoot.$get('currentUser').then (currentUser) ->
-        $scope.currentUser = currentUser
-        currentUser.$get('slots').then (slots) ->
-          if slots.constructor != Array
-            $scope.currentUserSlots[slots.id] = slots
-            return
-          slots.forEach (slot) ->
-            $scope.currentUserSlots[slot.id] = slot
-            return
-          return
+      apiRoot.$get('currentUser')
+    .then (currentUser) ->
+      $scope.currentUser = currentUser
+      currentUser.$get('slots')
+    .then (slots) ->
+      if slots.constructor != Array
+        $scope.currentUserSlots[slots.id] = slots
         return
-      return
+      slots.forEach (slot) ->
+        $scope.currentUserSlots[slot.id] = slot
+        return
 
     #load slots
     $scope.apiRoot.then (apiRoot) ->
-      apiRoot.$get('slots').then (slots) ->
-        slots.$get('slots').then (embeddedSlots) ->
-          embeddedSlots.forEach (slot) ->
-            $scope.slots[slot.id] = slot
-
-            slot.$get('room').then (room) ->
-              $scope.slotsInRooms[room.id] = [] if !$scope.slotsInRooms.hasOwnProperty room.id
-              $scope.slotsInRooms[room.id].push slot
-              length = $scope.slotsInRooms[room.id].length
-              $scope.slotIndices[length] = length if !$scope.slotIndices.hasOwnProperty length
-              $scope.slotsInRooms[room.id].sort (a, b) ->
-                return a.starttime.localeCompare b.starttime
-
-              $scope.rooms[room.id] = room if !$scope.rooms.hasOwnProperty room.id
-            return
-          return
-        return
+      apiRoot.$get('slots')
+    .then (slots) ->
+      slots.$get('slots')
+    .then (embeddedSlots) ->
+      embeddedSlots.forEach (slot) -> processSlot(slot)
+    .then () ->
+      $scope.timeIndices = Object.getOwnPropertyNames($scope.slotMatrix)
+      $scope.timeIndices.sort (a, b) ->
+        a.localeCompare b
       return
+
+  processSlot = (slot) ->
+    slot.$get('room').then (room) ->
+      $scope.rooms[room.id] = room if !$scope.rooms.hasOwnProperty room.id
+
+      found = false
+      Object.getOwnPropertyNames($scope.slotMatrix).forEach (timeIndex) ->
+        slotTimeDateTime = new Date("2015-01-01 " + slot.starttime + ".000000").getTime()
+        timeIndexDateTime = new Date("2015-01-01 " + timeIndex + ".000000").getTime()
+
+        if Math.abs(slotTimeDateTime - timeIndexDateTime) < 20 * 60 * 1000
+          $scope.slotMatrix[timeIndex][room.id] = slot
+          found = true
+          return
+
+      if !found
+        $scope.slotMatrix[slot.starttime] = {}
+        $scope.slotMatrix[slot.starttime][room.id] = slot
+
+      return
+    return
 
   init()
 ]
