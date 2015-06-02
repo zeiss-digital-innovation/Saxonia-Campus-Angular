@@ -90,6 +90,11 @@ body {
   float: none;
 }
 
+.alert {
+  padding: 6px 35px 6px 12px;
+  margin-bottom: 0;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
