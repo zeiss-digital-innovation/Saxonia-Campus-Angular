@@ -51,7 +51,7 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
         $scope.currentUserSlots[slot.id] = slot
         return
 
-    #load slots
+    # load slots
     $scope.apiRoot.then (apiRoot) ->
       apiRoot.$get('slots')
     .then (slots) ->
