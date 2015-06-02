@@ -16,10 +16,10 @@
                 <h3 class="panel-title"></h3>
               </div>
               <div class="panel-body">
-                <strong>
+                <span class="slot-time">
                   {{slot.starttime | limitTo: 5}} - {{slot.endtime | limitTo: 5}}
-                </strong>
-                <span ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
+                </span>
+                <span class="pull-right" ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
                   {{slot.participants}}/{{slot.capacity}}
                 </span><br/>
                 <br/>

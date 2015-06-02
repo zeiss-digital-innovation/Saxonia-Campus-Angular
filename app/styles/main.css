@@ -90,6 +90,28 @@ body {
   float: none;
 }
 
+.panel-default {
+  border-color: #2196F3;
+}
+
+.panel-default > .panel-heading {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+.panel-success  {
+  border-color: #FF9800;
+}
+
+.panel-success > .panel-heading {
+  background-color: #FF9800;
+  border-color: #FF9800;
+}
+
+.slot-time {
+  font-weight: bold;
+}
+
 .alert {
   padding: 6px 35px 6px 12px;
   margin-bottom: 0;
