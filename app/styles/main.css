@@ -90,6 +90,12 @@ body {
   float: none;
 }
 
+.navbar-brand > img {
+  display: inline;
+  max-height: 26px;
+  margin: -5px auto 0;
+}
+
 .panel-default {
   border-color: #2196F3;
 }

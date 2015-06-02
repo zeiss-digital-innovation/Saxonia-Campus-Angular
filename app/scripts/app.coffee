@@ -25,6 +25,8 @@ app = angular.module 'app', [
 ]
 
 app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, $window) ->
+  errorCount = 0
+
   request: (config) ->
     if $window.sessionStorage.token
       config.headers.authorization = 'Basic ' + $window.sessionStorage.token
@@ -32,7 +34,7 @@ app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, 
 
   responseError: (response) ->
     if response.status is 401
-      $rootScope.$broadcast 'unauthenticated'
+      $rootScope.$broadcast 'unauthenticated', {errorCount: errorCount++}
     response or $q.when(response)
 ]
 
@@ -52,9 +54,12 @@ app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', ($stateProv
   return
 ]
 
-app.run ['$rootScope', 'halClient', ($rootScope, halClient) ->
+app.run ['$rootScope', '$state', 'halClient', ($rootScope, $state, halClient) ->
   configureApi = () ->
-    $rootScope.apiRoot = halClient.$get('http://localhost:8080/rest');
+    $rootScope.apiRoot = halClient.$get('http://localhost:8080/rest')
+    $rootScope.apiRoot.then () ->
+      $state.go 'home'
+      return
     return
 
   $rootScope.$on 'authenticated', configureApi
@@ -63,7 +68,7 @@ app.run ['$rootScope', 'halClient', ($rootScope, halClient) ->
 ]
 
 app.controller 'AppController', ['$rootScope', '$state', '$modal', '$window', ($rootScope, $state, $modal, $window) ->
-  login = () ->
+  login = (event, args) ->
     $window.sessionStorage.token = undefined
 
     $modal.open
@@ -71,6 +76,9 @@ app.controller 'AppController', ['$rootScope', '$state', '$modal', '$window', ($
       templateUrl: '/scripts/shared/login/loginView.html'
       controller: 'LoginController'
       backdrop: 'static'
+      resolve:
+        errorCount: () ->
+          args.errorCount
 
   $rootScope.$on 'unauthenticated', login
   return
