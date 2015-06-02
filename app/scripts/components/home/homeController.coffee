@@ -70,10 +70,7 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
 
       found = false
       Object.getOwnPropertyNames($scope.slotMatrix).forEach (timeIndex) ->
-        slotTimeDateTime = new Date("2015-01-01 " + slot.starttime + ".000000").getTime()
-        timeIndexDateTime = new Date("2015-01-01 " + timeIndex + ".000000").getTime()
-
-        if Math.abs(slotTimeDateTime - timeIndexDateTime) < 20 * 60 * 1000
+        if getTimeDiff(slot.starttime, timeIndex) < 20 * 60 * 1000
           $scope.slotMatrix[timeIndex][room.id] = slot
           found = true
           return
@@ -84,6 +81,15 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
 
       return
     return
+
+  getTimeDiff = (a, b) ->
+    aSplit = a.split ':'
+    bSplit = b.split ':'
+
+    aDate = new Date(2015, 0, 1, aSplit[0], aSplit[1], aSplit[2], 0).getTime()
+    bDate = new Date(2015, 0, 1, bSplit[0], bSplit[1], bSplit[2], 0).getTime()
+
+    return Math.abs(aDate - bDate)
 
   init()
 ]
