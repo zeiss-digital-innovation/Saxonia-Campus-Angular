@@ -19,7 +19,7 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
       modalInstance = $modal.open
         animation: true
         size: 'lg'
-        templateUrl: '/scripts/components/details/detailsView.html'
+        templateUrl: 'scripts/components/details/detailsView.html'
         controller: 'DetailsController'
         resolve:
           slot: () ->

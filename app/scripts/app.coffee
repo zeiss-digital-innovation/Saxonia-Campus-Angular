@@ -41,7 +41,7 @@ app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, 
 app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', ($stateProvider, $urlRouterProvider, $httpProvider) ->
   $stateProvider.state 'home',
     url: '/home'
-    templateUrl: '/scripts/components/home/homeView.html'
+    templateUrl: 'scripts/components/home/homeView.html'
 
   $httpProvider.defaults.withCredentials = true
 
@@ -73,7 +73,7 @@ app.controller 'AppController', ['$rootScope', '$state', '$modal', '$window', ($
 
     $modal.open
       animation: true
-      templateUrl: '/scripts/shared/login/loginView.html'
+      templateUrl: 'scripts/shared/login/loginView.html'
       controller: 'LoginController'
       backdrop: 'static'
       resolve:
