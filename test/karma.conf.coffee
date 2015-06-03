@@ -28,6 +28,7 @@ module.exports = (config) ->
       'bower_components/rfc6570/rfc6570.js'
       'bower_components/angular-hal/angular-hal.js'
       'bower_components/bootstrap/dist/js/bootstrap.js'
+      'bower_components/angular-loading-bar/build/loading-bar.js'
       'bower_components/angular-mocks/angular-mocks.js'
       # endbower
       # bower:coffee

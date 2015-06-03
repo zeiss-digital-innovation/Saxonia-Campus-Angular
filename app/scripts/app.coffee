@@ -18,6 +18,7 @@ app = angular.module 'app', [
   'ui.router',
   'ui.bootstrap',
   'angular-hal',
+  'angular-loading-bar',
   'shared.navigationBar',
   'shared.login.controller',
   'components.home',
