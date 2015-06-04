@@ -43,7 +43,7 @@ app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', ($rootSco
 app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', 'usSpinnerConfigProvider', ($stateProvider, $urlRouterProvider, $httpProvider, usSpinnerConfigProvider) ->
   $stateProvider.state 'home',
     url: '/home'
-    templateUrl: '/scripts/components/home/homeView.html'
+    templateUrl: 'scripts/components/home/homeView.html'
 
   $httpProvider.defaults.withCredentials = true
 
@@ -91,7 +91,7 @@ app.controller 'AppController', ['$rootScope', '$scope', '$state', '$modal', '$w
 
     $modal.open
       animation: true
-      templateUrl: '/scripts/shared/login/loginView.html'
+      templateUrl: 'scripts/shared/login/loginView.html'
       controller: 'LoginController'
       backdrop: 'static'
       resolve:
