@@ -302,7 +302,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           flatten: true,
-          src: ['./config/config.js'],
+          src: ['./config/config.coffee'],
           dest: '<%= yeoman.app %>/scripts/services/'
         }]
       },
@@ -315,7 +315,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           flatten: true,
-          src: ['./config/config.js'],
+          src: ['./config/config.coffee'],
           dest: '<%= yeoman.app %>/scripts/services/'
         }]
       }
@@ -460,10 +460,10 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'replace:dev',
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
-      'replace:dev',
       'watch'
     ]);
   });
@@ -481,8 +481,8 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'useminPrepare',
-    'concurrent:dist',
     'replace:dist',
+    'concurrent:dist',
     'autoprefixer',
     'concat',
     'ngAnnotate',
