@@ -9,33 +9,46 @@
 ###
 home = angular.module 'components.home', []
 
-home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
+home.controller 'HomeController', ['$rootScope', '$scope', '$modal', 'usSpinnerService', ($rootScope, $scope, $modal, usSpinnerService) ->
 
   $scope.userInSlot = (slotId) ->
     return $scope.currentUserSlots.hasOwnProperty slotId
 
   $scope.showDetails = (slot) ->
+    usSpinnerService.spin 'spinner'
+
     slot.$get('self').then (singleSlot) ->
-      modalInstance = $modal.open
-        animation: true
-        size: 'lg'
-        templateUrl: 'scripts/components/details/detailsView.html'
-        controller: 'DetailsController'
-        resolve:
-          slot: () ->
-            singleSlot
-          userInSlot: () ->
-            $scope.userInSlot(singleSlot.id)
+      singleSlot.$get('room').then (room) ->
+        usSpinnerService.stop 'spinner'
 
-      modalInstance.result.then (result) ->
-        init() if result
+        modalInstance = $modal.open
+          animation: true
+          size: 'lg'
+          templateUrl: 'scripts/components/details/detailsView.html'
+          controller: 'DetailsController'
+          resolve:
+            slot: () ->
+              singleSlot
+            room: () ->
+              room
+            userInSlot: () ->
+              $scope.userInSlot(singleSlot.id)
 
-  init = () ->
+        modalInstance.result.then (result) ->
+          init() if result
+
+  clearAll = () ->
     $scope.currentUser = {}
     $scope.currentUserSlots = {}
     $scope.slotMatrix = {}
     $scope.rooms = {}
     $scope.timeIndices = []
+    return
+
+  init = () ->
+    clearAll()
+
+    usSpinnerService.spin 'spinner'
 
     # load current user data
     $scope.apiRoot.then (apiRoot) ->
@@ -62,6 +75,8 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
       $scope.timeIndices = Object.getOwnPropertyNames($scope.slotMatrix)
       $scope.timeIndices.sort (a, b) ->
         a.localeCompare b
+
+      usSpinnerService.stop 'spinner'
       return
 
   processSlot = (slot) ->
@@ -91,5 +106,7 @@ home.controller 'HomeController', ['$scope', '$modal', ($scope, $modal) ->
 
     return Math.abs(aDate - bDate)
 
-  init()
+  init() if $scope.isLoggedIn()
+  $rootScope.$on 'clearAll', clearAll
+  $rootScope.$on 'reload', init
 ]

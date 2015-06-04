@@ -2,14 +2,14 @@
 
 details = angular.module 'components.details', []
 
-details.controller 'DetailsController', ['$scope', '$modalInstance', 'slot', 'userInSlot', ($scope, $modalInstance, slot, userInSlot) ->
+details.controller 'DetailsController', ['$scope', '$modalInstance', 'slot', 'room', 'userInSlot', ($scope, $modalInstance, slot, room, userInSlot) ->
 
   $scope.slot = slot
+  $scope.room = room
   $scope.userInSlot = userInSlot
-  $scope.alert = null
 
   $scope.removeAlert = () ->
-    $scope.alert = null
+    delete $scope.alert
 
   $scope.register = () -> # regular
     slot.$put('register').then () ->

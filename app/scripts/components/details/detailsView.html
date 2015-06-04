@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
     <span class="slot-time">
-      {{slot.starttime | limitTo: 5}} - {{slot.endtime | limitTo: 5}}
+      {{slot.starttime | limitTo: 5}} - {{slot.endtime | limitTo: 5}} im Raum {{room.roomnumber}}
     </span>
     <span class="pull-right" ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
       {{slot.participants}}/{{slot.capacity}}

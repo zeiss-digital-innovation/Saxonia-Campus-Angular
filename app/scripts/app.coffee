@@ -18,15 +18,15 @@ app = angular.module 'app', [
   'ui.router',
   'ui.bootstrap',
   'angular-hal',
-  'angular-loading-bar',
+  'angularSpinner',
   'shared.navigationBar',
   'shared.login.controller',
   'components.home',
   'components.details'
 ]
 
-app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, $window) ->
-  errorCount = 0
+app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', ($rootScope, $q, $window, $log) ->
+  $rootScope.errorCount = 0
 
   request: (config) ->
     if $window.sessionStorage.token
@@ -35,11 +35,12 @@ app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', ($rootScope, $q, 
 
   responseError: (response) ->
     if response.status is 401
-      $rootScope.$broadcast 'unauthenticated', {errorCount: errorCount++}
+      $log.info 'broadcasting unauthenticated'
+      $rootScope.$broadcast 'unauthenticated', {errorCount: $rootScope.errorCount++}
     response or $q.when(response)
 ]
 
-app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', ($stateProvider, $urlRouterProvider, $httpProvider) ->
+app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', 'usSpinnerConfigProvider', ($stateProvider, $urlRouterProvider, $httpProvider, usSpinnerConfigProvider) ->
   $stateProvider.state 'home',
     url: '/home'
     templateUrl: 'scripts/components/home/homeView.html'
@@ -52,25 +53,41 @@ app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', ($stateProv
 
   $httpProvider.interceptors.push 'AuthInterceptor'
 
+  usSpinnerConfigProvider.setDefaults {
+    color: 'black'
+    lines: 13
+    length: 28
+    radius: 42
+    width: 14
+    scale: 1
+  }
+
   return
 ]
 
-app.run ['$rootScope', '$state', 'halClient', ($rootScope, $state, halClient) ->
+app.run ['$rootScope', '$state', '$log', 'halClient', ($rootScope, $state, $log, halClient) ->
   configureApi = () ->
-    $rootScope.apiRoot = halClient.$get('http://localhost:8080/rest')
-    $rootScope.apiRoot.then () ->
-      $state.go 'home'
+    $rootScope.apiRoot = halClient.$get('http://campustest-saxsys.rhcloud.com/rest')
+    $rootScope.apiRoot.then (apiRoot) ->
+      apiRoot.$get('slots').then () ->
+        if $state.is 'home'
+          $log.info 'broadcasting reload'
+          $rootScope.$broadcast 'reload'
+        else
+          $state.go 'home'
+        return
       return
     return
 
-  $rootScope.$on 'authenticated', configureApi
+  $rootScope.$on 'challengeAuth', configureApi
   configureApi()
   return
 ]
 
-app.controller 'AppController', ['$rootScope', '$state', '$modal', '$window', ($rootScope, $state, $modal, $window) ->
+app.controller 'AppController', ['$rootScope', '$scope', '$state', '$modal', '$window', '$log', ($rootScope, $scope, $state, $modal, $window, $log) ->
+
   login = (event, args) ->
-    $window.sessionStorage.token = undefined
+    delete $window.sessionStorage.token
 
     $modal.open
       animation: true
@@ -80,6 +97,19 @@ app.controller 'AppController', ['$rootScope', '$state', '$modal', '$window', ($
       resolve:
         errorCount: () ->
           args.errorCount
+    return
+
+  $scope.logout = () ->
+    delete $window.sessionStorage.token
+    $rootScope.errorCount = 0
+    $log.info 'broadcasting clearAll'
+    $rootScope.$broadcast 'clearAll'
+    $log.info 'broadcasting challengeAuth'
+    $rootScope.$broadcast 'challengeAuth'
+    return
+
+  $scope.isLoggedIn = () ->
+    return $window.sessionStorage.token?
 
   $rootScope.$on 'unauthenticated', login
   return
