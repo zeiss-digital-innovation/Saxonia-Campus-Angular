@@ -22,7 +22,8 @@ app = angular.module 'app', [
   'shared.navigationBar',
   'shared.login.controller',
   'components.home',
-  'components.details'
+  'components.details',
+  'services.config'
 ]
 
 app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', ($rootScope, $q, $window, $log) ->
@@ -65,9 +66,9 @@ app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', 'usSpinnerC
   return
 ]
 
-app.run ['$rootScope', '$state', '$log', 'halClient', ($rootScope, $state, $log, halClient) ->
+app.run ['$rootScope', '$state', '$log', 'halClient', 'configuration', ($rootScope, $state, $log, halClient, configuration) ->
   configureApi = () ->
-    $rootScope.apiRoot = halClient.$get('http://campustest-saxsys.rhcloud.com/rest')
+    $rootScope.apiRoot = halClient.$get(configuration.apiRootUri)
     $rootScope.apiRoot.then (apiRoot) ->
       apiRoot.$get('slots').then () ->
         if $state.is 'home'

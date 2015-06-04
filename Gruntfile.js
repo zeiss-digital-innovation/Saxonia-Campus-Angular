@@ -292,6 +292,35 @@ module.exports = function (grunt) {
     //   dist: {}
     // },
 
+    replace: {
+      dev: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/dev.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/services/'
+        }]
+      },
+      dist: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/prod.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/services/'
+        }]
+      }
+    },
+
     imagemin: {
       dist: {
         files: [{
@@ -434,13 +463,9 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
+      'replace:dev',
       'watch'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', [
@@ -457,6 +482,7 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
+    'replace:dist',
     'autoprefixer',
     'concat',
     'ngAnnotate',
