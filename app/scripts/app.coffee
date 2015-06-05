@@ -20,7 +20,7 @@ app = angular.module 'app', [
   'angular-hal',
   'angularSpinner',
   'shared.navigationBar',
-  'shared.login.controller',
+  'shared.login',
   'components.home',
   'components.details',
   'services.config'
@@ -108,6 +108,12 @@ app.controller 'AppController', ['$rootScope', '$scope', '$state', '$modal', '$w
     $log.info 'broadcasting challengeAuth'
     $rootScope.$broadcast 'challengeAuth'
     return
+
+  $scope.showHelp = () ->
+    $modal.open
+      animation: true
+      size: 'lg'
+      templateUrl: 'scripts/shared/help/helpView.html'
 
   $scope.isLoggedIn = () ->
     return $window.sessionStorage.token?

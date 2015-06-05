@@ -1,6 +1,6 @@
 'use strict'
 
-login = angular.module 'shared.login.controller', [
+login = angular.module 'shared.login', [
   'ab-base64'
 ]
 
