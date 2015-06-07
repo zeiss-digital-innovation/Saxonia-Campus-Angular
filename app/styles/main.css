@@ -114,6 +114,10 @@ body {
   color: #FF9800;
 }
 
+.panel-body {
+  min-height: 110px;
+}
+
 .panel-default {
   border-color: #2196F3;
 }
