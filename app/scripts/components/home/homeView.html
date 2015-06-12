@@ -10,6 +10,14 @@
     <div class="row">
       <div ng-repeat="room in rooms" ng-init="slot = slotMatrix[timeIndex][room.id]">
         <div class="col-md-1">
+          <div ng-if="!slot && isContinuation(timeIndex, room.id)">
+            <div class="panel panel-continuation">
+              <div class="panel-heading"></div>
+              <div class="panel-body text-center">
+                <br/><br/><em>Fortsetzung...</em>
+              </div>
+            </div>
+          </div>
           <div ng-if="slot">
             <div ng-class="{'panel panel-primary': !userInSlot(slot.id), 'panel panel-success': userInSlot(slot.id)}" ng-click="showDetails(slot)">
               <div class="panel-heading">

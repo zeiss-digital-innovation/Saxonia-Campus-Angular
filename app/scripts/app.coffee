@@ -70,7 +70,7 @@ app.run ['$rootScope', '$state', '$log', 'halClient', 'configuration', ($rootSco
   configureApi = () ->
     $rootScope.apiRoot = halClient.$get(configuration.apiRootUri)
     $rootScope.apiRoot.then (apiRoot) ->
-      apiRoot.$get('slots').then () ->
+      apiRoot.$get('currentUser').then () ->
         if $state.is 'home'
           $log.info 'broadcasting reload'
           $rootScope.$broadcast 'reload'

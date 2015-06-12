@@ -37,6 +37,20 @@ home.controller 'HomeController', ['$rootScope', '$scope', '$modal', 'usSpinnerS
         modalInstance.result.then (result) ->
           init() if result
 
+  $scope.isContinuation = (timeIndex, roomId) ->
+    index = $scope.timeIndices.indexOf(timeIndex)
+    if index == 0
+      return false
+
+    for i in [index-1...-1] by -1
+      slot = $scope.slotMatrix[$scope.timeIndices[i]][roomId]
+      if slot?
+        if getTimeDiff(slot.endtime, timeIndex) > 0
+          return true
+        break
+
+    return false
+
   clearAll = () ->
     $scope.currentUser = {}
     $scope.currentUserSlots = {}
@@ -85,7 +99,7 @@ home.controller 'HomeController', ['$rootScope', '$scope', '$modal', 'usSpinnerS
 
       found = false
       Object.getOwnPropertyNames($scope.slotMatrix).forEach (timeIndex) ->
-        if getTimeDiff(slot.starttime, timeIndex) < 20 * 60 * 1000
+        if Math.abs(getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000
           $scope.slotMatrix[timeIndex][room.id] = slot
           found = true
           return
@@ -104,7 +118,7 @@ home.controller 'HomeController', ['$rootScope', '$scope', '$modal', 'usSpinnerS
     aDate = new Date(2015, 0, 1, aSplit[0], aSplit[1], aSplit[2], 0).getTime()
     bDate = new Date(2015, 0, 1, bSplit[0], bSplit[1], bSplit[2], 0).getTime()
 
-    return Math.abs(aDate - bDate)
+    return aDate - bDate
 
   init() if $scope.isLoggedIn()
   $rootScope.$on 'clearAll', clearAll
