@@ -31,10 +31,10 @@
                   {{slot.participants}}/{{slot.capacity}}
                 </span><br/>
                 <br/>
-                <div popover="{{slot.title}}" popover-trigger="mouseenter" ng-if="slot.title.length > 40">
-                  {{ slot.title | limitTo: 40 }}...
+                <div popover="{{slot.title}}" popover-trigger="mouseenter" ng-if="slot.title.length > 36">
+                  {{ slot.title | limitTo: 36 }}...
                 </div>
-                <div ng-if="slot.title.length <= 40">{{slot.title}}</div>
+                <div ng-if="slot.title.length <= 36">{{slot.title}}</div>
               </div>
               <div class="panel-footer">
                 <div popover="{{slot.speaker}}" popover-trigger="mouseenter" ng-if="slot.speaker.length > 20">
