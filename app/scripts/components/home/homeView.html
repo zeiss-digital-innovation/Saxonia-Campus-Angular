@@ -27,7 +27,7 @@
                 <span class="slot-time">
                   {{slot.starttime | limitTo: 5}} - {{slot.endtime | limitTo: 5}}
                 </span>
-                <span class="pull-right" ng-class="{'badge red': (slot.participants == slot.capacity), 'badge green': (slot.participants <= slot.capacity)}">
+                <span class="pull-right" ng-class="{'badge red': (slot.participants >= slot.capacity), 'badge green': (slot.participants < slot.capacity)}">
                   {{slot.participants}}/{{slot.capacity}}
                 </span><br/>
                 <br/>
