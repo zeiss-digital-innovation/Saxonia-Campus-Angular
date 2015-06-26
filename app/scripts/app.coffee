@@ -26,7 +26,7 @@ app = angular.module 'app', [
   'services.config'
 ]
 
-app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', ($rootScope, $q, $window, $log) ->
+app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', 'usSpinnerService', ($rootScope, $q, $window, $log, usSpinnerService) ->
   $rootScope.errorCount = 0
 
   request: (config) ->
@@ -36,6 +36,7 @@ app.factory 'AuthInterceptor', ['$rootScope', '$q', '$window', '$log', ($rootSco
 
   responseError: (response) ->
     if response.status is 401
+      usSpinnerService.stop 'spinner'
       $log.info 'broadcasting unauthenticated'
       $rootScope.$broadcast 'unauthenticated', {errorCount: $rootScope.errorCount++}
     response or $q.when(response)
@@ -66,8 +67,10 @@ app.config ['$stateProvider', '$urlRouterProvider', '$httpProvider', 'usSpinnerC
   return
 ]
 
-app.run ['$rootScope', '$state', '$log', 'halClient', 'configuration', ($rootScope, $state, $log, halClient, configuration) ->
+app.run ['$rootScope', '$state', '$log', 'halClient', 'usSpinnerService', 'configuration', ($rootScope, $state, $log, halClient, usSpinnerService, configuration) ->
   configureApi = () ->
+    usSpinnerService.spin 'spinner'
+
     $rootScope.apiRoot = halClient.$get(configuration.apiRootUri)
     $rootScope.apiRoot.then (apiRoot) ->
       apiRoot.$get('currentUser').then () ->

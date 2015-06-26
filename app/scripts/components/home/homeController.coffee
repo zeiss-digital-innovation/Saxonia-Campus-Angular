@@ -62,8 +62,6 @@ home.controller 'HomeController', ['$rootScope', '$scope', '$modal', 'usSpinnerS
   init = () ->
     clearAll()
 
-    usSpinnerService.spin 'spinner'
-
     # load current user data
     $scope.apiRoot.then (apiRoot) ->
       apiRoot.$get('currentUser')
