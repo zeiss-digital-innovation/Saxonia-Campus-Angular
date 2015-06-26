@@ -1,6 +1,9 @@
 <form name="form" novalidate>
   <div class="modal-header">
-    <h4>{{slot.title}}</h4>
+    <h4>
+      {{slot.title}}
+      <a ng-click="cancel()"><span class="glyphicon glyphicon-remove pull-right" style="font-size: 14px" aria-hidden="true"></span></a>
+    </h4>
     <small>{{slot.speaker}}</small>
   </div>
   <div class="modal-body">

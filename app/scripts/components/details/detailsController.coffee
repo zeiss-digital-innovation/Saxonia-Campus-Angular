@@ -8,6 +8,9 @@ details.controller 'DetailsController', ['$scope', '$modalInstance', 'slot', 'ro
   $scope.room = room
   $scope.userInSlot = userInSlot
 
+  $scope.cancel = () ->
+    $modalInstance.dismiss('cancel')
+
   $scope.removeAlert = () ->
     delete $scope.alert
 
