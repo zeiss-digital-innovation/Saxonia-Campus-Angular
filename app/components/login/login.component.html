@@ -1,0 +1,19 @@
+<div class="col-lg-3"></div>
+<div class="card col-lg-6 bg-faded">
+    <div class="card-block">
+        <h4 class="card-title">Login</h4>
+        <form class="card-text">
+            <fieldset class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter username" [(ngModel)]="username">
+                <small class="text-muted">Benutze hier deinen Saxonia Benutzernamen.</small>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="password">
+            </fieldset>
+            <button (click)="login()" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+<div class="col-lg-3"></div>
