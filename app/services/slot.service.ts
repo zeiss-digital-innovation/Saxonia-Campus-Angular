@@ -15,7 +15,7 @@ export class SlotService {
         return this.http.get(this._slotsUrl, {
                 headers: RestService.getHeaders()
             })
-            .map(res => <Slot[]> res.json().data)
+            .map(res => <Slot[]> res.json()._embedded.slots)
             .do(data => console.log(data)) // eyeball results in the console
             .catch(SlotService.handleError)
     }
