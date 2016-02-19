@@ -6,3 +6,11 @@
 .container-fluid {
     padding-top: 16px;
 }
+
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.no-cursor {
+    cursor: default;
+}
