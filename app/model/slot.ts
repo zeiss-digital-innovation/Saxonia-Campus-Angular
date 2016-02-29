@@ -1,3 +1,5 @@
+import {EmbeddedRoom} from './embedded-room'
+
 export interface Slot {
     id: number
     title: string
@@ -7,4 +9,5 @@ export interface Slot {
     endtime: string
     capacity: number
     participants: number
+    _embedded: EmbeddedRoom
 }
