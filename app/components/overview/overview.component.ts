@@ -11,8 +11,8 @@ import {SlotService} from '../../services/slot.service'
 export class OverviewComponent implements OnInit {
 
     rooms: Room[] = []
-    slots: Slot[] = []
-    map: any = {}
+    timeIndices: String[] = []
+    slotMatrix: any = {}
 
     constructor(private _router: Router, private _slotService: SlotService) {}
 
@@ -25,18 +25,40 @@ export class OverviewComponent implements OnInit {
             .subscribe(
                 slots => {
                     for (var slot of slots) {
-                        this.slots.push(slot)
-                        var room = slot._embedded.room
-                        if (this.rooms.indexOf(room) < 0) {
+                        const room = slot._embedded.room
+                        if (!this.rooms.some(item => item.id == room.id)) {
                             this.rooms.push(room)
                         }
-                        if (!this.map.hasOwnProperty(room)) {
-                            this.map[room] = []
+
+                        var found = Object.getOwnPropertyNames(this.slotMatrix).some(timeIndex => {
+                            if (Math.abs(this.getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000) {
+                                this.slotMatrix[timeIndex][room.id] = slot
+                                return true
+                            }
+                        })
+
+                        if (!found) {
+                            this.slotMatrix[slot.starttime] = {}
+                            this.slotMatrix[slot.starttime][room.id] = slot
                         }
-                        this.map[room].push(slot)
                     }
                 },
-                error => {console.log(error); this._router.navigate(['Login'])})
+                error => {console.log(error); this._router.navigate(['Login'])},
+                () => {
+                    this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix)
+                    this.timeIndices.sort((a, b) => a.localeCompare(b))
+                }
+            )
+    }
+
+    private getTimeDiff(a, b) {
+        var aSplit = a.split(':')
+        var bSplit = b.split(':')
+
+        var aDate = new Date(2015, 0, 1, aSplit[0], aSplit[1], aSplit[2], 0).getTime()
+        var bDate = new Date(2015, 0, 1, bSplit[0], bSplit[1], bSplit[2], 0).getTime()
+
+        return aDate - bDate
     }
 }
 
