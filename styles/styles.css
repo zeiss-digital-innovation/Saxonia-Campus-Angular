@@ -14,3 +14,32 @@
 .padding-top {
     padding-top: 15px;
 }
+
+.col-xs-1 {
+    width: 12.5%
+}
+
+.smaller {
+    font-size: 12px;
+}
+
+.flexbox {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flexbox > * {
+    padding-left: 15px;
+    flex: 1 12.5%;
+}
+
+.flexbox > *:first-child {
+    padding-left: 0 !important;
+}
+
+.card-block {
+    padding: 1rem;
+}

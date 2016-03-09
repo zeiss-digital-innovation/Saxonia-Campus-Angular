@@ -20,6 +20,21 @@ export class OverviewComponent implements OnInit {
         this.getSlots()
     }
 
+    getSlotCount(i: number, slot: Slot) {
+        var timeIndex
+        var slotCount = 0
+
+        do {
+            if (i + slotCount > this.timeIndices.length) {
+                break;
+            }
+            timeIndex = this.timeIndices[i + slotCount]
+            slotCount++
+        } while (this.getTimeDiff(timeIndex, slot.endtime) > 0)
+
+        return slotCount
+    }
+
     getSlots() {
         this._slotService.getSlots()
             .subscribe(

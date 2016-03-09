@@ -1,28 +1,31 @@
-<div class="row">
-    <div *ngFor="#room of rooms" class="col-xs-1">
-        <div class="card">
-            <div class="card-block">
-                <strong class="card-title">{{room.roomnumber}}</strong>
+<div class="smaller">
+    <div class="flexbox">
+        <div *ngFor="#room of rooms">
+            <div class="card">
+                <div class="card-block">
+                    <strong class="card-title">{{room.roomnumber}}</strong>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div *ngFor="#timeIndex of timeIndices">
-    <div class="row">
-        <div *ngFor="#room of rooms">
-            <div *ngIf="slotMatrix[timeIndex][room.id]" class="col-xs-1">
-                <div class="card">
-                    <div class="card-block">
-                        <h4 class="card-title">{{slotMatrix[timeIndex][room.id].title}}</h4>
-                        <p class="card-text">{{slotMatrix[timeIndex][room.id].description}}</p>
-                        <p class="card-text"><small class="text-muted">{{slotMatrix[timeIndex][room.id].speaker}}</small></p>
+    <div *ngFor="#timeIndex of timeIndices">
+        <div class="flexbox">
+            <div *ngFor="#room of rooms" class="flexbox">
+                <div *ngIf="slotMatrix[timeIndex][room.id]" class="flexbox">
+                    <div class="card">
+                        <div class="card-block">
+                            <span class="card-title"><strong>{{slotMatrix[timeIndex][room.id].title}}</strong></span><br/>
+                            <br/>
+                            <p class="card-text">{{slotMatrix[timeIndex][room.id].description}}</p>
+                            <p class="card-text"><small class="text-muted">{{slotMatrix[timeIndex][room.id].speaker}}</small></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div *ngIf="!slotMatrix[timeIndex][room.id]" class="col-xs-1">
-                <div class="card">
-                    <div class="card-block">
-                        <p class="card-text"><i>Fortsetzung ...</i></p>
+                <div *ngIf="!slotMatrix[timeIndex][room.id]" class="flexbox">
+                    <div class="card flex-grow">
+                        <div class="card-block">
+                            <p class="card-text"><i>Fortsetzung ...</i></p>
+                        </div>
                     </div>
                 </div>
             </div>
