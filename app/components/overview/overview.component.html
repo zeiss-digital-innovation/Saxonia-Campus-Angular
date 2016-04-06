@@ -16,11 +16,12 @@
                         <div class="card card-flex card-info-outline">
                             <div class="card-title bg-info"></div>
                             <div class="card-block">
-                                <strong>{{slotMatrix[timeIndex][room.id].title | slice:0:25}}
-                                {{slotMatrix[timeIndex][room.id].title.length > 25 ? '...' : ''}}</strong>
+                                <strong>
+                                    {{slotMatrix[timeIndex][room.id].starttime}} - {{slotMatrix[timeIndex][room.id].endtime}}
+                                    <span class="label label-success pull-xs-right">{{slotMatrix[timeIndex][room.id].participants}} / {{slotMatrix[timeIndex][room.id].capacity}}</span>
+                                </strong>
                                 <br/><br/>
-                                <p class="card-text">{{slotMatrix[timeIndex][room.id].description | slice:0:100}}
-                                {{slotMatrix[timeIndex][room.id].description.length > 100 ? '...' : ''}}</p>
+                                <p class="card-text">{{slotMatrix[timeIndex][room.id].title}}</p>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted">{{slotMatrix[timeIndex][room.id].speaker}}</small>

@@ -13,6 +13,10 @@
     margin-top: -5px;
 }
 
+.label {
+    font-size: 100%;
+}
+
 .no-bottom-margin {
     margin-bottom: 0;
 }
