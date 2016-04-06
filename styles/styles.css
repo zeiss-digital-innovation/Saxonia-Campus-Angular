@@ -43,3 +43,7 @@
 .card-block {
     padding: 1rem;
 }
+
+.card-title {
+    padding-bottom: 5px;
+}

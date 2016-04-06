@@ -3,7 +3,7 @@
         <div *ngFor="#room of rooms">
             <div class="card">
                 <div class="card-block">
-                    <strong class="card-title">{{room.roomnumber}}</strong>
+                    <strong class="card-title text-xs-center">{{room.roomnumber}}</strong>
                 </div>
             </div>
         </div>
@@ -14,15 +14,17 @@
                 <div *ngIf="slotMatrix[timeIndex][room.id]" class="flexbox">
                     <div class="card">
                         <div class="card-block">
-                            <span class="card-title"><strong>{{slotMatrix[timeIndex][room.id].title | slice:0:40}}</strong></span><br/>
+                            <div class="card-title"><strong>{{slotMatrix[timeIndex][room.id].title | slice:0:25}}
+                            {{slotMatrix[timeIndex][room.id].title.length > 25 ? '...' : ''}}</strong></div>
                             <br/>
-                            <p class="card-text">{{slotMatrix[timeIndex][room.id].description | slice:0:100}}</p>
+                            <p class="card-text">{{slotMatrix[timeIndex][room.id].description | slice:0:100}}
+                            {{slotMatrix[timeIndex][room.id].description.length > 100 ? '...' : ''}}</p>
                             <p class="card-text"><small class="text-muted">{{slotMatrix[timeIndex][room.id].speaker}}</small></p>
                         </div>
                     </div>
                 </div>
                 <div *ngIf="!slotMatrix[timeIndex][room.id]" class="flexbox">
-                    <div class="card flex-grow">
+                    <div class="card">
                         <div class="card-block">
                             <p class="card-text"><i>Fortsetzung ...</i></p>
                         </div>

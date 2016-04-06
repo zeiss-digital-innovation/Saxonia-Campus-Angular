@@ -4,6 +4,7 @@ import {Slot} from '../../model/slot'
 import {EmbeddedRoom} from '../../model/embedded-room'
 import {Room} from '../../model/room'
 import {SlotService} from '../../services/slot.service'
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html'
@@ -37,13 +38,21 @@ export class OverviewComponent implements OnInit {
 
     getSlots() {
         this._slotService.getSlots()
-            .subscribe(
-                slots => {
-                    for (var slot of slots) {
+            .groupBy(slot => {
+                if (slot._embedded) {
+                    return slot._embedded.room.id
+                } else {
+                    return -1
+                }
+            }, slot => slot)
+            .subscribe(roomSlots => {
+                roomSlots.first().subscribe(slot => {
+                    this.rooms.push(slot._embedded.room)
+                })
+
+                roomSlots.subscribe(
+                    slot => {
                         const room = slot._embedded.room
-                        if (!this.rooms.some(item => item.id == room.id)) {
-                            this.rooms.push(room)
-                        }
 
                         var found = Object.getOwnPropertyNames(this.slotMatrix).some(timeIndex => {
                             if (Math.abs(this.getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000) {
@@ -56,14 +65,43 @@ export class OverviewComponent implements OnInit {
                             this.slotMatrix[slot.starttime] = {}
                             this.slotMatrix[slot.starttime][room.id] = slot
                         }
+                    },
+                    () => {},
+                    () => {
+                        this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix)
+                        this.timeIndices.sort((a, b) => a.localeCompare(b))
                     }
-                },
-                error => {console.log(error); this._router.navigate(['Login'])},
-                () => {
-                    this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix)
-                    this.timeIndices.sort((a, b) => a.localeCompare(b))
-                }
-            )
+                )
+            })
+
+
+            //.subscribe(
+            //    slots => {
+            //        for (var slot of slots) {
+            //            const room = slot._embedded.room
+            //            if (!this.rooms.some(item => item.id == room.id)) {
+            //                this.rooms.push(room)
+            //            }
+            //
+            //            var found = Object.getOwnPropertyNames(this.slotMatrix).some(timeIndex => {
+            //                if (Math.abs(this.getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000) {
+            //                    this.slotMatrix[timeIndex][room.id] = slot
+            //                    return true
+            //                }
+            //            })
+            //
+            //            if (!found) {
+            //                this.slotMatrix[slot.starttime] = {}
+            //                this.slotMatrix[slot.starttime][room.id] = slot
+            //            }
+            //        }
+            //    },
+            //    error => {console.log(error); this._router.navigate(['Login'])},
+            //    () => {
+            //        this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix)
+            //        this.timeIndices.sort((a, b) => a.localeCompare(b))
+            //    }
+            //)
     }
 
     private getTimeDiff(a, b) {
