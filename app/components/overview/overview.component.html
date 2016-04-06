@@ -1,9 +1,9 @@
 <div class="smaller">
     <div class="flexbox">
         <div *ngFor="#room of rooms">
-            <div class="card">
-                <div class="card-block">
-                    <strong class="card-title text-xs-center">{{room.roomnumber}}</strong>
+            <div class="card bg-faded">
+                <div class="card-block text-xs-center">
+                    <strong class="card-title">{{room.roomnumber}}</strong>
                 </div>
             </div>
         </div>
@@ -12,7 +12,7 @@
         <div class="flexbox">
             <div *ngFor="#room of rooms" class="flexbox">
                 <div *ngIf="slotMatrix[timeIndex][room.id]" class="flexbox">
-                    <div class="card">
+                    <div class="card card-info-outline">
                         <div class="card-block">
                             <div class="card-title"><strong>{{slotMatrix[timeIndex][room.id].title | slice:0:25}}
                             {{slotMatrix[timeIndex][room.id].title.length > 25 ? '...' : ''}}</strong></div>

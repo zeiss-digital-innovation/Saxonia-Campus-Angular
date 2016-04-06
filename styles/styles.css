@@ -1,6 +1,16 @@
+.navbar {
+    width: 100%;
+}
+
+.navbar-brand {
+    display: inline-block;
+    margin-left: 215px;
+}
+
 #logo {
-    float: left;
+    display: inline;
     height: 30px;
+    margin-top: -5px;
 }
 
 .no-bottom-margin {
