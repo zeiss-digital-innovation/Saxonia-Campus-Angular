@@ -8,7 +8,6 @@ import {HomeComponent} from '../home/home.component';
 import {NavbarComponent} from '../navbar/navbar.component';
 import {OverviewComponent} from '../overview/overview.component';
 import {LoginComponent} from '../login/login.component';
-import {SlotComponent} from '../slot/slot.component';
 
 @Component({
     selector: 'app',
