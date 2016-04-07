@@ -28,6 +28,10 @@
     cursor: default;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .padding-top {
     padding-top: 15px;
 }

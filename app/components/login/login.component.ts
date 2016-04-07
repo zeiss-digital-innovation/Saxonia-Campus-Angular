@@ -18,7 +18,12 @@ export class LoginComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.modal.open()
+        this.modal.open();
+    }
+
+    clearForm() {
+        this.username = null;
+        this.password = null;
     }
 
     login() {

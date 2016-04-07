@@ -1,18 +1,20 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, ViewChild} from 'angular2/core';
 import {Router} from 'angular2/router';
+import {SlotComponent} from '../slot/slot.component';
 import {Slot} from '../../model/slot';
 import {EmbeddedRoom} from '../../model/embedded-room';
 import {Room} from '../../model/room';
 import {SlotService} from '../../services/slot.service';
-import {MODAL_DIRECTIVES} from '../modal/modal';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
-    directives: MODAL_DIRECTIVES
+    directives: [SlotComponent]
 })
 export class OverviewComponent implements OnInit {
 
+    @ViewChild('slotDetail')
+    slotComponent: SlotComponent;
     rooms: Room[] = [];
     timeIndices: String[] = [];
     slotMatrix: any = {};
@@ -36,6 +38,10 @@ export class OverviewComponent implements OnInit {
         } while (this.getTimeDiff(timeIndex, slot.endtime) > 0);
 
         return slotCount;
+    }
+
+    showDetail(slot: Slot) {
+        this.slotComponent.showSlot(slot);
     }
 
     getSlots() {

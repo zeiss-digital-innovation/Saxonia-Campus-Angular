@@ -1,0 +1,21 @@
+<modal #slotModal>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">{{slot?.title}}</h4>
+        <small>{{slot?.speaker}}</small>
+    </modal-header>
+    <modal-body>
+        <strong>
+            {{slot?.starttime || "" | slice:0:5}} - {{slot?.endtime || "" | slice:0:5}} im Raum {{slot?._embedded?.room?.roomnumber}}
+        </strong>
+        <span class="label pull-xs-right"
+              [class.label-success]="slot?.participants < slot?.capacity"
+              [class.label-danger]="slot?.participants >= slot?.capacity">
+            {{slot?.participants}}/{{slot?.capacity}}
+        </span><br/>
+        <br/>
+        {{slot?.description}}
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="register()">anmelden</button>
+    </modal-footer>
+</modal>
