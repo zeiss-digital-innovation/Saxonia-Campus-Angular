@@ -4,6 +4,9 @@
 
 .navbar-brand {
     display: inline-block;
+}
+
+.navbar-brand-authenticated {
     margin-left: 215px;
 }
 
