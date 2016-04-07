@@ -32,10 +32,10 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!slotMatrix[timeIndex][room.id]" class="flexbox">
+                <div *ngIf="isContinuation(timeIndex, room.id)" class="flexbox">
                     <div class="card card-flex">
                         <div class="card-block card-continuation-flex text-xs-center">
-                            <p class="card-text"><i>Fortsetzung ...</i></p>
+                            <p class="card-text text-muted"><i>Fortsetzung ...</i></p>
                         </div>
                     </div>
                 </div>

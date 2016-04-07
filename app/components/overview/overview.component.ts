@@ -25,19 +25,21 @@ export class OverviewComponent implements OnInit {
         this.getSlots();
     }
 
-    getSlotCount(i: number, slot: Slot) {
-        var timeIndex;
-        var slotCount = 0;
+    isContinuation(timeIndex: string, roomId: string): boolean {
 
-        do {
-            if (i + slotCount > this.timeIndices.length) {
-                break;
+        let index = this.timeIndices.indexOf(timeIndex);
+        if (index == 0) {
+            return false;
+        }
+
+        for (var i = index-1; i >= 0; i--) {
+            let slot = this.slotMatrix[this.timeIndices[i]][roomId]
+            if (slot != null && this.getTimeDiff(slot.endtime, timeIndex) > 0) {
+                return true;
             }
-            timeIndex = this.timeIndices[i + slotCount];
-            slotCount++
-        } while (this.getTimeDiff(timeIndex, slot.endtime) > 0);
+        }
 
-        return slotCount;
+        return false;
     }
 
     showDetail(slot: Slot) {
