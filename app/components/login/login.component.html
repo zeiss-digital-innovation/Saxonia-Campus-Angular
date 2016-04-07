@@ -1,19 +1,21 @@
-<div class="col-lg-3"></div>
-<div class="card col-lg-6 bg-faded">
-    <div class="card-block">
-        <h4 class="card-title">Login</h4>
-        <form class="card-text">
+<modal #loginModal [keyboard]="false" [backdrop]="'static'">
+    <modal-header>
+        <h4 class="modal-title">Login</h4>
+    </modal-header>
+    <modal-body>
+        <form>
             <fieldset class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter username" [(ngModel)]="username">
+                <input autofocus type="text" class="form-control" id="username" placeholder="Enter username" [(ngModel)]="username">
                 <small class="text-muted">Benutze hier deinen Saxonia Benutzernamen.</small>
             </fieldset>
             <fieldset class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="password">
             </fieldset>
-            <button (click)="login()" class="btn btn-primary">Login</button>
         </form>
-    </div>
-</div>
-<div class="col-lg-3"></div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+    </modal-footer>
+</modal>

@@ -1,5 +1,5 @@
-import {Room} from './room'
+import {Room} from './room';
 
 export interface EmbeddedRoom {
-    room: Room
+    room: Room;
 }

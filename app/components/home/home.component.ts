@@ -1,6 +1,6 @@
-import {Component, OnInit} from 'angular2/core'
-import {Router} from 'angular2/router'
-import {RestService} from '../../services/rest.service'
+import {Component, OnInit} from 'angular2/core';
+import {Router} from 'angular2/router';
+import {RestService} from '../../services/rest.service';
 
 @Component({
     template: ''
@@ -8,7 +8,7 @@ import {RestService} from '../../services/rest.service'
 export class HomeComponent implements OnInit {
 
     ngOnInit() {
-        this.getBaseResource()
+        this.getBaseResource();
     }
 
     constructor(private _router: Router, private _restService: RestService) {}
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
             .subscribe(
                 result => this._router.navigate(['Overview']),
                 error => this._router.navigate(['Login'])
-        )
+        );
     }
 }
 
