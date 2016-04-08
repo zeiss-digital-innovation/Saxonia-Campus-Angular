@@ -1,4 +1,5 @@
-import {Component, ViewChild} from 'angular2/core';
+import {Component, ViewChild, AfterViewInit} from 'angular2/core';
+import {SlotService} from '../../services/slot.service';
 import {Slot} from '../../model/slot';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
@@ -12,13 +13,23 @@ export class SlotComponent {
     @ViewChild('slotModal')
     modal: ModalComponent;
     slot: Slot;
+    userInSlot: boolean;
 
-    showSlot(slot: Slot) {
+    constructor(private _slotService: SlotService) {}
+
+    showSlot(slot: Slot, userInSlot: boolean) {
         this.slot = slot;
+        this.userInSlot = userInSlot;
         this.modal.open('lg');
     }
 
     register() {
+        this._slotService.register(this.slot.id).subscribe();
+        this.modal.close();
+    }
+
+    unregister() {
+        this._slotService.unregister(this.slot.id).subscribe();
         this.modal.close();
     }
 }

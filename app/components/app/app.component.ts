@@ -4,6 +4,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {AuthService} from '../../services/auth.service';
 import {RestService} from '../../services/rest.service';
 import {SlotService} from '../../services/slot.service';
+import {UserService} from '../../services/user.service';
 import {HomeComponent} from '../home/home.component';
 import {NavbarComponent} from '../navbar/navbar.component';
 import {OverviewComponent} from '../overview/overview.component';
@@ -21,7 +22,8 @@ import {LoginComponent} from '../login/login.component';
         HTTP_PROVIDERS,
         AuthService,
         RestService,
-        SlotService
+        SlotService,
+        UserService
     ]
 })
 @RouteConfig([

@@ -1,28 +1,37 @@
-import {Component, OnInit, ViewChild} from 'angular2/core';
+import {Component, OnInit, AfterViewInit, ViewChild} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {SlotComponent} from '../slot/slot.component';
 import {Slot} from '../../model/slot';
 import {EmbeddedRoom} from '../../model/embedded-room';
 import {Room} from '../../model/room';
+import {User} from '../../model/user';
 import {SlotService} from '../../services/slot.service';
+import {UserService} from '../../services/user.service';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
     directives: [SlotComponent]
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, AfterViewInit {
 
     @ViewChild('slotDetail')
     slotComponent: SlotComponent;
     rooms: Room[] = [];
     timeIndices: String[] = [];
     slotMatrix: any = {};
+    userSlots: number[] = [];
 
-    constructor(private _router: Router, private _slotService: SlotService) {}
+    constructor(private _slotService: SlotService,
+                private _userService: UserService) {}
 
     ngOnInit() {
         this.getSlots();
+        this.getCurrentUser();
+    }
+
+    ngAfterViewInit() {
+        this.slotComponent.modal.onClose.subscribe(() => this.ngOnInit());
     }
 
     isContinuation(timeIndex: string, roomId: string): boolean {
@@ -43,21 +52,30 @@ export class OverviewComponent implements OnInit {
     }
 
     showDetail(slot: Slot) {
-        this.slotComponent.showSlot(slot);
+        this.slotComponent.showSlot(slot, this.userInSlot(slot.id));
+    }
+
+    userInSlot(slotId: number): boolean {
+        return this.userSlots.indexOf(slotId) > -1
     }
 
     getSlots() {
         this._slotService.getSlots()
             .groupBy(slot => {
                 if (slot._embedded) {
-                    return slot._embedded.room.id
+                    return slot._embedded.room.id;
                 } else {
-                    return -1
+                    return -1;
                 }
             }, slot => slot)
             .subscribe(roomSlots => {
                 roomSlots.first().subscribe(slot => {
-                    this.rooms.push(slot._embedded.room)
+                    for (let room: Room of this.rooms) {
+                        if (room.id == slot._embedded.room.id) {
+                            return;
+                        }
+                    }
+                    this.rooms.push(slot._embedded.room);
                 });
 
                 roomSlots.subscribe(
@@ -67,21 +85,31 @@ export class OverviewComponent implements OnInit {
                         var found = Object.getOwnPropertyNames(this.slotMatrix).some(timeIndex => {
                             if (Math.abs(this.getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000) {
                                 this.slotMatrix[timeIndex][room.id] = slot;
-                                return true
+                                return true;
                             }
                         });
 
                         if (!found) {
                             this.slotMatrix[slot.starttime] = {};
-                            this.slotMatrix[slot.starttime][room.id] = slot
+                            this.slotMatrix[slot.starttime][room.id] = slot;
                         }
                     },
                     () => {},
                     () => {
                         this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix);
-                        this.timeIndices.sort((a, b) => a.localeCompare(b))
+                        this.timeIndices.sort((a, b) => a.localeCompare(b));
                     }
                 )
+            });
+    }
+
+    getCurrentUser() {
+        this.userSlots = [];
+        this._userService.getUser()
+            .subscribe(user => {
+                for (let slot: Slot of user._embedded.slots) {
+                    this.userSlots.push(slot.id);
+                }
             });
     }
 

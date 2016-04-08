@@ -16,6 +16,7 @@
         <p class="text-justify">{{slot?.description}}</p>
     </modal-body>
     <modal-footer>
-        <button type="button" class="btn btn-primary" (click)="register()">anmelden</button>
+        <button *ngIf="userInSlot" type="button" class="btn btn-danger" (click)="unregister()">Buchung entfernen</button>
+        <button *ngIf="!userInSlot" type="button" class="btn btn-primary" (click)="register()">Buchen</button>
     </modal-footer>
 </modal>

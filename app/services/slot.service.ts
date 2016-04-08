@@ -20,6 +20,20 @@ export class SlotService {
             .catch(SlotService.handleError);
     }
 
+    register(slotId: number) {
+        return this.http.put(`http://localhost:8180/rest/slots/${slotId}/participants/user`, '{}', {
+                headers: RestService.getHeaders()
+            })
+            .catch(SlotService.handleError);
+    }
+
+    unregister(slotId: number) {
+        return this.http.delete(`http://localhost:8180/rest/slots/${slotId}/participants/user`, {
+                headers: RestService.getHeaders()
+            })
+            .catch(SlotService.handleError);
+    }
+
     private static handleError (error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

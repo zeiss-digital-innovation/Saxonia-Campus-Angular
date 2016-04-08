@@ -12,9 +12,14 @@
         <div *ngFor="#timeIndex of timeIndices" class="flexbox">
             <div *ngFor="#room of rooms" class="flexbox">
                 <div *ngIf="slotMatrix[timeIndex][room.id]" class="flexbox">
-                    <div class="card card-flex card-info-outline clickable"
+                    <div class="card card-flex clickable"
+                         [class.card-warning-outline]="userInSlot(slotMatrix[timeIndex][room.id].id)"
+                         [class.card-info-outline]="!userInSlot(slotMatrix[timeIndex][room.id].id)"
                          (click)="showDetail(slotMatrix[timeIndex][room.id])">
-                        <div class="card-title bg-info"></div>
+                        <div class="card-title"
+                             [class.bg-warning]="userInSlot(slotMatrix[timeIndex][room.id].id)"
+                             [class.bg-info]="!userInSlot(slotMatrix[timeIndex][room.id].id)">
+                        </div>
                         <div class="card-block">
                             <strong>
                                 {{slotMatrix[timeIndex][room.id].starttime | slice:0:5}} - {{slotMatrix[timeIndex][room.id].endtime | slice:0:5}}
@@ -43,4 +48,4 @@
         </div>
     </div>
 </div>
-<slot #slotDetail></slot>
+<slot #slotDetail (close)="getCurrentUser()"></slot>
