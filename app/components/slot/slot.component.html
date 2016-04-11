@@ -1,22 +1,33 @@
-<modal #slotModal>
-    <modal-header [show-close]="true">
-        <h4 class="modal-title">{{slot?.title}}</h4>
-        <small>{{slot?.speaker}}</small>
-    </modal-header>
-    <modal-body>
-        <strong>
-            {{slot?.starttime || "" | slice:0:5}} - {{slot?.endtime || "" | slice:0:5}} im Raum {{slot?._embedded?.room?.roomnumber}}
-        </strong>
-        <span class="label pull-xs-right"
-              [class.label-success]="slot?.participants < slot?.capacity"
-              [class.label-danger]="slot?.participants >= slot?.capacity">
-            {{slot?.participants}}/{{slot?.capacity}}
-        </span><br/>
-        <br/>
-        <p class="text-justify">{{slot?.description}}</p>
-    </modal-body>
-    <modal-footer>
-        <button *ngIf="userInSlot" type="button" class="btn btn-danger" (click)="unregister()">Buchung entfernen</button>
-        <button *ngIf="!userInSlot" type="button" class="btn btn-primary" (click)="register()">Buchen</button>
-    </modal-footer>
-</modal>
+<div *ngIf="slot" class="flexbox">
+    <div class="card card-flex clickable"
+         [class.card-warning-outline]="userInSlot"
+         [class.card-info-outline]="!userInSlot"
+         (click)="showSlotDetail()">
+        <div class="card-title"
+             [class.bg-warning]="userInSlot"
+             [class.bg-info]="!userInSlot">
+        </div>
+        <div class="card-block">
+            <strong>
+                {{slot.starttime | slice:0:5}} - {{slot.endtime | slice:0:5}}
+                <span class="label pull-xs-right"
+                      [class.label-success]="slot.participants < slot.capacity"
+                      [class.label-danger]="slot.participants >= slot.capacity">
+                    {{slot.participants}}/{{slot.capacity}}
+                </span>
+            </strong>
+            <br/><br/>
+            <p class="card-text">{{slot.title}}</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">{{slot.speaker}}</small>
+        </div>
+    </div>
+</div>
+<div *ngIf="isContinuation" class="flexbox">
+    <div class="card card-flex">
+        <div class="card-block card-continuation-flex text-xs-center">
+            <p class="card-text text-muted"><i>Fortsetzung ...</i></p>
+        </div>
+    </div>
+</div>

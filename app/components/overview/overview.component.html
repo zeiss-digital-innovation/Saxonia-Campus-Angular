@@ -11,41 +11,13 @@
     <div class="smaller">
         <div *ngFor="#timeIndex of timeIndices" class="flexbox">
             <div *ngFor="#room of rooms" class="flexbox">
-                <div *ngIf="slotMatrix[timeIndex][room.id]" class="flexbox">
-                    <div class="card card-flex clickable"
-                         [class.card-warning-outline]="userInSlot(slotMatrix[timeIndex][room.id].id)"
-                         [class.card-info-outline]="!userInSlot(slotMatrix[timeIndex][room.id].id)"
-                         (click)="showDetail(slotMatrix[timeIndex][room.id])">
-                        <div class="card-title"
-                             [class.bg-warning]="userInSlot(slotMatrix[timeIndex][room.id].id)"
-                             [class.bg-info]="!userInSlot(slotMatrix[timeIndex][room.id].id)">
-                        </div>
-                        <div class="card-block">
-                            <strong>
-                                {{slotMatrix[timeIndex][room.id].starttime | slice:0:5}} - {{slotMatrix[timeIndex][room.id].endtime | slice:0:5}}
-                                <span class="label pull-xs-right"
-                                      [class.label-success]="slotMatrix[timeIndex][room.id].participants < slotMatrix[timeIndex][room.id].capacity"
-                                      [class.label-danger]="slotMatrix[timeIndex][room.id].participants >= slotMatrix[timeIndex][room.id].capacity">
-                                    {{slotMatrix[timeIndex][room.id].participants}}/{{slotMatrix[timeIndex][room.id].capacity}}
-                                </span>
-                            </strong>
-                            <br/><br/>
-                            <p class="card-text">{{slotMatrix[timeIndex][room.id].title}}</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">{{slotMatrix[timeIndex][room.id].speaker}}</small>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="isContinuation(timeIndex, room.id)" class="flexbox">
-                    <div class="card card-flex">
-                        <div class="card-block card-continuation-flex text-xs-center">
-                            <p class="card-text text-muted"><i>Fortsetzung ...</i></p>
-                        </div>
-                    </div>
-                </div>
+                <slot class="flexbox"
+                      (onSlotClick)="slotDetail.showSlot($event, userInSlot($event))"
+                      [slot]="slotMatrix[timeIndex][room.id]"
+                      [userInSlot]="userInSlot(slotMatrix[timeIndex][room.id])"
+                      [isContinuation]="isContinuation(timeIndex, room.id)"></slot>
             </div>
         </div>
     </div>
 </div>
-<slot #slotDetail (close)="getCurrentUser()"></slot>
+<slot-detail #slotDetail (close)="getCurrentUser()"></slot-detail>

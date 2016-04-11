@@ -1,36 +1,26 @@
-import {Component, ViewChild, AfterViewInit} from 'angular2/core';
-import {SlotService} from '../../services/slot.service';
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {Slot} from '../../model/slot';
-import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
     selector: 'slot',
-    templateUrl: 'app/components/slot/slot.component.html',
-    directives: MODAL_DIRECTIVES
+    templateUrl: 'app/components/slot/slot.component.html'
 })
 export class SlotComponent {
 
-    @ViewChild('slotModal')
-    modal: ModalComponent;
+    @Input()
     slot: Slot;
+    @Input()
     userInSlot: boolean;
+    @Input()
+    isContinuation: boolean;
+    @Output()
+    onSlotClick: EventEmitter<Slot> = new EventEmitter(false);
 
-    constructor(private _slotService: SlotService) {}
-
-    showSlot(slot: Slot, userInSlot: boolean) {
-        this.slot = slot;
-        this.userInSlot = userInSlot;
-        this.modal.open('lg');
-    }
-
-    register() {
-        this._slotService.register(this.slot.id).subscribe();
-        this.modal.close();
-    }
-
-    unregister() {
-        this._slotService.unregister(this.slot.id).subscribe();
-        this.modal.close();
+    showSlotDetail() {
+        if (this.slot == null) {
+            return;
+        }
+        this.onSlotClick.emit(this.slot);
     }
 }
 

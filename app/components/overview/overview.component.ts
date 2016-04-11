@@ -1,6 +1,7 @@
 import {Component, OnInit, AfterViewInit, ViewChild} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {SlotComponent} from '../slot/slot.component';
+import {SlotDetailComponent} from '../slot-detail/slot-detail.component';
 import {Slot} from '../../model/slot';
 import {EmbeddedRoom} from '../../model/embedded-room';
 import {Room} from '../../model/room';
@@ -11,12 +12,12 @@ import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
-    directives: [SlotComponent]
+    directives: [SlotComponent, SlotDetailComponent]
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
 
     @ViewChild('slotDetail')
-    slotComponent: SlotComponent;
+    slotDetailComponent: SlotDetailComponent;
     rooms: Room[] = [];
     timeIndices: String[] = [];
     slotMatrix: any = {};
@@ -31,7 +32,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.slotComponent.modal.onClose.subscribe(() => this.ngOnInit());
+        this.slotDetailComponent.modal.onClose.subscribe(() => this.ngOnInit());
     }
 
     isContinuation(timeIndex: string, roomId: string): boolean {
@@ -51,12 +52,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         return false;
     }
 
-    showDetail(slot: Slot) {
-        this.slotComponent.showSlot(slot, this.userInSlot(slot.id));
-    }
-
-    userInSlot(slotId: number): boolean {
-        return this.userSlots.indexOf(slotId) > -1
+    userInSlot(slot: Slot): boolean {
+        if (slot == null) {
+            return false;
+        }
+        return this.userSlots.indexOf(slot.id) > -1
     }
 
     getSlots() {
