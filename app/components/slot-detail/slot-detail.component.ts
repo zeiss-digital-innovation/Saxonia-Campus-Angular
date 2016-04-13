@@ -30,6 +30,9 @@ export class SlotDetailComponent {
         if (this.slot == null) {
             return false;
         }
+        if (this.slot.participants >= this.slot.capacity) {
+            return false;
+        }
         return this.slot._links.hasOwnProperty('register');
     }
 
