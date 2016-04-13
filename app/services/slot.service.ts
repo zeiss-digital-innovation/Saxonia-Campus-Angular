@@ -3,32 +3,44 @@ import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {RestService} from './rest.service';
 import {Slot} from '../model/slot';
+import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class SlotService {
-    constructor (private http: Http) {}
-
-    // this is so un-hypermedia :(
-    private _slotsUrl = 'http://localhost:8180/rest/slots';
+    constructor (private http: Http, private _restService: RestService) {}
 
     getSlots() {
-        return this.http.get(this._slotsUrl, {
-                headers: RestService.getHeaders()
-            })
-            .flatMap(res => <Slot[]> res.json()._embedded.slots)
-            .do(data => console.log(data)) // eyeball results in the console
-            .catch(SlotService.handleError);
-    }
-
-    register(slotId: number) {
-        return this.http.put(`http://localhost:8180/rest/slots/${slotId}/participants/user`, '{}', {
-                headers: RestService.getHeaders()
+        return this._restService.getRest()
+            .flatMap(hypermediaResource => {
+                let link: string = 'slots';
+                return this.http.get(hypermediaResource._links[link].href, {
+                        headers: RestService.getHeaders()
+                    })
+                    .flatMap(res => Observable.fromArray(<Slot[]> res.json()._embedded.slots))
             })
             .catch(SlotService.handleError);
     }
 
-    unregister(slotId: number) {
-        return this.http.delete(`http://localhost:8180/rest/slots/${slotId}/participants/user`, {
+    getSlot(slot: Slot) {
+        let link: string = 'self';
+        return this.http.get(slot._links[link].href, {
+                headers: RestService.getHeaders()
+            })
+            .map(res => <Slot> res.json())
+            .catch(SlotService.handleError);
+    }
+
+    register(slot: Slot) {
+        let link: string = 'register';
+        return this.http.put(slot._links[link].href, '', {
+                headers: RestService.getHeaders()
+            })
+            .catch(SlotService.handleError);
+    }
+
+    unregister(slot: Slot) {
+        let link: string = 'unregister';
+        return this.http.delete(slot._links[link].href, {
                 headers: RestService.getHeaders()
             })
             .catch(SlotService.handleError);

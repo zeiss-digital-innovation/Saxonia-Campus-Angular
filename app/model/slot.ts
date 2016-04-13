@@ -1,6 +1,7 @@
+import {HypermediaResource} from './hypermedia-resource';
 import {EmbeddedRoom} from './embedded-room';
 
-export interface Slot {
+export interface Slot extends HypermediaResource {
     id: number;
     title: string;
     speaker: string;

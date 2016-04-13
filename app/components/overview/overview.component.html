@@ -1,5 +1,11 @@
 <div>
-    <div class="flexbox">
+    <div id="button-bar" class="text-xs-center">
+        <button *ngFor="#date of dates" class="btn btn-info-outline"
+                (click)="selectedDate = date" [class.active]="date == selectedDate">
+            {{date}}
+        </button>
+    </div>
+    <div class="flexbox container-fluid">
         <div *ngFor="#room of rooms">
             <div class="card bg-faded">
                 <div class="card-block card-room-block text-xs-center">
@@ -8,14 +14,15 @@
             </div>
         </div>
     </div>
-    <div class="smaller">
-        <div *ngFor="#timeIndex of timeIndices" class="flexbox">
+    <div *ngFor="#date of dates" class="container-fluid grid smaller float-xs-left"
+         [class.future]="isFuture(date)" [class.past]="isPast(date)">
+        <div *ngFor="#time of times[date]" class="flexbox">
             <div *ngFor="#room of rooms" class="flexbox">
                 <slot class="flexbox"
                       (onSlotClick)="slotDetail.showSlot($event, userInSlot($event))"
-                      [slot]="slotMatrix[timeIndex][room.id]"
-                      [userInSlot]="userInSlot(slotMatrix[timeIndex][room.id])"
-                      [isContinuation]="isContinuation(timeIndex, room.id)"></slot>
+                      [slot]="slotMatrix[date][time][room.id]"
+                      [userInSlot]="userInSlot(slotMatrix[date][time][room.id])"
+                      [isContinuation]="isContinuation(date, time, room.id)"></slot>
             </div>
         </div>
     </div>

@@ -1,5 +1,7 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {Slot} from '../../model/slot';
+import {SlotService} from '../../services/slot.service';
+import {RestService} from '../../services/rest.service';
 
 @Component({
     selector: 'slot',
@@ -14,13 +16,16 @@ export class SlotComponent {
     @Input()
     isContinuation: boolean;
     @Output()
-    onSlotClick: EventEmitter<Slot> = new EventEmitter(false);
+    onSlotClick: EventEmitter<Slot> = new EventEmitter<Slot>(false);
+
+    constructor(private _slotService: SlotService) {}
 
     showSlotDetail() {
         if (this.slot == null) {
             return;
         }
-        this.onSlotClick.emit(this.slot);
+        this._slotService.getSlot(this.slot)
+            .subscribe(slot => this.onSlotClick.emit(slot));
     }
 }
 

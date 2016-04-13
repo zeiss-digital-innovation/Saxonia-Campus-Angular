@@ -8,6 +8,7 @@ import {Room} from '../../model/room';
 import {User} from '../../model/user';
 import {SlotService} from '../../services/slot.service';
 import {UserService} from '../../services/user.service';
+import {RestService} from '../../services/rest.service';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -19,11 +20,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     @ViewChild('slotDetail')
     slotDetailComponent: SlotDetailComponent;
     rooms: Room[] = [];
-    timeIndices: String[] = [];
+    dates: string[] = [];
+    times: any = {};
     slotMatrix: any = {};
     userSlots: number[] = [];
+    selectedDate: string = null;
 
-    constructor(private _slotService: SlotService,
+    constructor(private _router: Router,
+                private _slotService: SlotService,
                 private _userService: UserService) {}
 
     ngOnInit() {
@@ -33,23 +37,32 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.slotDetailComponent.modal.onClose.subscribe(() => this.ngOnInit());
+        this.slotDetailComponent.modal.onDismiss.subscribe(() => this.ngOnInit());
     }
 
-    isContinuation(timeIndex: string, roomId: string): boolean {
-
-        let index = this.timeIndices.indexOf(timeIndex);
+    isContinuation(date: string, time: string, roomId: string): boolean {
+        let index = this.times[date].indexOf(time);
         if (index == 0) {
             return false;
         }
 
         for (var i = index-1; i >= 0; i--) {
-            let slot = this.slotMatrix[this.timeIndices[i]][roomId]
-            if (slot != null && this.getTimeDiff(slot.endtime, timeIndex) > 0) {
+            let slot = this.slotMatrix[this.times[i]][roomId];
+            let endDateTime: Date = new Date(Date.parse(slot.endtime));
+            if (slot != null && (this.getTimeDiff(this.getTime(endDateTime), time) > 0)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    isFuture(date: string): boolean {
+        return this.getDateDiff(this.selectedDate, date) < 0;
+    }
+
+    isPast(date: string): boolean {
+        return this.getDateDiff(this.selectedDate, date) > 0;
     }
 
     userInSlot(slot: Slot): boolean {
@@ -59,66 +72,105 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         return this.userSlots.indexOf(slot.id) > -1
     }
 
-    getSlots() {
+    private getSlots() {
         this._slotService.getSlots()
-            .groupBy(slot => {
+            .groupBy((slot: Slot) => {
                 if (slot._embedded) {
                     return slot._embedded.room.id;
                 } else {
                     return -1;
                 }
             }, slot => slot)
-            .subscribe(roomSlots => {
-                roomSlots.first().subscribe(slot => {
-                    for (let room: Room of this.rooms) {
-                        if (room.id == slot._embedded.room.id) {
-                            return;
-                        }
-                    }
-                    this.rooms.push(slot._embedded.room);
-                });
-
-                roomSlots.subscribe(
-                    slot => {
-                        const room = slot._embedded.room;
-
-                        var found = Object.getOwnPropertyNames(this.slotMatrix).some(timeIndex => {
-                            if (Math.abs(this.getTimeDiff(slot.starttime, timeIndex)) < 20 * 60 * 1000) {
-                                this.slotMatrix[timeIndex][room.id] = slot;
-                                return true;
+            .subscribe(
+                roomSlots => {
+                    roomSlots.first().subscribe((slot: Slot) => {
+                        for (let room of this.rooms) {
+                            if (room.id == slot._embedded.room.id) {
+                                return;
                             }
-                        });
-
-                        if (!found) {
-                            this.slotMatrix[slot.starttime] = {};
-                            this.slotMatrix[slot.starttime][room.id] = slot;
                         }
-                    },
-                    () => {},
-                    () => {
-                        this.timeIndices = Object.getOwnPropertyNames(this.slotMatrix);
-                        this.timeIndices.sort((a, b) => a.localeCompare(b));
-                    }
-                )
-            });
+                        this.rooms.push(slot._embedded.room);
+                    });
+
+                    roomSlots.subscribe(
+                        (slot: Slot) => {
+                            let room: Room = slot._embedded.room;
+                            let startDateTime: Date = new Date(Date.parse(slot.starttime));
+                            let startDate: string = this.getDate(startDateTime);
+                            let startTime: string = this.getTime(startDateTime);
+
+                            if (this.dates.indexOf(startDate) < 0) {
+                                this.dates.push(startDate);
+                                this.times[startDate] = [];
+                                this.slotMatrix[startDate] = {};
+                            }
+
+                            var found = Object.getOwnPropertyNames(this.slotMatrix[startDate]).some(time => {
+                                if (this.getTimeDiff(startTime, time) < 20 * 60 * 1000) {
+                                    this.slotMatrix[startDate][startTime][room.id] = slot;
+                                    return true;
+                                }
+                            });
+
+                            if (!found) {
+                                this.times[startDate].push(startTime);
+                                this.slotMatrix[startDate][startTime] = {};
+                                this.slotMatrix[startDate][startTime][room.id] = slot;
+                            }
+                        },
+                        () => {},
+                        () => {
+                            this.dates.sort((a: string, b : string) => a.localeCompare(b));
+                            this.dates.forEach(date => {
+                                this.times[date].sort((a: string, b : string) => a.localeCompare(b));
+                            });
+                            if (this.dates.length > 0 && this.selectedDate == null) {
+                                this.selectedDate = this.dates[0];
+                            }
+                        }
+                    )
+                },
+                error => this._router.navigate(['Login'])
+            );
     }
 
-    getCurrentUser() {
+    private getDate(date: Date): string {
+        return ('0'+date.getDate()).slice(-2) + '.' + ('0'+(date.getMonth()+1)).slice(-2) + '.' + date.getFullYear();
+    }
+
+    private getTime(date: Date): string {
+        return ('0'+date.getHours()).slice(-2) + ':' + ('0'+date.getMinutes()).slice(-2);
+    }
+
+    private getCurrentUser() {
         this.userSlots = [];
         this._userService.getUser()
-            .subscribe(user => {
-                for (let slot: Slot of user._embedded.slots) {
-                    this.userSlots.push(slot.id);
-                }
-            });
+            .subscribe(
+                (user:User) => {
+                    for (let slot of user._embedded.slots) {
+                        this.userSlots.push(slot.id);
+                    }
+                },
+                error => this._router.navigate(['Login'])
+            );
     }
 
-    private getTimeDiff(a, b) {
-        var aSplit = a.split(':');
-        var bSplit = b.split(':');
+    private getDateDiff(a: string, b: string) {
+        let aSplit: string[] = a.split('.');
+        let bSplit: string[] = b.split('.');
 
-        var aDate = new Date(2015, 0, 1, aSplit[0], aSplit[1], aSplit[2], 0).getTime();
-        var bDate = new Date(2015, 0, 1, bSplit[0], bSplit[1], bSplit[2], 0).getTime();
+        let aDate = new Date(+aSplit[2], (+aSplit[1])-1, +aSplit[0], 0, 0, 0, 0).getTime();
+        let bDate = new Date(+bSplit[2], (+bSplit[1])-1, +bSplit[0], 0, 0, 0, 0).getTime();
+
+        return aDate - bDate;
+    }
+
+    private getTimeDiff(a: string, b: string) {
+        let aSplit: string[] = a.split(':');
+        let bSplit: string[] = b.split(':');
+
+        let aDate = new Date(2015, 0, 1, +aSplit[0], +aSplit[1], 0, 0).getTime();
+        let bDate = new Date(2015, 0, 1, +bSplit[0], +bSplit[1], 0, 0).getTime();
 
         return aDate - bDate;
     }

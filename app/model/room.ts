@@ -3,9 +3,9 @@ export class Room {
     capacity: number;
     roomnumber: string;
 
-    constructor (private id: number, private capacity: number, private roomnumber: string) {
-        this.id = id;
-        this.capacity = capacity;
-        this.roomnumber = roomnumber;
+    constructor (private theId: number, private theCapacity: number, private theRoomnumber: string) {
+        this.id = theId;
+        this.capacity = theCapacity;
+        this.roomnumber = theRoomnumber;
     }
 }

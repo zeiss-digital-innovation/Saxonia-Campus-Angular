@@ -1,23 +1,23 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
+import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class RestService {
-
     constructor (private http: Http) {}
 
-    private _restUrl = 'http://localhost:8180/rest';
+    private _restUrl = 'http://localhost:8080/rest';
 
     public getRest() {
         return this.http.get(this._restUrl, {
                 headers: RestService.getHeaders()
             })
-            .do(data => console.log(data)) // eyeball results in the console
+            .map(res => <HypermediaResource> res.json())
             .catch(RestService.handleError);
     }
 
-    public static getHeaders() {
+    public static getHeaders(): Headers {
         var headers = new Headers();
         if (sessionStorage.getItem('token')) {
             headers.append('Authorization', 'Basic ' + sessionStorage.getItem('token'));

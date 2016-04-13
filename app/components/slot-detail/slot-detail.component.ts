@@ -1,6 +1,8 @@
 import {Component, ViewChild, AfterViewInit} from 'angular2/core';
-import {SlotService} from '../../services/slot.service';
+import {CanActivate} from 'angular2/router';
 import {Slot} from '../../model/slot';
+import {SlotService} from '../../services/slot.service';
+import {RestService} from '../../services/rest.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
@@ -23,14 +25,26 @@ export class SlotDetailComponent {
         this.modal.open('lg');
     }
 
+    isRegisterable(): boolean {
+        if (this.slot == null) {
+            return false;
+        }
+        return this.slot._links.hasOwnProperty('register');
+    }
+
+    isUnregisterable(): boolean {
+        if (this.slot == null) {
+            return false;
+        }
+        return this.slot._links.hasOwnProperty('unregister');
+    }
+
     register() {
-        this._slotService.register(this.slot.id).subscribe();
-        this.modal.close();
+        this._slotService.register(this.slot).subscribe(() => this.modal.close());
     }
 
     unregister() {
-        this._slotService.unregister(this.slot.id).subscribe();
-        this.modal.close();
+        this._slotService.unregister(this.slot).subscribe(() => this.modal.close());
     }
 }
 

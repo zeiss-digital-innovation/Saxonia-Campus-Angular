@@ -5,11 +5,11 @@ export class AuthService {
         sessionStorage.setItem('token', btoa(username + ':' + password));
     }
 
-    public static getUsername() : string {
+    public static getUsername(): string {
         return sessionStorage.getItem('username');
     }
 
-    public static isAuthenticated() : boolean {
+    public static isAuthenticated(): boolean {
         return sessionStorage.getItem('token') != null;
     }
 

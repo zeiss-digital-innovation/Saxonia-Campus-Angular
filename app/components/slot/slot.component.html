@@ -9,9 +9,10 @@
         </div>
         <div class="card-block">
             <strong>
-                {{slot.starttime | slice:0:5}} - {{slot.endtime | slice:0:5}}
+                {{slot.starttime | slice:11:16}} - {{slot.endtime | slice:11:16}}
                 <span class="label pull-xs-right"
-                      [class.label-success]="slot.participants < slot.capacity"
+                      [class.label-success]="slot.participants < (slot.capacity - 3)"
+                      [class.label-warning]="slot.participants >= (slot.capacity - 3) && slot.participants < slot.capacity"
                       [class.label-danger]="slot.participants >= slot.capacity">
                     {{slot.participants}}/{{slot.capacity}}
                 </span>
