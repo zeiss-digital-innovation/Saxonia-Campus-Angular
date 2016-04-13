@@ -1,6 +1,7 @@
 import {Component, ViewChild, AfterViewInit} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {AuthService} from '../../services/auth.service';
+import {RestService} from '../../services/rest.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
@@ -13,8 +14,9 @@ export class LoginComponent implements AfterViewInit {
     modal: ModalComponent;
     username: string;
     password: string;
+    errorMessage: string;
 
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _restService: RestService) {
     }
 
     ngAfterViewInit() {
@@ -24,12 +26,24 @@ export class LoginComponent implements AfterViewInit {
     clearForm() {
         this.username = null;
         this.password = null;
+        this.errorMessage = null;
     }
 
     login() {
         AuthService.setCredentials(this.username, this.password);
-        this.modal.close();
-        this._router.navigate(['Home']);
+        this._restService.getRest()
+            .subscribe(
+                () => {
+                    this.errorMessage = null;
+                    this.modal.close();
+                    this._router.navigate(['Overview']);
+                },
+                () => {
+                    this.clearForm();
+                    AuthService.removeCredentials();
+                    this.errorMessage = `Login fehlgeschlagen!`;
+                }
+        );
     }
 }
 

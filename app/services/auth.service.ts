@@ -14,6 +14,7 @@ export class AuthService {
     }
 
     public static removeCredentials() {
-        sessionStorage.clear();
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('token');
     }
 }

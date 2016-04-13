@@ -16,6 +16,12 @@
         </form>
     </modal-body>
     <modal-footer>
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in pull-xs-left" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorMessage}}
+        </div>
         <button type="button" class="btn btn-default" (click)="clearForm()">Leeren</button>
         <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
     </modal-footer>

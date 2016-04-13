@@ -20,7 +20,7 @@ export class NavbarComponent {
 
     logout() {
         AuthService.removeCredentials();
-        this._router.navigate(['Home']);
+        this._router.navigate(['Login']);
     }
 }
 

@@ -5,7 +5,6 @@ import {AuthService} from '../../services/auth.service';
 import {RestService} from '../../services/rest.service';
 import {SlotService} from '../../services/slot.service';
 import {UserService} from '../../services/user.service';
-import {HomeComponent} from '../home/home.component';
 import {NavbarComponent} from '../navbar/navbar.component';
 import {OverviewComponent} from '../overview/overview.component';
 import {LoginComponent} from '../login/login.component';
@@ -28,12 +27,6 @@ import {LoginComponent} from '../login/login.component';
 })
 @RouteConfig([
     {
-        path: '/home',
-        name: 'Home',
-        component: HomeComponent,
-        useAsDefault: true
-    },
-    {
         path: '/overview',
         name: 'Overview',
         component: OverviewComponent
@@ -41,7 +34,8 @@ import {LoginComponent} from '../login/login.component';
     {
         path: '/login',
         name: 'Login',
-        component: LoginComponent
-    },
+        component: LoginComponent,
+        useAsDefault: true
+    }
 ])
 export class AppComponent {}

@@ -16,6 +16,7 @@ export class SlotDetailComponent {
     modal: ModalComponent;
     slot: Slot;
     userInSlot: boolean;
+    errorMessage: string;
 
     constructor(private _slotService: SlotService) {}
 
@@ -40,11 +41,29 @@ export class SlotDetailComponent {
     }
 
     register() {
-        this._slotService.register(this.slot).subscribe(() => this.modal.close());
+        this._slotService.register(this.slot)
+            .subscribe(
+                () => {
+                    this.errorMessage = null;
+                    this.modal.close();
+                },
+                () => {
+                    this.errorMessage = `Buchung fehlgeschlagen!`;
+                }
+            );
     }
 
     unregister() {
-        this._slotService.unregister(this.slot).subscribe(() => this.modal.close());
+        this._slotService.unregister(this.slot)
+            .subscribe(
+                () => {
+                    this.errorMessage = null;
+                    this.modal.close();
+                },
+                () => {
+                    this.errorMessage = `Entfernen der Buchung fehlgeschlagen!`;
+                }
+            );
     }
 }
 

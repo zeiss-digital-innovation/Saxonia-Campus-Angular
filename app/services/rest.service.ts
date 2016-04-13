@@ -18,7 +18,9 @@ export class RestService {
     }
 
     public static getHeaders(): Headers {
-        var headers = new Headers();
+        var headers: Headers = new Headers();
+        headers.append('Cache-Control', 'no-cache');
+        headers.append('Pragma', 'no-cache');
         if (sessionStorage.getItem('token')) {
             headers.append('Authorization', 'Basic ' + sessionStorage.getItem('token'));
         }
