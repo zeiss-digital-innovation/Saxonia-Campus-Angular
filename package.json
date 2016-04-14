@@ -2,9 +2,9 @@
   "name": "campus_angular2",
   "version": "1.0.0",
   "description": "saxonia campus app written in Angular 2",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/saxsys/Saxonia-Campus-Angular"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saxsys/Saxonia-Campus-Angular"
   },
   "scripts": {
     "postinstall": "npm run typings install",
@@ -12,7 +12,8 @@
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "typings" : "typings"
+    "typings": "typings",
+    "gulp": "gulp"
   },
   "license": "ISC",
   "dependencies": {
@@ -28,8 +29,15 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-html-replace": "^1.5.5",
+    "gulp-replace": "^0.5.4",
+    "gulp-typescript": "^2.13.0",
+    "gulp-war": "^0.1.4",
+    "gulp-zip": "^3.2.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.9",
-    "typings":"^0.7.12"
+    "typings": "^0.7.12"
   }
 }
