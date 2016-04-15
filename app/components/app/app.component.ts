@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {Router, RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
+import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {AuthService} from '../../services/auth.service';
 import {RestService} from '../../services/rest.service';
@@ -17,7 +17,6 @@ import {LoginComponent} from '../login/login.component';
         NavbarComponent
     ],
     providers: [
-        ROUTER_PROVIDERS,
         HTTP_PROVIDERS,
         AuthService,
         RestService,
