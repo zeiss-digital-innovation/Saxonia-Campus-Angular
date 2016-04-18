@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
-import {Http, Response, Headers} from 'angular2/http';
+import {Response, Headers} from 'angular2/http';
+import {AuthHttp} from 'angular2-jwt';
 import {Observable} from 'rxjs/Observable';
 import {RestService} from './rest.service';
 import {User} from '../model/user';
@@ -9,13 +10,13 @@ import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class UserService {
-    constructor (private http: Http, private _restService: RestService) {}
+    constructor (private _authHttp: AuthHttp, private _restService: RestService) {}
 
     getUser() {
         return this._restService.getRest()
             .flatMap((hypermediaResource: HypermediaResource) => {
                 let link: string = 'currentUser';
-                return this.http.get(hypermediaResource._links[link].href, {
+                return this._authHttp.get(hypermediaResource._links[link].href, {
                         headers: RestService.getHeaders()
                     })
                     .map(res => {

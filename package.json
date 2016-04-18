@@ -25,7 +25,8 @@
     "zone.js": "0.6.10",
     "bootstrap": "4.0.0-alpha.2",
     "jquery": "1.12.3",
-    "tether": "1.2.0"
+    "tether": "1.2.0",
+    "angular2-jwt": "^0.1.12"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",

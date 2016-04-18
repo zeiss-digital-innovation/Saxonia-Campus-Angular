@@ -1,6 +1,6 @@
 import {Component, ViewChild, AfterViewInit} from 'angular2/core';
 import {Router} from 'angular2/router';
-import {AuthService} from '../../services/auth.service';
+import {OAuth2Service} from '../../services/oauth2.service';
 import {RestService} from '../../services/rest.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
@@ -30,20 +30,7 @@ export class LoginComponent implements AfterViewInit {
     }
 
     login() {
-        AuthService.setCredentials(this.username, this.password);
-        this._restService.getRest()
-            .subscribe(
-                () => {
-                    this.errorMessage = null;
-                    this.modal.close();
-                    this._router.navigate(['Overview']);
-                },
-                () => {
-                    this.clearForm();
-                    AuthService.removeCredentials();
-                    this.errorMessage = `Login fehlgeschlagen!`;
-                }
-        );
+        console.log("If you see this, something went wrong with single-sign-on.")
     }
 }
 

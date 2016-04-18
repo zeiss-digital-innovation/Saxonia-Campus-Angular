@@ -28,6 +28,7 @@ gulp.task('copy:assets', ['clean'], function() {
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/tether/dist/js/tether.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/angular2-jwt/angular2-jwt.js',
         'node_modules/tether/dist/css/tether.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'styles/*.css',

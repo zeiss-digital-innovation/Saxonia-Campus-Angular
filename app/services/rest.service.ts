@@ -1,16 +1,17 @@
 import {Injectable} from 'angular2/core';
-import {Http, Response, Headers} from 'angular2/http';
+import {Response, Headers} from 'angular2/http';
+import {AuthHttp} from 'angular2-jwt';
 import {Observable} from 'rxjs/Observable';
 import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class RestService {
-    constructor (private http: Http) {}
+    constructor (private _authHttp: AuthHttp) {}
 
-    private _restUrl = 'http://localhost:8080/rest';
+    private _restUrl = 'https://nb299.saxsys.de:8443/rest';
 
     public getRest() {
-        return this.http.get(this._restUrl, {
+        return this._authHttp.get(this._restUrl, {
                 headers: RestService.getHeaders()
             })
             .map(res => <HypermediaResource> res.json())
@@ -21,9 +22,6 @@ export class RestService {
         var headers: Headers = new Headers();
         headers.append('Cache-Control', 'no-cache');
         headers.append('Pragma', 'no-cache');
-        if (sessionStorage.getItem('token')) {
-            headers.append('Authorization', 'Basic ' + sessionStorage.getItem('token'));
-        }
         return headers;
     }
 

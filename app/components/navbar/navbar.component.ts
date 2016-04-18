@@ -1,6 +1,8 @@
 import {Component} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {AuthService} from '../../services/auth.service';
+import {Location} from 'angular2/router';
+import {OAuth2Service} from '../../services/oauth2.service';
+import {UserService} from '../../services/user.service';
+import {User} from '../../model/user';
 
 @Component({
     selector: 'navbar',
@@ -8,19 +10,29 @@ import {AuthService} from '../../services/auth.service';
 })
 export class NavbarComponent {
 
-    constructor(private _router: Router) {}
+    private username = '';
 
-    getUsername() : string {
-        return AuthService.getUsername();
+    constructor(private _location: Location,
+                private _oauth2Service: OAuth2Service,
+                private _userService: UserService) {
+        this._oauth2Service.onAuthenticate.subscribe(() => this.getUsername())
+    }
+
+    private getUsername() {
+        this._userService.getUser()
+            .subscribe((user: User) => {
+                this.username = user.username;
+            });
     }
 
     isAuthenticated() : boolean {
-        return AuthService.isAuthenticated();
+        return this._oauth2Service.isAuthenticated();
     }
 
     logout() {
-        AuthService.removeCredentials();
-        this._router.navigate(['Login']);
+        this._oauth2Service.removeToken();
+        this.username = '';
+        this._location.go('/');
     }
 }
 
