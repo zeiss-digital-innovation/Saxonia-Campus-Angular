@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {Location} from 'angular2/router';
+import {Router} from 'angular2/router';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {UserService} from '../../services/user.service';
 import {User} from '../../model/user';
@@ -12,7 +12,7 @@ export class NavbarComponent {
 
     private username = '';
 
-    constructor(private _location: Location,
+    constructor(private _router: Router,
                 private _oauth2Service: OAuth2Service,
                 private _userService: UserService) {
         this._oauth2Service.onAuthenticate.subscribe(() => this.getUsername())
@@ -32,7 +32,7 @@ export class NavbarComponent {
     logout() {
         this._oauth2Service.removeToken();
         this.username = '';
-        this._location.go('/');
+        this._router.navigate(['Login']);
     }
 }
 
