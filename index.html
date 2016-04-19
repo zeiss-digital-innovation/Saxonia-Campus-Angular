@@ -1,6 +1,22 @@
 <html>
 <head>
     <base href="/">
+
+    <!-- this prevents application load when not authenticated and automatically redirects to ADFS -->
+    <script>
+        var search = {};
+        location.search.substr(1).split("&").forEach(function(item) {search[item.split("=")[0]] = item.split("=")[1]});
+        if (localStorage.getItem('id_token') == null
+            && localStorage.getItem('refresh_token') == null
+            && search['code'] == null) {
+            window.location.href = 'https://adfs.saxsys.de/adfs/oauth2/authorize' +
+                    '?response_type=code' +
+                    '&client_id=campusapp' +
+                    '&resource=' + encodeURIComponent('https://nb299.saxsys.de:8443/adfs-saml') +
+                    '&redirect_uri=' + encodeURIComponent('https://nb299.saxsys.de:8443/campus');
+        }
+    </script>
+
     <title>Saxonia Campus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
