@@ -1,8 +1,8 @@
 import {Component} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {OAuth2Service} from '../../services/oauth2.service';
-import {UserService} from '../../services/user.service';
 import {User} from '../../model/user';
+import {JwtHelper} from 'angular2-jwt';
 
 @Component({
     selector: 'navbar',
@@ -11,18 +11,14 @@ import {User} from '../../model/user';
 export class NavbarComponent {
 
     private username = '';
+    private jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(private _router: Router,
-                private _oauth2Service: OAuth2Service,
-                private _userService: UserService) {
-        this._oauth2Service.onAuthenticate.subscribe(() => this.getUsername())
-    }
-
-    private getUsername() {
-        this._userService.getUser()
-            .subscribe((user: User) => {
-                this.username = user.username;
-            });
+                private _oauth2Service: OAuth2Service) {
+        this._oauth2Service.onAuthenticate.subscribe(token => {
+            let decodedToken = this.jwtHelper.decodeToken(token);
+            this.username = decodedToken.sub;
+        })
     }
 
     isAuthenticated() : boolean {

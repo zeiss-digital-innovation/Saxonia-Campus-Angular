@@ -1,32 +1,40 @@
 import {Injectable} from 'angular2/core';
-import {Response, Headers} from 'angular2/http';
-import {AuthHttp} from 'angular2-jwt';
+import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
+import {OAuth2Service} from './oauth2.service';
 import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class RestService {
-    constructor (private _authHttp: AuthHttp) {}
+    constructor (private _http: Http, private _oauth2Service: OAuth2Service) {}
 
     private _restUrl = 'https://nb299.saxsys.de:8443/rest';
 
     public getRest() {
-        return this._authHttp.get(this._restUrl, {
-                headers: RestService.getHeaders()
+        return Observable.defer(() => {
+                return this._http.get(this._restUrl, {headers: RestService.getAuthHeader()})
             })
+            .retryWhen(errors => errors.flatMap(error => {
+                    // this will essentially automatically retry the request if it can
+                    console.log('automatic rest retry');
+                    return this._oauth2Service.doImplicitFlow(null);
+                }).delay(250)
+            )
             .map(res => <HypermediaResource> res.json())
-            .catch(RestService.handleError);
+            .catch(RestService.handleError)
     }
 
-    public static getHeaders(): Headers {
-        var headers: Headers = new Headers();
-        headers.append('Cache-Control', 'no-cache');
-        headers.append('Pragma', 'no-cache');
+    public static getAuthHeader(): Headers {
+        let headers: Headers = new Headers();
+        let token = localStorage.getItem('id_token');
+        if (token != null) {
+            headers.append('Authorization', 'Bearer ' + token);
+        }
         return headers;
     }
 
     private static handleError (error: Response) {
         console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }

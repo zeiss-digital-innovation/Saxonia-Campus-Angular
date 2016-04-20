@@ -1,54 +1,72 @@
 import {Injectable} from 'angular2/core';
-import {Response, Headers} from 'angular2/http';
-import {AuthHttp} from 'angular2-jwt';
+import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {RestService} from './rest.service';
+import {OAuth2Service} from './oauth2.service';
 import {Slot} from '../model/slot';
 import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class SlotService {
-    constructor (private _authHttp: AuthHttp, private _restService: RestService) {}
+    constructor (private _http: Http,
+                 private _restService: RestService,
+                 private _oauth2Service: OAuth2Service) {}
 
     getSlots() {
-        return this._restService.getRest()
+        return Observable.defer(() => this._restService.getRest())
             .flatMap(hypermediaResource => {
                 let link: string = 'slots';
-                return this._authHttp.get(hypermediaResource._links[link].href, {
-                        headers: RestService.getHeaders()
-                    })
+                return Observable.defer(() => this._http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
+                    .retryWhen(errors => errors.flatMap(error => {
+                            // this will essentially automatically retry the request if it can
+                            console.log('automatic slots retry');
+                            return this._oauth2Service.doImplicitFlow(null);
+                        }).delay(250)
+                    )
                     .flatMap(res => Observable.fromArray(<Slot[]> res.json()._embedded.slots))
             })
-            .catch(SlotService.handleError);
+            .catch(SlotService.handleError)
     }
 
     getSlot(slot: Slot) {
         let link: string = 'self';
-        return this._authHttp.get(slot._links[link].href, {
-                headers: RestService.getHeaders()
-            })
+        return Observable.defer(() => this._http.get(slot._links[link].href, {headers: RestService.getAuthHeader()}))
+            .retryWhen(errors => errors.flatMap(error => {
+                    // this will essentially automatically retry the request if it can
+                    console.log('automatic slot retry');
+                    return this._oauth2Service.doImplicitFlow(null);
+                }).delay(250)
+            )
             .map(res => <Slot> res.json())
-            .catch(SlotService.handleError);
+            .catch(SlotService.handleError)
     }
 
     register(slot: Slot) {
         let link: string = 'register';
-        return this._authHttp.put(slot._links[link].href, '', {
-                headers: RestService.getHeaders()
-            })
-            .catch(SlotService.handleError);
+        return Observable.defer(() => this._http.put(slot._links[link].href, '', {headers: RestService.getAuthHeader()}))
+            .retryWhen(errors => errors.flatMap(error => {
+                    // this will essentially automatically retry the request if it can
+                    console.log('automatic register retry');
+                    return this._oauth2Service.doImplicitFlow(null);
+                }).delay(250)
+            )
+            .catch(SlotService.handleError)
     }
 
     unregister(slot: Slot) {
         let link: string = 'unregister';
-        return this._authHttp.delete(slot._links[link].href, {
-                headers: RestService.getHeaders()
-            })
-            .catch(SlotService.handleError);
+        return Observable.defer(() => this._http.delete(slot._links[link].href, {headers: RestService.getAuthHeader()}))
+            .retryWhen(errors => errors.flatMap(error => {
+                    // this will essentially automatically retry the request if it can
+                    console.log('automatic unregister retry');
+                    return this._oauth2Service.doImplicitFlow(null);
+                }).delay(250)
+            )
+            .catch(SlotService.handleError)
     }
 
     private static handleError (error: Response) {
         console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }

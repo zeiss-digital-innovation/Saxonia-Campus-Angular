@@ -145,6 +145,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     private getCurrentUser() {
         this.userSlots = [];
         this._userService.getUser()
+            .delay(150) // short delay to prevent unnecessary concurrent token refresh requests
             .subscribe(
                 (user:User) => {
                     for (let slot of user._embedded.slots) {

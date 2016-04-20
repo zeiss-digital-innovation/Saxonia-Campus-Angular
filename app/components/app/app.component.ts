@@ -35,12 +35,16 @@ import {LoginComponent} from '../login/login.component';
     }
 ])
 export class AppComponent implements OnInit {
-    constructor(private _oauth2Service: OAuth2Service) {}
+    constructor(private _router: Router, private _oauth2Service: OAuth2Service) {}
 
     ngOnInit() {
         let search = {};
         window.location.search.substr(1).split("&").forEach(function(item) {search[item.split("=")[0]] = item.split("=")[1]});
-        this._oauth2Service.doImplicitFlow(search['code']);
+        this._oauth2Service.doImplicitFlow(search['code'])
+            .subscribe(
+            () => this._router.navigate(['Overview']),
+            () => this._router.navigate(['Login'])
+        );
     }
 }
 

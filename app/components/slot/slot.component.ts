@@ -25,7 +25,11 @@ export class SlotComponent {
             return;
         }
         this._slotService.getSlot(this.slot)
-            .subscribe(slot => this.onSlotClick.emit(slot));
+            .subscribe(slot => {
+                this.onSlotClick.emit(slot)
+            },
+            error => console.log(error)
+        );
     }
 }
 

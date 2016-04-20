@@ -1,7 +1,6 @@
 import {Component, ViewChild, AfterViewInit} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Location} from 'angular2/router';
 import {OAuth2Service} from '../../services/oauth2.service';
-import {RestService} from '../../services/rest.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
@@ -16,8 +15,7 @@ export class LoginComponent implements AfterViewInit {
     password: string;
     errorMessage: string;
 
-    constructor(private _router: Router, private _restService: RestService) {
-    }
+    constructor(private _location: Location, private _oauth2Service: OAuth2Service) {}
 
     ngAfterViewInit() {
         this.modal.open();
@@ -30,7 +28,9 @@ export class LoginComponent implements AfterViewInit {
     }
 
     login() {
-        console.log("If you see this, something went wrong with single-sign-on.")
+        console.log("If you see this, something went wrong with single-sign-on.");
+        this._oauth2Service.removeToken();
+        this._location.go('/');
     }
 }
 
