@@ -1,19 +1,17 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
+import {ConfigService} from './config.service';
 import {OAuth2Service} from './oauth2.service';
 import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class RestService {
-    constructor (private _http: Http, private _oauth2Service: OAuth2Service) {}
-
-    private _restUrl = 'https://nb299.saxsys.de:8443/rest';
+    constructor (private _http: Http, private _configService: ConfigService, private _oauth2Service: OAuth2Service) {}
 
     public getRest() {
-        return Observable.defer(() => {
-                return this._http.get(this._restUrl, {headers: RestService.getAuthHeader()})
-            })
+        return Observable.defer(() => this._configService.getConfig())
+            .flatMap(config => this._http.get(config['backend.url'], {headers: RestService.getAuthHeader()}))
             .retryWhen(errors => errors.flatMap(error => {
                     // this will essentially automatically retry the request if it can
                     console.log('automatic rest retry');

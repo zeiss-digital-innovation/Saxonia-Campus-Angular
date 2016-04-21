@@ -4,9 +4,14 @@ const gulp = require('gulp');
 // Include Our Plugins
 const del = require('del');
 const replace = require('gulp-replace');
+const rename = require('gulp-rename');
 const ts = require('gulp-typescript');
 const war = require('gulp-war');
 const zip = require('gulp-zip');
+const args = require('yargs').argv;
+
+var isProd = args.env === 'prod';
+var isTest = args.env === 'test';
 
 // clean the contents of the distribution directory
 gulp.task('clean', function () {
@@ -39,41 +44,50 @@ gulp.task('copy:assets', ['clean'], function() {
     .pipe(gulp.dest('dist'))
 });
 
+// copy assets
+gulp.task('copy:config', ['clean'], function() {
+    var configFile = 'config/dev.json';
+    if (isTest) {
+        configFile = 'config/test.json';
+    }
+    if (isProd) {
+        configFile = 'config/prod.json';
+    }
+    return gulp.src(configFile)
+        .pipe(rename('config.json'))
+        .pipe(gulp.dest('dist'))
+});
+
 // compile typescript
 gulp.task('compile', ['clean'], function() {
     var project = ts.createProject('tsconfig.json');
     return project.src()
         .pipe(ts(project))
-        .pipe(gulp.dest("dist/scripts"));
+        .pipe(gulp.dest('dist/scripts'));
 });
 
 // replace base in index to target war name
-gulp.task('replace-index', ['compile', 'copy:assets'], function() {
+gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function() {
+    var config = require('./dist/config.json');
     return gulp.src('dist/index.html')
         .pipe(replace(
             '<base href="/">',
-            '<base href="/campus/">')
-        )
-        .pipe(gulp.dest("dist"));
-});
-
-// replace rest url if necessary
-gulp.task('replace-rest-url', ['compile', 'copy:assets'], function() {
-    return gulp.src('dist/scripts/services/rest.service.js', {"base": "dist"})
+            '<base href="/campus/">'
+        ))
         .pipe(replace(
-            'http://localhost:8080/rest',
-            'http://localhost:8080/rest')
-        )
-        .pipe(gulp.dest("dist"));
+            'https://adfs.saxsys.de/adfs/oauth2/authorize',
+            config['adfs.auth.url']
+        ))
+        .pipe(gulp.dest('dist'));
 });
 
 // build war
-gulp.task('war', ['compile', 'copy:assets', 'replace-index', 'replace-rest-url'], function () {
+gulp.task('war', ['compile', 'copy:assets', 'copy:config', 'replace-index'], function () {
     gulp.src(['dist/**/*'])
         .pipe(war({
             welcome: 'index.html',
             displayName: 'Campus Angular2 WAR'
         }))
         .pipe(zip('campus.war'))
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest('dist'));
 });

@@ -11,7 +11,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
-    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "start": "tsc && copy config\\dev.json scripts\\config.json && concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "typings": "typings",
     "gulp": "gulp"
   },
@@ -33,12 +33,14 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-html-replace": "^1.5.5",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-typescript": "^2.13.0",
     "gulp-war": "^0.1.4",
     "gulp-zip": "^3.2.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12"
+    "typings": "^0.7.12",
+    "yargs": "^4.6.0"
   }
 }

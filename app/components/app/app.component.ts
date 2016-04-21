@@ -1,5 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
 import {Router, RouteConfig, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
+import {ConfigService} from '../../services/config.service';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {RestService} from '../../services/rest.service';
 import {SlotService} from '../../services/slot.service';
@@ -16,6 +17,7 @@ import {LoginComponent} from '../login/login.component';
         NavbarComponent
     ],
     providers: [
+        ConfigService,
         OAuth2Service,
         RestService,
         SlotService,
