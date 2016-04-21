@@ -23,7 +23,7 @@ export class UserService {
                             // this will essentially automatically retry the request if it can
                             console.log('automatic currentUser retry');
                             return this._oauth2Service.doImplicitFlow(null);
-                        })
+                        }).delay(250)
                     )
                     .map(res => {
                         let user:User = <User> res.json();
