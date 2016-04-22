@@ -25,6 +25,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     slotMatrix: any = {};
     userSlots: number[] = [];
     selectedDate: string = null;
+    errorMessage: string;
 
     constructor(private _router: Router,
                 private _slotService: SlotService,
@@ -130,7 +131,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                         }
                     )
                 },
-                error => this._router.navigate(['Login'])
+                error => this.errorMessage = 'Konnte Slot-Daten nicht vom Backend laden.'
             );
     }
 
@@ -145,14 +146,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     private getCurrentUser() {
         this.userSlots = [];
         this._userService.getUser()
-            .delay(150) // short delay to prevent unnecessary concurrent token refresh requests
             .subscribe(
                 (user:User) => {
                     for (let slot of user._embedded.slots) {
                         this.userSlots.push(slot.id);
                     }
                 },
-                error => this._router.navigate(['Login'])
+                error => this.errorMessage = 'Konnte Benutzer-Buchungs-Daten nicht vom Backend laden.'
             );
     }
 

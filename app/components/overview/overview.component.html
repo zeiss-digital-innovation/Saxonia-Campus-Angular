@@ -1,3 +1,9 @@
+<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{errorMessage}}
+</div>
 <div>
     <div id="button-bar" class="text-xs-center">
         <button *ngFor="#date of dates" class="btn btn-info-outline"

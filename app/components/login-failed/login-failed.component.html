@@ -1,0 +1,13 @@
+<modal #loginModal [keyboard]="false" [backdrop]="'static'">
+    <modal-header>
+        <h4 class="modal-title">Login mit Single-Sign-On fehlgeschlagen.</h4>
+    </modal-header>
+    <modal-body>
+        Dies kann passieren, wenn euer automatischer Login abgelaufen ist. Versucht es dann einfach mit dem Button unten noch einmal.<br>
+        <br>
+        Wenn diese Meldung <strong>mehrfach</strong> erscheint wendet euch bitte an das Campus Team.
+    </modal-body>
+    <modal-footer>
+        <button type="submit" class="btn btn-primary" (click)="retry()">Login erneuern</button>
+    </modal-footer>
+</modal>

@@ -26,7 +26,7 @@ export class NavbarComponent {
     }
 
     logout() {
-        this._oauth2Service.removeToken();
+        this._oauth2Service.removeTokens();
         this.username = '';
         this._router.navigate(['Login']);
     }

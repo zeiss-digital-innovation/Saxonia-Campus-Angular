@@ -16,6 +16,12 @@
         <p class="text-justify">{{slot?.description}}</p>
     </modal-body>
     <modal-footer>
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in pull-xs-left" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{errorMessage}}</strong>
+        </div>
         <button *ngIf="isUnregisterable() && userInSlot" type="button" class="btn btn-danger" (click)="unregister()">Buchung entfernen</button>
         <button *ngIf="isRegisterable() && !userInSlot" type="button" class="btn btn-primary" (click)="register()">Buchen</button>
     </modal-footer>

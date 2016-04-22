@@ -78,6 +78,18 @@ gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function()
             'https://adfs.saxsys.de/adfs/oauth2/authorize',
             config['adfs.auth.url']
         ))
+        .pipe(replace(
+            '&client_id=campusapp',
+            '&client_id=' + config['client.id']
+        ))
+        .pipe(replace(
+            'https://nb299.saxsys.de:8443/adfs-saml',
+            config['resource']
+        ))
+        .pipe(replace(
+            'https://nb299.saxsys.de:8443/campus',
+            config['redirect.url']
+        ))
         .pipe(gulp.dest('dist'));
 });
 

@@ -50,7 +50,8 @@ export class OAuth2Service {
 
     private getToken(adfsTokenUrl: string, payload: string) {
         let observable = this._http.post(adfsTokenUrl, payload)
-            .map(res => res.json());
+            .map(res => res.json())
+            .cache();
 
         observable.subscribe(
                 json => {
@@ -60,7 +61,7 @@ export class OAuth2Service {
                     }
                     this.onAuthenticate.emit(json.access_token);
                 },
-                () => this.removeToken()
+                () => this.removeTokens()
             );
 
         return observable;
@@ -70,7 +71,7 @@ export class OAuth2Service {
         return localStorage.getItem('id_token') != null;
     }
 
-    public removeToken() {
+    public removeTokens() {
         localStorage.removeItem('id_token');
         localStorage.removeItem('refresh_token');
     }

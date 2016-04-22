@@ -7,7 +7,7 @@ import {SlotService} from '../../services/slot.service';
 import {UserService} from '../../services/user.service';
 import {NavbarComponent} from '../navbar/navbar.component';
 import {OverviewComponent} from '../overview/overview.component';
-import {LoginComponent} from '../login/login.component';
+import {LoginFailedComponent} from '../login-failed/login-failed.component';
 
 @Component({
     selector: 'app',
@@ -31,9 +31,9 @@ import {LoginComponent} from '../login/login.component';
         component: OverviewComponent
     },
     {
-        path: '/login',
-        name: 'Login',
-        component: LoginComponent
+        path: '/loginFailed',
+        name: 'LoginFailed',
+        component: LoginFailedComponent
     }
 ])
 export class AppComponent implements OnInit {
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
         this._oauth2Service.doImplicitFlow(search['code'])
             .subscribe(
             () => this._router.navigate(['Overview']),
-            () => this._router.navigate(['Login'])
+            () => this._router.navigate(['LoginFailed'])
         );
     }
 }
