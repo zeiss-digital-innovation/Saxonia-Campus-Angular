@@ -117,12 +117,14 @@
 
 .past {
     transform: translate(-110%,0);
-    display: none;
 }
 
 .future {
     transform: translate(110%,0);
-    display: none;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 .modal-footer > .alert {
