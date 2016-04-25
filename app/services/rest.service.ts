@@ -21,7 +21,7 @@ export class RestService {
                     return this._oauth2Service.doImplicitFlow(null);
                 }).delay(250)
             )
-            .map(res => <HypermediaResource> res.json())
+            .map((res: Response) => <HypermediaResource> res.json())
             .catch(RestService.handleError)
     }
 
