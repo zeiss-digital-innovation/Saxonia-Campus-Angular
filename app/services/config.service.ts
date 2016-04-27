@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ConfigService {
-    private _configUrl: string = 'config.json';
+    private _configUrl: string = 'scripts/config.json';
     private _configObservable: Observable<Object>;
 
     constructor (private _http: Http) {

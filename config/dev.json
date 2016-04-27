@@ -1,8 +1,8 @@
 {
   "adfs.auth.url": "https://adfs.saxsys.de/adfs/oauth2/authorize",
-  "adfs.token.url": "https://nb299.saxsys.de:8443/rest/tokenHandler",
+  "adfs.token.url": "https://nb299.saxsys.de:8543/rest/tokenHandler",
   "client.id": "campusapp",
   "resource": "https://nb299.saxsys.de:8443/adfs-saml",
   "redirect.url": "https://nb299.saxsys.de:8443/campus",
-  "backend.url": "https://nb299.saxsys.de:8443/rest"
+  "backend.url": "https://nb299.saxsys.de:8543/rest"
 }

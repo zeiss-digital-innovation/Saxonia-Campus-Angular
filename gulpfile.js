@@ -55,7 +55,7 @@ gulp.task('copy:config', ['clean'], function() {
     }
     return gulp.src(configFile)
         .pipe(rename('config.json'))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist/scripts'))
 });
 
 // compile typescript
@@ -68,7 +68,7 @@ gulp.task('compile', ['clean'], function() {
 
 // replace base in index to target war name
 gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function() {
-    var config = require('./dist/config.json');
+    var config = require('./dist/scripts/config.json');
     return gulp.src('dist/index.html')
         .pipe(replace(
             '<base href="/">',
