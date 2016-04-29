@@ -49,8 +49,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
         for (var i = index-1; i >= 0; i--) {
             let slot = this.slotMatrix[date][this.times[date][i]][roomId];
-            let endDateTime: Date = new Date(Date.parse(slot.endtime));
-            if (slot != null && (this.getTimeDiff(this.getTime(endDateTime), time) > 0)) {
+            if (slot != null && (this.getTimeDiff(this.getTime(new Date(Date.parse(slot.endtime))), time) > 0)) {
                 return true;
             }
         }
@@ -108,7 +107,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
                             var found = Object.getOwnPropertyNames(this.slotMatrix[startDate]).some(time => {
                                 if (this.getTimeDiff(startTime, time) < 20 * 60 * 1000) {
-                                    this.slotMatrix[startDate][startTime][room.id] = slot;
+                                    this.slotMatrix[startDate][time][room.id] = slot;
                                     return true;
                                 }
                             });
