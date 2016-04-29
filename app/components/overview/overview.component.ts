@@ -48,7 +48,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         }
 
         for (var i = index-1; i >= 0; i--) {
-            let slot = this.slotMatrix[this.times[i]][roomId];
+            let slot = this.slotMatrix[date][this.times[date][i]][roomId];
             let endDateTime: Date = new Date(Date.parse(slot.endtime));
             if (slot != null && (this.getTimeDiff(this.getTime(endDateTime), time) > 0)) {
                 return true;
