@@ -106,7 +106,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                             }
 
                             var found = Object.getOwnPropertyNames(this.slotMatrix[startDate]).some(time => {
-                                if (this.getTimeDiff(startTime, time) < 20 * 60 * 1000) {
+                                if (Math.abs(this.getTimeDiff(startTime, time)) < 20 * 60 * 1000) {
                                     this.slotMatrix[startDate][time][room.id] = slot;
                                     return true;
                                 }
