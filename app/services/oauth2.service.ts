@@ -1,5 +1,4 @@
 import {Injectable, Output, EventEmitter} from 'angular2/core';
-import {Location} from 'angular2/router';
 import {Http, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {JwtHelper} from 'angular2-jwt';

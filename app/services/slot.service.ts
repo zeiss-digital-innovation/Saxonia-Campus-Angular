@@ -27,7 +27,7 @@ export class SlotService {
                             return this._oauth2Service.doImplicitFlow(null);
                         }).delay(250)
                     )
-                    .flatMap(res => Observable.fromArray(<Slot[]> res.json()._embedded.slots))
+                    .flatMap(res => Observable.from(<Slot[]> res.json()._embedded.slots))
             })
             .catch(SlotService.handleError)
     }

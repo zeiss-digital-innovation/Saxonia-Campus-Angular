@@ -1,5 +1,4 @@
 import {Component, ViewChild, AfterViewInit} from 'angular2/core';
-import {Location} from 'angular2/router';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {ConfigService} from '../../services/config.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
@@ -14,7 +13,7 @@ export class LoginFailedComponent implements AfterViewInit {
     modal: ModalComponent;
     redirectUrl: string;
 
-    constructor(private _location: Location, private _oauth2Service: OAuth2Service, private _configService: ConfigService) {
+    constructor(private _oauth2Service: OAuth2Service, private _configService: ConfigService) {
         this._configService.getConfig().subscribe(config => this.redirectUrl = config['redirect.url']);
     }
 

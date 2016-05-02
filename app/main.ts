@@ -2,7 +2,8 @@
 import {bootstrap}    from 'angular2/platform/browser';
 import {AppComponent} from './components/app/app.component';
 import {CampusRequestOptions} from './services/campus-request-options';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
+import {ROUTER_PROVIDERS} from 'angular2/router';
 import {Http, HTTP_PROVIDERS, RequestOptions} from 'angular2/http';
 import {enableProdMode, provide} from 'angular2/core';
 // Add all operators to Observable
