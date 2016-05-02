@@ -12,7 +12,7 @@ export class RestService {
     public getRest() {
         return Observable.defer(() => this._configService.getConfig())
             .flatMap(config => this._http.get(config['backend.url'], {headers: RestService.getAuthHeader()}))
-            .retryWhen(errors => errors.zip(Observable.range(1, 1), error => error)
+            .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
                 .flatMap(error => {
                     if (error.status != 401) {
                         return Observable.throw('no automatic retry possible' + error.status);
