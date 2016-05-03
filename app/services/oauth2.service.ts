@@ -54,11 +54,21 @@ export class OAuth2Service {
 
         observable.subscribe(
                 json => {
-                    localStorage.setItem('id_token', json.access_token);
-                    if (localStorage.getItem('refresh_token') == null) {
+                    let access_token = json.access_token;
+                    try {
+                        let decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json.access_token));
+                        if (decodedToken.proxy_token != null) {
+                            // this is actually a proxy token wrapper from ADFS not an access token
+                            // this will also never contain refresh tokens according to Microsoft spec
+                            access_token = decodedToken.access_token;
+                        }
+                    } catch (error) {}
+
+                    localStorage.setItem('id_token', access_token);
+                    if (localStorage.getItem('refresh_token') == null && json.refresh_token != null) {
                         localStorage.setItem('refresh_token', json.refresh_token);
                     }
-                    this.onAuthenticate.emit(json.access_token);
+                    this.onAuthenticate.emit(access_token);
                 },
                 () => this.removeTokens()
             );
