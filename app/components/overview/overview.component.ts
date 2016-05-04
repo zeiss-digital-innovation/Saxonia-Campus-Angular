@@ -127,6 +127,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                             if (this.dates.length > 0 && this.selectedDate == null) {
                                 this.selectedDate = this.dates[0];
                             }
+                            this.rooms.sort((a: Room, b: Room) => a.id - b.id);
                         }
                     )
                 },
