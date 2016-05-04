@@ -7,7 +7,7 @@ import {ConfigService} from './config.service';
 @Injectable()
 export class OAuth2Service {
     @Output()
-    onAuthenticate: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+    onAuthenticate: EventEmitter<any> = new EventEmitter(false);
     private jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(private _http: Http, private _configService: ConfigService) {}

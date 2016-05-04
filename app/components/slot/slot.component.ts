@@ -16,7 +16,7 @@ export class SlotComponent {
     @Input()
     isContinuation: boolean;
     @Output()
-    onSlotClick: EventEmitter<Slot> = new EventEmitter<Slot>(false);
+    onSlotClick: EventEmitter<any> = new EventEmitter(false);
 
     constructor(private _slotService: SlotService) {}
 
