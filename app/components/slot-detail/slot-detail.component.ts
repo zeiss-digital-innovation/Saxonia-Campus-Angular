@@ -2,12 +2,13 @@ import {Component, ViewChild, AfterViewInit} from 'angular2/core';
 import {CanActivate} from 'angular2/router';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
-import {RestService} from '../../services/rest.service';
+import {NewlinePipe} from '../../pipes/newline.pipe';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
     selector: 'slot-detail',
     templateUrl: 'app/components/slot-detail/slot-detail.component.html',
+    pipes: [NewlinePipe],
     directives: MODAL_DIRECTIVES
 })
 export class SlotDetailComponent {
@@ -69,4 +70,3 @@ export class SlotDetailComponent {
             );
     }
 }
-
