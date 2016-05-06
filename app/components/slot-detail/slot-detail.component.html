@@ -13,7 +13,7 @@
             {{slot?.participants}}/{{slot?.capacity}}
         </span><br/>
         <br/>
-        <p class="text-justify">{{slot?.description}}</p>
+        <p class="text-justify" [innerHtml]="slot?.description | newline"></p>
     </modal-body>
     <modal-footer>
         <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in pull-xs-left" role="alert">

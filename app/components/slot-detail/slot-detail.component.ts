@@ -1,11 +1,13 @@
 import {Component, ViewChild} from '@angular/core';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
+import {NewlinePipe} from '../../pipes/newline.pipe';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({
     selector: 'slot-detail',
     templateUrl: 'app/components/slot-detail/slot-detail.component.html',
+    pipes: [NewlinePipe],
     directives: MODAL_DIRECTIVES
 })
 export class SlotDetailComponent {
@@ -67,4 +69,3 @@ export class SlotDetailComponent {
             );
     }
 }
-
