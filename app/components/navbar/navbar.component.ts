@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {OAuth2Service} from '../../services/oauth2.service';
-import {User} from '../../model/user';
 import {JwtHelper} from 'angular2-jwt';
 
 @Component({
@@ -26,9 +25,7 @@ export class NavbarComponent {
     }
 
     logout() {
-        this._oauth2Service.removeTokens();
         this.username = '';
-        this._router.navigate(['Login']);
+        this._oauth2Service.logout();
     }
 }
-

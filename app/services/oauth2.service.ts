@@ -80,8 +80,20 @@ export class OAuth2Service {
         return localStorage.getItem('id_token') != null;
     }
 
+    public logout() {
+        this.removeTokens();
+        this.redirectToLogoutUrl();
+    }
+
     public removeTokens() {
         localStorage.removeItem('id_token');
         localStorage.removeItem('refresh_token');
+    }
+    
+    private redirectToLogoutUrl() {
+        this._configService.getConfig().subscribe(config => {
+            const adfsLogoutUrl:string = config['adfs.logout.url'];
+            window.location.href = adfsLogoutUrl;
+        });
     }
 }
