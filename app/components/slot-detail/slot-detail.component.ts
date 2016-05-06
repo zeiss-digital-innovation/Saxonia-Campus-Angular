@@ -1,8 +1,6 @@
-import {Component, ViewChild, AfterViewInit} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
+import {Component, ViewChild} from '@angular/core';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
-import {RestService} from '../../services/rest.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 
 @Component({

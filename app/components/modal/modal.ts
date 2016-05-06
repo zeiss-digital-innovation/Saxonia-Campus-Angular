@@ -1,10 +1,9 @@
-import { Type } from 'angular2/core';
-
-import { ModalComponent } from './components/modal';
-import { ModalHeaderComponent } from './components/modal-header';
-import { ModalBodyComponent } from './components/modal-body';
-import { ModalFooterComponent } from './components/modal-footer';
-import { AutofocusDirective } from './directives/autofocus';
+import {Type} from '@angular/core';
+import {ModalComponent} from './components/modal';
+import {ModalHeaderComponent} from './components/modal-header';
+import {ModalBodyComponent} from './components/modal-body';
+import {ModalFooterComponent} from './components/modal-footer';
+import {AutofocusDirective} from './directives/autofocus';
 
 export * from './components/modal';
 export * from './components/modal-header';

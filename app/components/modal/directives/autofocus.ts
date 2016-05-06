@@ -1,5 +1,5 @@
-import { Directive, ElementRef } from 'angular2/core';
-import { ModalComponent } from '../components/modal';
+import {Directive, ElementRef} from '@angular/core';
+import {ModalComponent} from '../components/modal';
 
 @Directive({
     selector: '[autofocus]'

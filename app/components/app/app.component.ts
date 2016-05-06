@@ -1,13 +1,13 @@
-import {Component, OnInit} from 'angular2/core';
-import {Router, RouteConfig, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
-import {ConfigService} from '../../services/config.service';
-import {OAuth2Service} from '../../services/oauth2.service';
-import {RestService} from '../../services/rest.service';
-import {SlotService} from '../../services/slot.service';
-import {UserService} from '../../services/user.service';
-import {NavbarComponent} from '../navbar/navbar.component';
-import {OverviewComponent} from '../overview/overview.component';
-import {LoginFailedComponent} from '../login-failed/login-failed.component';
+import {Component, OnInit} from "@angular/core";
+import {Router, ROUTER_DIRECTIVES, Routes} from "@angular/router";
+import {ConfigService} from "../../services/config.service";
+import {OAuth2Service} from "../../services/oauth2.service";
+import {RestService} from "../../services/rest.service";
+import {SlotService} from "../../services/slot.service";
+import {UserService} from "../../services/user.service";
+import {NavbarComponent} from "../navbar/navbar.component";
+import {OverviewComponent} from "../overview/overview.component";
+import {LoginFailedComponent} from "../login-failed/login-failed.component";
 
 @Component({
     selector: 'app',
@@ -24,29 +24,30 @@ import {LoginFailedComponent} from '../login-failed/login-failed.component';
         UserService
     ]
 })
-@RouteConfig([
+@Routes([
     {
         path: '/overview',
-        name: 'Overview',
         component: OverviewComponent
     },
     {
         path: '/loginFailed',
-        name: 'LoginFailed',
         component: LoginFailedComponent
     }
 ])
 export class AppComponent implements OnInit {
-    constructor(private _router: Router, private _oauth2Service: OAuth2Service) {}
+    constructor(private _router:Router, private _oauth2Service:OAuth2Service) {
+    }
 
     ngOnInit() {
         let search = {};
-        window.location.search.substr(1).split("&").forEach(function(item) {search[item.split("=")[0]] = item.split("=")[1]});
+        window.location.search.substr(1).split("&").forEach(function (item) {
+            search[item.split("=")[0]] = item.split("=")[1]
+        });
         this._oauth2Service.doImplicitFlow(search['code'])
             .subscribe(
-            () => this._router.navigate(['Overview']),
-            () => this._router.navigate(['LoginFailed'])
-        );
+                () => this._router.navigate(['/overview']),
+                () => this._router.navigate(['/loginFailed'])
+            );
     }
 }
 

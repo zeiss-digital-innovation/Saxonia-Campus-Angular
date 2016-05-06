@@ -1,5 +1,5 @@
-import {Injectable, Output, EventEmitter} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Injectable, Output, EventEmitter} from '@angular/core';
+import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {JwtHelper} from 'angular2-jwt';
 import {ConfigService} from './config.service';

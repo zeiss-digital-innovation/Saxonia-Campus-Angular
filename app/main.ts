@@ -1,11 +1,11 @@
-///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
-import {bootstrap}    from 'angular2/platform/browser';
+///<reference path="../typings/browser/ambient/es6-shim/index.d.ts"/>
+import {bootstrap}    from '@angular/platform-browser-dynamic';
 import {AppComponent} from './components/app/app.component';
 import {CampusRequestOptions} from './services/campus-request-options';
-import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
-import {ROUTER_PROVIDERS} from 'angular2/router';
-import {Http, HTTP_PROVIDERS, RequestOptions} from 'angular2/http';
-import {enableProdMode, provide} from 'angular2/core';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {ROUTER_PROVIDERS} from '@angular/router';
+import {HTTP_PROVIDERS, RequestOptions} from '@angular/http';
+import {enableProdMode, provide} from '@angular/core';
 // Add all operators to Observable
 import 'rxjs/Rx';
 
