@@ -95,7 +95,7 @@ gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function()
 
 // build war
 gulp.task('war', ['compile', 'copy:assets', 'copy:config', 'replace-index'], function () {
-    gulp.src(['dist/**/*', 'war-files/**/*'])
+    gulp.src(['dist/**/*', 'war-content/**/*'])
         .pipe(war({
             welcome: 'index.html',
             displayName: 'Campus Angular2 WAR'
