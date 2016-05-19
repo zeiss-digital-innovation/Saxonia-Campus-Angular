@@ -1,3 +1,36 @@
+/* Media dependent styles */
+
+@media (min-width: 767px) {
+    .navbar-brand-authenticated {
+        margin-left: 215px;
+    }
+}
+
+@media (orientation: portrait) AND (max-width: 640px) , (orientation: landscape) AND (max-width: 767px){
+
+    .room-number-mobile {
+        display: none;
+    }
+
+    #userForm {
+        float: none !important;
+    }
+
+    #room-bar {
+        display: none;
+    }
+
+    .card-info-outline {
+        display: none !important;
+    }
+
+    .card-warning-outline {
+        width: 92vw;
+    }
+}
+
+/* Default stylesheet */
+
 .navbar {
     width: 100%;
 }
@@ -6,9 +39,6 @@
     display: inline-block;
 }
 
-.navbar-brand-authenticated {
-    margin-left: 215px;
-}
 
 #logo {
     display: inline;
