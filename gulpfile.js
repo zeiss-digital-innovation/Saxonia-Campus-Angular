@@ -44,6 +44,7 @@ gulp.task('copy:assets', ['clean', 'compile'], function() {
         
         'node_modules/tether/dist/css/tether.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
+        'WEB-INF/jboss-web.xml',
         'styles/*.css',
         'images/**/*',
         'app/**/*.html',
