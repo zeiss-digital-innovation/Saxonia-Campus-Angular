@@ -4,14 +4,14 @@
     .navbar-brand-authenticated {
         margin-left: 215px;
     }
-}
-
-@media (orientation: portrait) AND (max-width: 640px) , (orientation: landscape) AND (max-width: 767px){
 
     .room-number-mobile {
         display: none;
     }
+}
 
+@media (orientation: portrait) AND (max-width: 640px) , (orientation: landscape) AND (max-width: 767px){
+    
     #userForm {
         float: none !important;
     }
