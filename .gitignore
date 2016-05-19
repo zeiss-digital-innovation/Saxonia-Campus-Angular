@@ -1,5 +1,6 @@
-/node_modules
-/scripts
-/.idea
-npm-debug.log
-/typings
+.idea
+*.iml
+node_modules
+typings
+scripts
+dist
