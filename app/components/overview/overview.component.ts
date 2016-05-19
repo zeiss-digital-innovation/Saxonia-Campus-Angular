@@ -1,15 +1,12 @@
-import {Component, OnInit, AfterViewInit, ViewChild} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {SlotComponent} from '../slot/slot.component';
 import {SlotDetailComponent} from '../slot-detail/slot-detail.component';
 import {Slot} from '../../model/slot';
-import {EmbeddedRoom} from '../../model/embedded-room';
 import {Room} from '../../model/room';
 import {User} from '../../model/user';
 import {SlotService} from '../../services/slot.service';
 import {UserService} from '../../services/user.service';
-import {RestService} from '../../services/rest.service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
@@ -64,7 +61,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     isPast(date: string): boolean {
         return this.getDateDiff(this.selectedDate, date) > 0;
     }
-
+    
     userInSlot(slot: Slot): boolean {
         if (slot == null) {
             return false;

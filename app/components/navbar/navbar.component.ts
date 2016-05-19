@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {JwtHelper} from 'angular2-jwt';
 

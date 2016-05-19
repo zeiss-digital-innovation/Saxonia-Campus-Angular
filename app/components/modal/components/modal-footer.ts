@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, Type } from 'angular2/core';
-import { ModalComponent } from './modal';
+import {Component, Input} from "@angular/core";
+import {ModalComponent} from "./modal";
 
 @Component({
     selector: 'modal-footer',

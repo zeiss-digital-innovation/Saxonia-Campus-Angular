@@ -5,10 +5,12 @@
     <!-- this prevents application load when not authenticated and automatically redirects to ADFS -->
     <script>
         var search = {};
-        location.search.substr(1).split("&").forEach(function(item) {search[item.split("=")[0]] = item.split("=")[1]});
+        location.search.substr(1).split("&").forEach(function (item) {
+            search[item.split("=")[0]] = item.split("=")[1]
+        });
         if (localStorage.getItem('id_token') == null
-            && localStorage.getItem('refresh_token') == null
-            && search['code'] == null) {
+                && localStorage.getItem('refresh_token') == null
+                && search['code'] == null) {
             window.location.href = 'https://adfs.saxsys.de/adfs/oauth2/authorize' +
                     '?response_type=code' +
                     '&client_id=campusapp' +
@@ -21,17 +23,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
-    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/tether/dist/js/tether.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -41,25 +38,13 @@
     <link href="styles/styles.css" rel="stylesheet">
 
     <!-- 2. Configure SystemJS -->
-    <script>
-        System.config({
-            packages: {
-                scripts: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                }
-            },
-            map: {
-                "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt.js"
-            }
-        });
-        System.import('scripts/main').then(null, console.error.bind(console));
-    </script>
+    <script src="systemjs.config.js"></script>
+    <script> System.import('app').catch(function (err) {console.error(err);});</script>
 </head>
 
 <!-- 3. Display the application -->
 <body>
-    <app>Loading...</app>
+<app>Loading...</app>
 </body>
 
 </html>

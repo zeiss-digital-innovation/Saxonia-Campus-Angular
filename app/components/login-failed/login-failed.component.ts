@@ -1,4 +1,4 @@
-import {Component, ViewChild, AfterViewInit} from 'angular2/core';
+import {Component, ViewChild, AfterViewInit} from '@angular/core';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {ConfigService} from '../../services/config.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';

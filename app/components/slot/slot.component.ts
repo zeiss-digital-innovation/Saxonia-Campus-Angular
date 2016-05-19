@@ -1,7 +1,6 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
-import {RestService} from '../../services/rest.service';
 
 @Component({
     selector: 'slot',

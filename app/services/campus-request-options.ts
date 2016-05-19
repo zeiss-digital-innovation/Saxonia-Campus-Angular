@@ -1,4 +1,4 @@
-import {Headers, BaseRequestOptions} from 'angular2/http';
+import {BaseRequestOptions} from '@angular/http';
 
 export class CampusRequestOptions extends BaseRequestOptions {
     constructor() {

@@ -1,7 +1,5 @@
-import { ElementRef } from 'angular2/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/fromEvent';
+import {ElementRef} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 declare var jQuery: any;
 

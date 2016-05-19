@@ -8,32 +8,40 @@ const rename = require('gulp-rename');
 const ts = require('gulp-typescript');
 const war = require('gulp-war');
 const zip = require('gulp-zip');
+const SystemBuilder = require('systemjs-builder');
 const args = require('yargs').argv;
 
 var isProd = args.env === 'prod';
 var isTest = args.env === 'test';
+var builder = new SystemBuilder();
 
 // clean the contents of the distribution directory
 gulp.task('clean', function () {
-    return del('dist/**/*');
+    return del(['dist/**/*', 'scripts/**/*']);
 });
 
 // copy assets
-gulp.task('copy:assets', ['clean'], function() {
+gulp.task('copy:assets', ['clean', 'compile'], function() {
+    builder.loadConfig('./systemjs.config.js')
+        .then(function() {
+            return builder.buildStatic('app', 'dist/bundle.js', {
+                minify: isProd || isTest,
+                mangle: isProd || isTest,
+                rollup: isProd || isTest
+            });
+        });
+
     return gulp.src([
         'node_modules/es6-shim/es6-shim.min.js',
-        'node_modules/systemjs/dist/system-polyfills.js',
-        'node_modules/angular2/es6/dev/src/testing/shims_for_IE.js',
-        'node_modules/angular2/bundles/angular2-polyfills.js',
+        'node_modules/zone.js/dist/zone.js',
+        'node_modules/reflect-metadata/Reflect.js',
         'node_modules/systemjs/dist/system.src.js',
-        'node_modules/rxjs/bundles/Rx.js',
-        'node_modules/angular2/bundles/angular2.dev.js',
-        'node_modules/angular2/bundles/router.dev.js',
-        'node_modules/angular2/bundles/http.dev.js',
+
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/tether/dist/js/tether.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/angular2-jwt/angular2-jwt.js',
+        
         'node_modules/tether/dist/css/tether.min.css',
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'styles/*.css',
@@ -63,11 +71,11 @@ gulp.task('compile', ['clean'], function() {
     var project = ts.createProject('tsconfig.json');
     return project.src()
         .pipe(ts(project))
-        .pipe(gulp.dest('dist/scripts'));
+        .pipe(gulp.dest('scripts'));
 });
 
 // replace base in index to target war name
-gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function() {
+gulp.task('replace:index', ['compile', 'copy:assets', 'copy:config'], function() {
     var config = require('./dist/scripts/config.json');
     return gulp.src('dist/index.html')
         .pipe(replace(
@@ -90,12 +98,24 @@ gulp.task('replace-index', ['compile', 'copy:assets', 'copy:config'], function()
             'https://nb299.saxsys.de:8443/campus',
             config['redirect.url']
         ))
+        .pipe(replace(
+            '<script src="systemjs.config.js"></script>',
+            ''
+        ))
+        .pipe(replace(
+            '<script> System.import(\'app\').catch(function (err) {console.error(err);});</script>',
+            ''
+        ))
+        .pipe(replace(
+            '</body>',
+            '<script src="bundle.js"></script></body>'
+        ))
         .pipe(gulp.dest('dist'));
 });
 
 // build war
-gulp.task('war', ['compile', 'copy:assets', 'copy:config', 'replace-index'], function () {
-    gulp.src(['dist/**/*', 'war-content/**/*'])
+gulp.task('war', ['compile', 'copy:assets', 'copy:config', 'replace:index'], function () {
+    gulp.src(['dist/**/*'])
         .pipe(war({
             welcome: 'index.html',
             displayName: 'Campus Angular2 WAR'
