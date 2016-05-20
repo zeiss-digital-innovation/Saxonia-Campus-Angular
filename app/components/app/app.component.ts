@@ -8,6 +8,7 @@ import {UserService} from "../../services/user.service";
 import {NavbarComponent} from "../navbar/navbar.component";
 import {OverviewComponent} from "../overview/overview.component";
 import {LoginFailedComponent} from "../login-failed/login-failed.component";
+import {JwtHelper} from 'angular2-jwt';
 
 @Component({
     selector: 'app',
@@ -35,6 +36,9 @@ import {LoginFailedComponent} from "../login-failed/login-failed.component";
     }
 ])
 export class AppComponent implements OnInit {
+
+    private jwtHelper: JwtHelper = new JwtHelper();
+
     constructor(private _router:Router, private _oauth2Service:OAuth2Service) {
     }
 
@@ -45,8 +49,20 @@ export class AppComponent implements OnInit {
         });
         this._oauth2Service.doImplicitFlow(search['code'])
             .subscribe(
-                () => this._router.navigate(['/overview']),
-                () => this._router.navigate(['/loginFailed'])
+                () => {
+                    let id_token = localStorage.getItem('id_token');
+                    let role = this.jwtHelper.decodeToken(id_token).role;
+                    let roles = [].concat(role);
+                    let isUser = roles.some(entry => {
+                        if (entry == 'user' || entry == 'admin') return true;
+                    });
+                    if (isUser) {
+                        this._router.navigate(['/overview'])
+                    } else {
+                        this._router.navigate(['/loginFailed', {reason: 'unauthorized'}])
+                    }
+                },
+                () => this._router.navigate(['/loginFailed', {reason: 'unauthenticated'}])
             );
     }
 }

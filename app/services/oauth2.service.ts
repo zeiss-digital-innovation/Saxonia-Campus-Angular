@@ -25,6 +25,7 @@ export class OAuth2Service {
             // everything is valid and user is authenticated
             if (id_token != null && !this.jwtHelper.isTokenExpired(id_token)) {
                 console.log('all authenticated');
+                console.log('user roles: ' + this.jwtHelper.decodeToken(id_token).role);
                 this.onAuthenticate.emit(id_token);
                 return Observable.range(1, 1);
                 // access token expired or not available and refresh token available -> get new access token with refresh token
@@ -92,8 +93,7 @@ export class OAuth2Service {
     
     private redirectToLogoutUrl() {
         this._configService.getConfig().subscribe(config => {
-            const adfsLogoutUrl:string = config['adfs.logout.url'];
-            window.location.href = adfsLogoutUrl;
+            window.location.href = config['adfs.logout.url'];
         });
     }
 }
