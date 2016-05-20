@@ -28,6 +28,9 @@ export class RestService {
 
     public static getAuthHeader(): Headers {
         let headers: Headers = new Headers();
+        headers.append('Cache-Control', 'no-cache');
+        headers.append('Pragma', 'no-cache');
+        
         let token = localStorage.getItem('id_token');
         if (token != null) {
             headers.append('Authorization', 'Bearer ' + token);
