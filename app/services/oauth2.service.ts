@@ -69,6 +69,7 @@ export class OAuth2Service {
                     if (localStorage.getItem('refresh_token') == null && json.refresh_token != null) {
                         localStorage.setItem('refresh_token', json.refresh_token);
                     }
+                    console.log('user roles: ' + this.jwtHelper.decodeToken(access_token).role);
                     this.onAuthenticate.emit(access_token);
                 },
                 () => this.removeTokens()
