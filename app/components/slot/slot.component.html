@@ -16,6 +16,10 @@
                       [class.label-danger]="slot.participants >= slot.capacity">
                     {{slot.participants}}/{{slot.capacity}}
                 </span>
+                <br/>
+                <span class="room-number-mobile">
+                    {{slot._embedded.room.roomnumber}}
+                </span>
             </strong>
             <br/><br/>
             <p class="card-text">{{slot.title}}</p>
