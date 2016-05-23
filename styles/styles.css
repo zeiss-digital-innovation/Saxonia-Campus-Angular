@@ -112,8 +112,10 @@
 .grid {
     position: absolute;
     width: 100%;
+}
+
+.grid-animated {
     transition: 0.6s cubic-bezier(0.75, 0, 0.25, 1);
-    -ms-transition: none !important;
 }
 
 .past {

@@ -21,6 +21,7 @@
         </div>
     </div>
     <div *ngFor="let date of dates" class="container-fluid grid smaller float-xs-left"
+         [class.grid-animated]="enableAnimation"
          [class.future]="isFuture(date)" [class.past]="isPast(date)">
         <div *ngFor="let time of times[date]" class="flexbox">
             <div *ngFor="let room of rooms" class="flexbox">

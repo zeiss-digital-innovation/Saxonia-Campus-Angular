@@ -1,5 +1,4 @@
 import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
 import {SlotComponent} from '../slot/slot.component';
 import {SlotDetailComponent} from '../slot-detail/slot-detail.component';
 import {Slot} from '../../model/slot';
@@ -23,9 +22,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     userSlots: number[] = [];
     selectedDate: string = null;
     errorMessage: string;
+    enableAnimation: boolean = false;
 
-    constructor(private _router: Router,
-                private _slotService: SlotService,
+    constructor(private _slotService: SlotService,
                 private _userService: UserService) {}
 
     ngOnInit() {
@@ -114,21 +113,22 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                                 this.slotMatrix[startDate][startTime] = {};
                                 this.slotMatrix[startDate][startTime][room.id] = slot;
                             }
-                        },
-                        () => {},
-                        () => {
-                            this.dates.sort((a: string, b : string) => a.localeCompare(b));
-                            this.dates.forEach(date => {
-                                this.times[date].sort((a: string, b : string) => a.localeCompare(b));
-                            });
-                            if (this.dates.length > 0 && this.selectedDate == null) {
-                                this.selectedDate = this.dates[0];
-                            }
-                            this.rooms.sort((a: Room, b: Room) => a.id - b.id);
                         }
                     )
                 },
-                error => this.errorMessage = 'Konnte Slot-Daten nicht vom Backend laden.'
+                error => this.errorMessage = 'Konnte Slot-Daten nicht vom Backend laden.',
+                () => {
+                    this.dates.sort((a: string, b : string) => a.localeCompare(b));
+                    this.dates.forEach(date => {
+                        this.times[date].sort((a: string, b : string) => a.localeCompare(b));
+                    });
+                    if (this.dates.length > 0 && this.selectedDate == null) {
+                        this.selectedDate = this.dates[0];
+                    }
+                    this.rooms.sort((a: Room, b: Room) => a.id - b.id);
+                    // this will make sure animations are enabled AFTER initial digest cycle, fixes IE animation issue
+                    setTimeout(() => this.enableAnimation = true, 1);
+                }
             );
     }
 
