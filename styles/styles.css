@@ -1,6 +1,6 @@
 /* Media dependent styles */
 
-@media (min-width: 767px) {
+@media only screen and (min-device-width: 660px) {
     .navbar-brand-authenticated {
         margin-left: 215px;
     }
@@ -14,7 +14,7 @@
     }
 }
 
-@media (orientation: portrait) AND (max-width: 640px) , (orientation: landscape) AND (max-width: 767px){
+@media  only screen and (orientation: portrait) AND (max-device-width: 420px), (orientation: landscape) AND (max-device-width: 660px) {
 
     #userName {
         display: none !important;
@@ -30,6 +30,8 @@
 
     .flexbox > * {
         padding-left: 0 !important;
+        flex: initial !important;
+        min-width: 0;
     }
 
     .card-warning-outline {
@@ -90,10 +92,6 @@
     padding-top: 15px;
 }
 
-.col-xs-1 {
-    width: 12.5%
-}
-
 .smaller {
     font-size: 12px;
 }
@@ -104,11 +102,13 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    min-width: 0;
 }
 
 .flexbox > * {
     padding-left: 15px;
     flex: 1 12.5%;
+    min-width: 0;
 }
 
 .flexbox > *:first-child {
