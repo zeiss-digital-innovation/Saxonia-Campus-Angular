@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>campus</context-root>
+    <virtual-host>campus</virtual-host>
+</jboss-web>

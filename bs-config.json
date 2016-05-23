@@ -1,0 +1,15 @@
+{
+  "open": "external",
+  "host": "nb299.saxsys.de",
+  "port": 8443,
+  "https": {
+    "cert": "D:/nb299.saxsys.de.crt",
+    "key": "D:/nb299.saxsys.de.key"
+  },
+  "server": {
+    "routes": {
+      "/campus": "."
+    }
+  },
+  "startPath": "/campus"
+}
