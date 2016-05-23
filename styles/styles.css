@@ -8,24 +8,40 @@
     .room-number-mobile {
         display: none;
     }
+
+    .navbar {
+        text-align: center !important;
+    }
 }
 
 @media (orientation: portrait) AND (max-width: 640px) , (orientation: landscape) AND (max-width: 767px){
-    
-    #userForm {
-        float: none !important;
+
+    #userName {
+        display: none !important;
     }
 
     #room-bar {
         display: none;
     }
 
-    .card-info-outline {
+    .mobile-hidden {
         display: none !important;
+    }
+
+    .flexbox > * {
+        padding-left: 0 !important;
     }
 
     .card-warning-outline {
         width: 92vw;
+    }
+
+    .navbar {
+        text-align: left !important;
+    }
+
+    .modal-dialog {
+        width: 95vw;
     }
 }
 
