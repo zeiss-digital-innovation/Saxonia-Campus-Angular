@@ -1,7 +1,7 @@
 <nav class="navbar navbar-dark bg-inverse">
     <a class="navbar-brand pull-xs-none" [class.navbar-brand-authenticated]="isAuthenticated()"><img id="logo" src="images/saxonia.png"/> Saxonia Campus</a>
-    <form id="userForm" class="form-inline pull-xs-right no-bottom-margin" *ngIf="isAuthenticated()">
+    <div id="userForm" class="form-inline pull-xs-right no-bottom-margin" *ngIf="isAuthenticated()">
         <button id="userName" class="btn navbar-dark bg-inverse no-cursor">{{username}}</button>
         <button id="logoutButton" (click)="logout()" class="btn btn-info-outline">Logout</button>
-    </form>
+    </div>
 </nav>
