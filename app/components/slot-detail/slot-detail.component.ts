@@ -51,7 +51,7 @@ export class SlotDetailComponent {
                     this.modal.close();
                 },
                 () => {
-                    this.errorMessage = `Buchung fehlgeschlagen!`;
+                    this.errorMessage = `Buchung fehlgeschlagen! Zu dieser Zeit ist schon etwas gebucht!`;
                 }
             );
     }
