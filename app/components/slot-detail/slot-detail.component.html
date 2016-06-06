@@ -9,6 +9,7 @@
         </strong>
         <span class="label pull-xs-right"
               [class.label-success]="slot?.participants < slot?.capacity"
+              [class.label-warning]="slot?.participants >= (slot?.capacity - 3) && slot?.participants < slot?.capacity"
               [class.label-danger]="slot?.participants >= slot?.capacity">
             {{slot?.participants}}/{{slot?.capacity}}
         </span><br/>
