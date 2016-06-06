@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, AfterViewInit} from '@angular/core';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
 import {NewlinePipe} from '../../pipes/newline.pipe';
@@ -10,8 +10,8 @@ import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
     pipes: [NewlinePipe],
     directives: MODAL_DIRECTIVES
 })
-export class SlotDetailComponent {
-
+export class SlotDetailComponent implements AfterViewInit {
+    
     @ViewChild('slotModal')
     modal: ModalComponent;
     slot: Slot;
@@ -19,6 +19,11 @@ export class SlotDetailComponent {
     errorMessage: string;
 
     constructor(private _slotService: SlotService) {}
+
+    ngAfterViewInit() {
+        this.modal.onClose.subscribe(() => this.errorMessage = undefined);
+        this.modal.onDismiss.subscribe(() => this.errorMessage = undefined);
+    }
 
     showSlot(slot: Slot, userInSlot: boolean) {
         this.slot = slot;
