@@ -1,6 +1,7 @@
 /* Media dependent styles */
 
 @media only screen and (min-device-width: 660px) {
+
     .navbar-brand-authenticated {
         margin-left: 215px;
     }
@@ -49,12 +50,8 @@
 
 /* Default stylesheet */
 
-html, body {
-    overflow-x: hidden;
-}
-
 body {
-    position: relative
+    overflow-x: hidden;
 }
 
 .navbar {
@@ -178,10 +175,6 @@ body {
 
 .future {
     transform: translateX(110%);
-}
-
-body {
-    overflow-x: hidden;
 }
 
 .modal-footer > .alert {
