@@ -49,14 +49,6 @@
 
 /* Default stylesheet */
 
-html, body {
-    overflow-x: hidden;
-}
-
-body {
-    position: relative
-}
-
 .navbar {
     width: 100%;
 }

@@ -172,5 +172,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
         return aDate - bDate;
     }
+
 }
 

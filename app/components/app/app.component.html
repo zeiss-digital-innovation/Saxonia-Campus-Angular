@@ -1,4 +1,6 @@
-<navbar></navbar>
-<div class="padding-top">
-    <router-outlet></router-outlet>
+<div (touchmove)="onTouchMove($event)" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+    <navbar></navbar>
+    <div class="padding-top">
+        <router-outlet></router-outlet>
+    </div>
 </div>
