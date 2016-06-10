@@ -6,6 +6,7 @@ import {Room} from '../../model/room';
 import {User} from '../../model/user';
 import {SlotService} from '../../services/slot.service';
 import {UserService} from '../../services/user.service';
+import {TouchService} from '../../services/touch.service';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
@@ -25,7 +26,16 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     enableAnimation: boolean = false;
 
     constructor(private _slotService: SlotService,
-                private _userService: UserService) {}
+                private _userService: UserService,
+                private _touchService: TouchService) {
+        this._touchService.swipeEvent.subscribe((direction: string) => {
+            if (direction === 'left') {
+                this.selectedDate = this.getPreviousDate();
+            } else if (direction === 'right') {
+                this.selectedDate = this.getNextDate();
+            }
+        });
+    }
 
     ngOnInit() {
         this.getSlots();
@@ -173,5 +183,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         return aDate - bDate;
     }
 
+    private getNextDate() {
+        return this.dates[Math.min(this.dates.length - 1, this.dates.indexOf(this.selectedDate) + 1)];
+    }
+
+    private getPreviousDate() {
+        return this.dates[Math.max(0, this.dates.indexOf(this.selectedDate) - 1)];
+    }
 }
 

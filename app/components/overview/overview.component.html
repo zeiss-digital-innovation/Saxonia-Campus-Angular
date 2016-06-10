@@ -7,7 +7,7 @@
 <div>
     <div id="button-bar" class="text-xs-center">
         <button *ngFor="let date of dates" class="btn btn-info-outline"
-                (click)="selectedDate = date" [class.active]="date == selectedDate">
+                (click)="selectedDate = date; $event.target.blur();" [class.active]="date == selectedDate">
             {{date}}
         </button>
     </div>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <div *ngFor="let date of dates" class="container-fluid grid smaller float-xs-left"
+    <div *ngFor="let date of dates" class="container-fluid grid smaller pull-xs-left"
          [class.grid-animated]="enableAnimation"
          [class.future]="isFuture(date)" [class.past]="isPast(date)">
         <div *ngFor="let time of times[date]" class="flexbox">
