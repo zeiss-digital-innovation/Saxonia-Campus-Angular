@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild, Type} from '@angular/core';
 import {SlotComponent} from '../slot/slot.component';
 import {SlotDetailComponent} from '../slot-detail/slot-detail.component';
 import {Slot} from '../../model/slot';
@@ -9,7 +9,7 @@ import {UserService} from '../../services/user.service';
 
 @Component({
     templateUrl: 'app/components/overview/overview.component.html',
-    directives: [SlotComponent, SlotDetailComponent]
+    directives: [<Type>SlotComponent, <Type>SlotDetailComponent]
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
 
@@ -24,8 +24,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     errorMessage: string;
     enableAnimation: boolean = false;
 
-    constructor(private _slotService: SlotService,
-                private _userService: UserService) {}
+    constructor(private slotService: SlotService,
+                private userService: UserService) {}
 
     ngOnInit() {
         this.getSlots();
@@ -69,7 +69,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
 
     private getSlots() {
-        this._slotService.getSlots()
+        this.slotService.getSlots()
             .groupBy((slot: Slot) => {
                 if (slot._embedded) {
                     return slot._embedded.room.id;
@@ -142,7 +142,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     private getCurrentUser() {
         this.userSlots = [];
-        this._userService.getUser()
+        this.userService.getUser()
             .subscribe(
                 (user:User) => {
                     for (let slot of user._embedded.slots) {

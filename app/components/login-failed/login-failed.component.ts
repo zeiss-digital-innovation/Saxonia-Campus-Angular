@@ -1,5 +1,5 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
-import {RouteSegment, OnActivate} from '@angular/router';
+import {Component, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {OAuth2Service} from '../../services/oauth2.service';
 import {ConfigService} from '../../services/config.service';
 import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
@@ -8,19 +8,21 @@ import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
     templateUrl: 'app/components/login-failed/login-failed.component.html',
     directives: MODAL_DIRECTIVES
 })
-export class LoginFailedComponent implements AfterViewInit, OnActivate {
+export class LoginFailedComponent implements OnInit, AfterViewInit {
 
     @ViewChild('loginModal')
     modal: ModalComponent;
     redirectUrl: string;
     reason: string;
 
-    constructor(private _oauth2Service: OAuth2Service, private _configService: ConfigService) {
-        this._configService.getConfig().subscribe(config => this.redirectUrl = config['redirect.url']);
+    constructor(private oauth2Service: OAuth2Service,
+                private configService: ConfigService,
+                private route: ActivatedRoute) {
+        this.configService.getConfig().subscribe(config => this.redirectUrl = config['redirect.url']);
     }
 
-    routerOnActivate(curr: RouteSegment) {
-        this.reason = curr.getParam('reason');
+    ngOnInit() {
+        this.reason = this.route.snapshot.params['reason'];
     }
 
     ngAfterViewInit() {
@@ -29,7 +31,7 @@ export class LoginFailedComponent implements AfterViewInit, OnActivate {
 
     retry() {
         console.log("If you see this, something went wrong with single-sign-on.");
-        this._oauth2Service.removeTokens();
+        this.oauth2Service.removeTokens();
         window.location.href = this.redirectUrl;
     }
 }

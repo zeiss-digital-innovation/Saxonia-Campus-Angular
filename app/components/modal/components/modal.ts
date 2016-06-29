@@ -1,5 +1,4 @@
 import { Component, AfterViewInit, OnDestroy, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { CanDeactivate, RouteTree } from '@angular/router';
 import { ModalInstance, ModalResult } from './modal-instance';
 
 @Component({
@@ -15,7 +14,7 @@ import { ModalInstance, ModalResult } from './modal-instance';
         </div>
     `
 })
-export class ModalComponent implements AfterViewInit, OnDestroy, CanDeactivate {
+export class ModalComponent implements AfterViewInit, OnDestroy {
 
     instance: ModalInstance;
     overrideSize: string = null;
@@ -45,10 +44,6 @@ export class ModalComponent implements AfterViewInit, OnDestroy, CanDeactivate {
 
     ngOnDestroy() {
         return this.instance && this.instance.destroy();
-    }
-
-    routerCanDeactivate(next: RouteTree, prev: RouteTree): any {
-        return this.ngOnDestroy();
     }
 
     open(size?: string): Promise<any> {

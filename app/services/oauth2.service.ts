@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {JwtHelper} from 'angular2-jwt';
 import {ConfigService} from './config.service';
+import {JWT} from "../model/JWT";
 
 @Injectable()
 export class OAuth2Service {
@@ -10,10 +11,10 @@ export class OAuth2Service {
     onAuthenticate: EventEmitter<any> = new EventEmitter(false);
     private jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(private _http: Http, private _configService: ConfigService) {}
+    constructor(private http: Http, private configService: ConfigService) {}
 
     public doImplicitFlow(code: string) {
-        return this._configService.getConfig().flatMap(config => {
+        return this.configService.getConfig().flatMap(config => {
             let clientId: string = config['client.id'];
             let resource: string = config['resource'];
             let redirectUrl: string = config['redirect.url'];
@@ -49,12 +50,12 @@ export class OAuth2Service {
     }
 
     private getToken(adfsTokenUrl: string, payload: string) {
-        let observable = this._http.post(adfsTokenUrl, payload)
+        let observable = this.http.post(adfsTokenUrl, payload)
             .map(res => res.json())
             .cache();
 
         observable.subscribe(
-                json => {
+                (json: JWT) => {
                     let access_token = json.access_token;
                     try {
                         let decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json.access_token));
@@ -93,7 +94,7 @@ export class OAuth2Service {
     }
     
     private redirectToLogoutUrl() {
-        this._configService.getConfig().subscribe(config => {
+        this.configService.getConfig().subscribe(config => {
             window.location.href = config['adfs.logout.url'];
         });
     }

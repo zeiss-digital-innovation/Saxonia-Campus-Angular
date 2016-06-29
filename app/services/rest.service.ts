@@ -7,11 +7,11 @@ import {HypermediaResource} from '../model/hypermedia-resource';
 
 @Injectable()
 export class RestService {
-    constructor (private _http: Http, private _configService: ConfigService, private _oauth2Service: OAuth2Service) {}
+    constructor (private http: Http, private configService: ConfigService, private oauth2Service: OAuth2Service) {}
 
     public getRest() {
-        return Observable.defer(() => this._configService.getConfig())
-            .flatMap(config => this._http.get(config['backend.url'], {headers: RestService.getAuthHeader()}))
+        return Observable.defer(() => this.configService.getConfig())
+            .flatMap(config => this.http.get(config['backend.url'], {headers: RestService.getAuthHeader()}))
             .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
                 .flatMap(error => {
                     if (error.status != 401) {
@@ -19,7 +19,7 @@ export class RestService {
                     }
                     // this will essentially automatically retry the request if it can
                     console.log('automatic rest retry');
-                    return this._oauth2Service.doImplicitFlow(null);
+                    return this.oauth2Service.doImplicitFlow(null);
                 }).delay(250)
             )
             .map((res: Response) => <HypermediaResource> res.json())

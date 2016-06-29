@@ -17,13 +17,13 @@ export class SlotComponent {
     @Output()
     onSlotClick: EventEmitter<any> = new EventEmitter(false);
 
-    constructor(private _slotService: SlotService) {}
+    constructor(private slotService: SlotService) {}
 
     showSlotDetail() {
         if (this.slot == null) {
             return;
         }
-        this._slotService.getSlot(this.slot)
+        this.slotService.getSlot(this.slot)
             .subscribe(slot => {
                 this.onSlotClick.emit(slot)
             },

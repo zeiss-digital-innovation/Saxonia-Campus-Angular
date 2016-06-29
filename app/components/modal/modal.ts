@@ -12,9 +12,9 @@ export * from './components/modal-footer';
 export * from './components/modal-instance';
 
 export const MODAL_DIRECTIVES: Type[] = [
-    ModalComponent,
-    ModalHeaderComponent,
-    ModalBodyComponent,
-    ModalFooterComponent,
-    AutofocusDirective
+    <Type>ModalComponent,
+    <Type>ModalHeaderComponent,
+    <Type>ModalBodyComponent,
+    <Type>ModalFooterComponent,
+    <Type>AutofocusDirective
 ];

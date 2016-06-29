@@ -12,20 +12,19 @@ export class NavbarComponent {
     private username = '';
     private jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(private _router: Router,
-                private _oauth2Service: OAuth2Service) {
-        this._oauth2Service.onAuthenticate.subscribe(token => {
+    constructor(private oauth2Service: OAuth2Service) {
+        this.oauth2Service.onAuthenticate.subscribe(token => {
             let decodedToken = this.jwtHelper.decodeToken(token);
             this.username = decodedToken.sub;
         })
     }
 
     isAuthenticated() : boolean {
-        return this._oauth2Service.isAuthenticated();
+        return this.oauth2Service.isAuthenticated();
     }
 
     logout() {
         this.username = '';
-        this._oauth2Service.logout();
+        this.oauth2Service.logout();
     }
 }

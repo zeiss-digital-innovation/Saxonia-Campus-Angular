@@ -1,13 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {Router, ROUTER_DIRECTIVES, Routes} from "@angular/router";
+import {Component, OnInit, Type} from "@angular/core";
+import {Router, ROUTER_DIRECTIVES} from "@angular/router";
 import {ConfigService} from "../../services/config.service";
 import {OAuth2Service} from "../../services/oauth2.service";
 import {RestService} from "../../services/rest.service";
 import {SlotService} from "../../services/slot.service";
 import {UserService} from "../../services/user.service";
 import {NavbarComponent} from "../navbar/navbar.component";
-import {OverviewComponent} from "../overview/overview.component";
-import {LoginFailedComponent} from "../login-failed/login-failed.component";
 import {JwtHelper} from 'angular2-jwt';
 
 @Component({
@@ -15,7 +13,7 @@ import {JwtHelper} from 'angular2-jwt';
     templateUrl: 'app/components/app/app.component.html',
     directives: [
         ROUTER_DIRECTIVES,
-        NavbarComponent
+        <Type>NavbarComponent
     ],
     providers: [
         ConfigService,
@@ -25,21 +23,11 @@ import {JwtHelper} from 'angular2-jwt';
         UserService
     ]
 })
-@Routes([
-    {
-        path: '/overview',
-        component: OverviewComponent
-    },
-    {
-        path: '/loginFailed',
-        component: LoginFailedComponent
-    }
-])
 export class AppComponent implements OnInit {
 
     private jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(private _router:Router, private _oauth2Service:OAuth2Service) {
+    constructor(private router: Router, private oauth2Service: OAuth2Service) {
     }
 
     ngOnInit() {
@@ -47,7 +35,7 @@ export class AppComponent implements OnInit {
         window.location.search.substr(1).split("&").forEach(function (item) {
             search[item.split("=")[0]] = item.split("=")[1]
         });
-        this._oauth2Service.doImplicitFlow(search['code'])
+        this.oauth2Service.doImplicitFlow(search['code'])
             .subscribe(
                 () => {
                     let id_token = localStorage.getItem('id_token');
@@ -57,12 +45,12 @@ export class AppComponent implements OnInit {
                         if (entry == 'user' || entry == 'admin') return true;
                     });
                     if (isUser) {
-                        this._router.navigate(['/overview'])
+                        this.router.navigate(['/overview'])
                     } else {
-                        this._router.navigate(['/loginFailed', {reason: 'unauthorized'}])
+                        this.router.navigate(['/loginFailed', {reason: 'unauthorized'}])
                     }
                 },
-                () => this._router.navigate(['/loginFailed', {reason: 'unauthenticated'}])
+                () => this.router.navigate(['/loginFailed', {reason: 'unauthenticated'}])
             );
     }
 }

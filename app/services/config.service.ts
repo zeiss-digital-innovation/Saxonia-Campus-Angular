@@ -4,14 +4,14 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ConfigService {
-    private _configUrl: string = 'scripts/config.json';
-    private _configObservable: Observable<Object>;
+    private configUrl: string = 'scripts/config.json';
+    private configObservable: Observable<Object>;
 
-    constructor (private _http: Http) {
-        this._configObservable = this._http.get(this._configUrl).map(res => res.json()).cache()
+    constructor (private http: Http) {
+        this.configObservable = this.http.get(this.configUrl).map(res => res.json()).cache()
     }
 
     public getConfig(): Observable<Object> {
-        return this._configObservable;
+        return this.configObservable;
     }
 }

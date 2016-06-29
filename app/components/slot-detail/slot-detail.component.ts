@@ -1,4 +1,4 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, AfterViewInit, Type} from '@angular/core';
 import {Slot} from '../../model/slot';
 import {SlotService} from '../../services/slot.service';
 import {NewlinePipe} from '../../pipes/newline.pipe';
@@ -7,7 +7,7 @@ import {MODAL_DIRECTIVES, ModalComponent} from '../modal/modal';
 @Component({
     selector: 'slot-detail',
     templateUrl: 'app/components/slot-detail/slot-detail.component.html',
-    pipes: [NewlinePipe],
+    pipes: [<Type>NewlinePipe],
     directives: MODAL_DIRECTIVES
 })
 export class SlotDetailComponent implements AfterViewInit {
@@ -18,7 +18,7 @@ export class SlotDetailComponent implements AfterViewInit {
     userInSlot: boolean;
     errorMessage: string;
 
-    constructor(private _slotService: SlotService) {}
+    constructor(private slotService: SlotService) {}
 
     ngAfterViewInit() {
         this.modal.onClose.subscribe(() => this.errorMessage = undefined);
@@ -49,7 +49,7 @@ export class SlotDetailComponent implements AfterViewInit {
     }
 
     register() {
-        this._slotService.register(this.slot)
+        this.slotService.register(this.slot)
             .subscribe(
                 () => {
                     this.errorMessage = null;
@@ -62,7 +62,7 @@ export class SlotDetailComponent implements AfterViewInit {
     }
 
     unregister() {
-        this._slotService.unregister(this.slot)
+        this.slotService.unregister(this.slot)
             .subscribe(
                 () => {
                     this.errorMessage = null;
