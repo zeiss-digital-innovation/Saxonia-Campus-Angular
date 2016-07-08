@@ -10,6 +10,7 @@ import { SlotDetailComponent } from './slot-detail/slot-detail.component';
 import { ModalModule } from '../common/modal/modal.module';
 import { SlotService } from './services/slot.service';
 import { UserService } from './services/user.service';
+import { ExportService } from './services/export.service';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { UserService } from './services/user.service';
   providers: [
     {provide: SlotService, useClass: SlotService},
     {provide: UserService, useClass: UserService},
+    {provide: ExportService, useClass: ExportService},
   ]
 })
 export class ScheduleModule {
