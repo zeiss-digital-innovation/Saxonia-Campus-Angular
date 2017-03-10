@@ -1,0 +1,22 @@
+<campus-modal #loginModal [keyboard]="false" [backdrop]="'static'">
+    <modal-header>
+        <h4 class="modal-title">
+            <span *ngIf="reason != 'unauthorized'">Login mit Single-Sign-On fehlgeschlagen.</span>
+            <span *ngIf="reason == 'unauthorized'">Keine Berechtigung für diese Seite.</span>
+        </h4>
+    </modal-header>
+    <modal-body>
+        <span *ngIf="reason != 'unauthorized'">
+            Dies kann passieren, wenn euer automatischer Login abgelaufen ist.<br>
+            Versucht es dann bitte einfach mit dem Button unten noch einmal.<br>
+            <br>
+            Wenn diese Meldung nach Betätigen des Buttons wieder erscheint, wendet euch bitte an das Campus Team.
+        </span>
+        <span *ngIf="reason == 'unauthorized'">
+            Du hast keine Berechtigung für die Nutzung dieser Seite. Bei Rückfragen wende dich bitte an Personal.
+        </span>
+    </modal-body>
+    <modal-footer *ngIf="reason != 'unauthorized'">
+        <button type="submit" class="btn btn-primary" (click)="retry()">Login erneuern</button>
+    </modal-footer>
+</campus-modal>
