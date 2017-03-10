@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Saxonia Campus</title>
+  <base href="/">
+
+  <!-- this prevents application load when not authenticated and automatically redirects to ADFS -->
+  <script>
+    var search = {};
+    location.search.substr(1).split("&").forEach(function (item) {
+      search[item.split("=")[0]] = item.split("=")[1]
+    });
+    if (localStorage.getItem('id_token') == null
+      && localStorage.getItem('refresh_token') == null
+      && search['code'] == null) {
+      window.location.href = 'https://adfs.saxsys.de/adfs/oauth2/authorize' +
+        '?response_type=code' +
+        '&client_id=campusapp' +
+          // FIXME Ersetzen durch Platzhalter oder am besten ganz raus [SB]
+        //       '&resource=' + encodeURIComponent('https://nb299.saxsys.de:8443/adfs-saml') +
+        //       '&redirect_uri=' + encodeURIComponent('https://nb299.saxsys.de:8443/campus');
+        '&resource=' + encodeURIComponent('https://nb323.saxsys.de:8443/adfs-saml') +
+        '&redirect_uri=' + encodeURIComponent('https://nb323.saxsys.de:4200/campus');
+    }
+  </script>
+  <style>
+    .splashscreen {
+      width: 100%;
+      text-align: center;
+      padding-top: 2rem;
+    }
+    .splashscreen img {
+      width:6rem;
+      height:6rem;
+    }
+  </style>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preload" as="image" href="assets/images/saxonia.png">
+</head>
+<body>
+<campus-app>
+  <div class="splashscreen"><img src="assets/images/saxonia.png" alt="Lädt..."><br/>
+  Lädt...
+  </div>
+</campus-app>
+</body>
+</html>
