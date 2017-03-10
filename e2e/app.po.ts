@@ -1,11 +1,11 @@
 import { browser, element, by } from 'protractor';
 
-export class SaxoniaCampusAngular4Page {
+export class SaxoniaCampusAngularPage {
   navigateTo() {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getNavbar() {
+    return element(by.css('campus-app campus-navbar'));
   }
 }
