@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "nb323": "ng serve -e nb323 --proxy-config proxy.conf.nb323.json --host nb323.saxsys.de --ssl --ssl-key ./nb323.saxsys.de.key --ssl-cert ./nb323.saxsys.de.cer",
+    "proxy": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --ssl --ssl-key ./ssl/server.key --ssl-cert ./ssl/server.crt",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
