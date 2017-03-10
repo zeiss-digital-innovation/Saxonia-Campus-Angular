@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
 import { ConfigService } from '../config/config.service';
 import { Jwt } from './jwt';
@@ -16,13 +16,13 @@ export class OAuth2Service {
 
   public doImplicitFlow(code: string) {
     const config = this.configService.getConfig();
-    let clientId: string = config['client.id'];
-    let resource: string = config['resource'];
-    let redirectUrl: string = config['redirect.url'];
-    let adfsAuthUrl: string = config['adfs.auth.url'];
+    const clientId: string = config['client.id'];
+    const resource: string = config['resource'];
+    const redirectUrl: string = config['redirect.url'];
+    const adfsAuthUrl: string = config['adfs.auth.url'];
 
-    let id_token = localStorage.getItem('id_token');
-    let refresh_token = localStorage.getItem('refresh_token');
+    const id_token = localStorage.getItem('id_token');
+    const refresh_token = localStorage.getItem('refresh_token');
 
     // everything is valid and user is authenticated
     if (id_token != null && !this.jwtHelper.isTokenExpired(id_token)) {
@@ -33,13 +33,13 @@ export class OAuth2Service {
       // access token expired or not available and refresh token available -> get new access token with refresh token
     } else if (refresh_token != null) {
       console.log('using refresh token to get new auth token');
-      let payload: string = `client_id=${clientId}&refresh_token=${localStorage.getItem('refresh_token')}&grant_type=refresh_token`;
+      const payload = `client_id=${clientId}&refresh_token=${localStorage.getItem('refresh_token')}&grant_type=refresh_token`;
       return this.getToken(config['adfs.token.url'], payload);
     }
     // process callback via redirect URI with authorization code -> get access token and refresh token with code
     else if (code != null) {
       console.log('using authorization code to get new auth and refresh tokens');
-      let payload: string = `client_id=${clientId}&code=${code}&redirect_uri=${encodeURIComponent(redirectUrl)}&grant_type=authorization_code`;
+      const payload = `client_id=${clientId}&code=${code}&redirect_uri=${encodeURIComponent(redirectUrl)}&grant_type=authorization_code`;
       return this.getToken(config['adfs.token.url'], payload);
     }
     // completely unauthenticated -> initiate OAuth2 flow by redirecting to ADFS
@@ -50,7 +50,7 @@ export class OAuth2Service {
   }
 
   private getToken(adfsTokenUrl: string, payload: string) {
-    let observable = this.http.post(adfsTokenUrl, payload)
+    const observable = this.http.post(adfsTokenUrl, payload)
       .map(res => res.json())
       .publishReplay().refCount();
 
@@ -58,7 +58,7 @@ export class OAuth2Service {
       (json: Jwt) => {
         let access_token = json.access_token;
         try {
-          let decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json.access_token));
+          const decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json.access_token));
           if (decodedToken.proxy_token != null) {
             // this is actually a proxy token wrapper from ADFS not an access token
             // this will also never contain refresh tokens according to Microsoft spec

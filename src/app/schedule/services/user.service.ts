@@ -10,6 +10,12 @@ import { RestService } from '../../shared/rest/rest.service';
 
 @Injectable()
 export class UserService {
+
+  private static handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error || 'Server error');
+  }
+
   constructor(private http: Http,
               private restService: RestService,
               private oauth2Service: OAuth2Service) {
@@ -18,7 +24,7 @@ export class UserService {
   getUser() {
     return this.restService.getRest()
       .flatMap((hypermediaResource: HypermediaResource) => {
-        let link: string = 'currentUser';
+        const link = 'currentUser';
         return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
           .retryWhen(errors => errors.zip(Observable.range(1, 1), error => error)
             .flatMap(error => {
@@ -31,7 +37,7 @@ export class UserService {
             }).delay(250)
           )
           .map(res => {
-            let user: User = <User> res.json();
+            const user: User = <User> res.json();
             if (res.json()._embedded == null) {
               user._embedded = new EmbeddedSlots();
               user._embedded.slots = [];
@@ -39,13 +45,8 @@ export class UserService {
               user._embedded.slots = [<Slot> res.json()._embedded.slots];
             }
             return user;
-          })
+          });
       })
-      .catch(UserService.handleError)
-  }
-
-  private static handleError(error: Response) {
-    console.error(error);
-    return Observable.throw(error || 'Server error');
+      .catch(UserService.handleError);
   }
 }

@@ -8,6 +8,12 @@ import { RestService } from '../../shared/rest/rest.service';
 
 @Injectable()
 export class SlotService {
+
+  private static handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error || 'Server error');
+  }
+
   constructor(private http: Http,
               private restService: RestService,
               private oauth2Service: OAuth2Service) {
@@ -16,7 +22,7 @@ export class SlotService {
   getSlots() {
     return Observable.defer(() => this.restService.getRest())
       .flatMap((hypermediaResource: HypermediaResource) => {
-        let link: string = 'slots';
+        const link = 'slots';
         return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
           .retryWhen(errors => errors.zip(Observable.range(1, 1), error => error)
             .flatMap(error => {
@@ -28,13 +34,13 @@ export class SlotService {
               return this.oauth2Service.doImplicitFlow(null);
             }).delay(250)
           )
-          .flatMap(res => Observable.from(<Slot[]> res.json()._embedded.slots))
+          .flatMap(res => Observable.from(<Slot[]> res.json()._embedded.slots));
       })
-      .catch(SlotService.handleError)
+      .catch(SlotService.handleError);
   }
 
   getSlot(slot: Slot) {
-    let link: string = 'self';
+    const link = 'self';
     return Observable.defer(() => this.http.get(slot._links[link].href, {headers: RestService.getAuthHeader()}))
       .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
         .flatMap(error => {
@@ -47,11 +53,11 @@ export class SlotService {
         }).delay(250)
       )
       .map(res => <Slot> res.json())
-      .catch(SlotService.handleError)
+      .catch(SlotService.handleError);
   }
 
   register(slot: Slot) {
-    let link: string = 'register';
+    const link = 'register';
     return Observable.defer(() => this.http.put(slot._links[link].href, '', {headers: RestService.getAuthHeader()}))
       .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
         .flatMap(error => {
@@ -63,11 +69,11 @@ export class SlotService {
           return this.oauth2Service.doImplicitFlow(null);
         }).delay(250)
       )
-      .catch(SlotService.handleError)
+      .catch(SlotService.handleError);
   }
 
   unregister(slot: Slot) {
-    let link: string = 'unregister';
+    const link = 'unregister';
     return Observable.defer(() => this.http.delete(slot._links[link].href, {headers: RestService.getAuthHeader()}))
       .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
         .flatMap(error => {
@@ -79,11 +85,6 @@ export class SlotService {
           return this.oauth2Service.doImplicitFlow(null);
         }).delay(250)
       )
-      .catch(SlotService.handleError)
-  }
-
-  private static handleError(error: Response) {
-    console.error(error);
-    return Observable.throw(error || 'Server error');
+      .catch(SlotService.handleError);
   }
 }

@@ -14,12 +14,12 @@ export class NavbarComponent {
 
     constructor(private oauth2Service: OAuth2Service) {
         this.oauth2Service.onAuthenticate.subscribe(token => {
-            let decodedToken = this.jwtHelper.decodeToken(token);
+            const decodedToken = this.jwtHelper.decodeToken(token);
             this.username = decodedToken.sub;
-        })
+        });
     }
 
-    isAuthenticated() : boolean {
+    isAuthenticated(): boolean {
         return this.oauth2Service.isAuthenticated();
     }
 
