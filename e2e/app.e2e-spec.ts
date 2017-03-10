@@ -1,14 +1,14 @@
-import { SaxoniaCampusAngular4Page } from './app.po';
+import { SaxoniaCampusAngularPage } from './app.po';
 
-describe('saxonia-campus-angular4 App', () => {
-  let page: SaxoniaCampusAngular4Page;
+describe('saxonia-campus-angular App', () => {
+  let page: SaxoniaCampusAngularPage;
 
   beforeEach(() => {
-    page = new SaxoniaCampusAngular4Page();
+    page = new SaxoniaCampusAngularPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display navbar', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getNavbar()).toBeTruthy();
   });
 });
