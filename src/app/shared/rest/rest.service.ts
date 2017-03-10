@@ -7,6 +7,24 @@ import { HypermediaResource } from './hypermedia-resource';
 
 @Injectable()
 export class RestService {
+
+  public static getAuthHeader(): Headers {
+    const headers: Headers = new Headers();
+    headers.append('Cache-Control', 'no-cache');
+    headers.append('Pragma', 'no-cache');
+
+    const token = localStorage.getItem('id_token');
+    if (token != null) {
+      headers.append('Authorization', 'Bearer ' + token);
+    }
+    return headers;
+  }
+
+  private static handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error || 'Server error');
+  }
+
   constructor(private _http: Http, private _configService: ConfigService, private _oauth2Service: OAuth2Service) {
   }
 
@@ -24,23 +42,7 @@ export class RestService {
         }).delay(250)
       )
       .map((res: Response) => <HypermediaResource> res.json())
-      .catch(RestService.handleError)
+      .catch(RestService.handleError);
   }
 
-  public static getAuthHeader(): Headers {
-    let headers: Headers = new Headers();
-    headers.append('Cache-Control', 'no-cache');
-    headers.append('Pragma', 'no-cache');
-
-    let token = localStorage.getItem('id_token');
-    if (token != null) {
-      headers.append('Authorization', 'Bearer ' + token);
-    }
-    return headers;
-  }
-
-  private static handleError(error: Response) {
-    console.error(error);
-    return Observable.throw(error || 'Server error');
-  }
 }

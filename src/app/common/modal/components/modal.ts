@@ -19,10 +19,10 @@ export class ModalComponent implements AfterViewInit, OnDestroy, CanDeactivate<M
 
   instance: ModalInstance;
   overrideSize: string = null;
-  visible: boolean = false;
-  @Input() animation: boolean = true;
+  visible = false;
+  @Input() animation = true;
   @Input() backdrop: any = true;
-  @Input() keyboard: boolean = true;
+  @Input() keyboard = true;
   @Input() size: string;
   @Output() onClose: EventEmitter<any> = new EventEmitter(false);
   @Output() onDismiss: EventEmitter<any> = new EventEmitter(false);
@@ -35,8 +35,9 @@ export class ModalComponent implements AfterViewInit, OnDestroy, CanDeactivate<M
     this.instance = new ModalInstance(this.element);
     this.instance.hidden.subscribe((result) => {
       this.visible = this.instance.visible;
-      if (result === ModalResult.Dismiss)
+      if (result === ModalResult.Dismiss) {
         this.onDismiss.emit(undefined);
+      }
     });
     this.instance.shown.subscribe(() => {
       this.onOpen.emit(undefined);
@@ -52,7 +53,9 @@ export class ModalComponent implements AfterViewInit, OnDestroy, CanDeactivate<M
   }
 
   open(size?: string): Promise<any> {
-    if (ModalSize.validSize(size)) this.overrideSize = size;
+    if (ModalSize.validSize(size)) {
+      this.overrideSize = size;
+    }
     return this.instance.open().then(() => {
       this.visible = this.instance.visible;
     });

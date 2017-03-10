@@ -26,7 +26,7 @@ export class SlotComponent {
     }
     this._slotService.getSlot(this.slot)
       .subscribe(slot => {
-          this.onSlotClick.emit(slot)
+          this.onSlotClick.emit(slot);
         },
         error => console.log(error)
       );

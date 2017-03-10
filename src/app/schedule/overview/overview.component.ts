@@ -20,7 +20,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   userSlots: number[] = [];
   selectedDate: string = null;
   errorMessage: string;
-  enableAnimation: boolean = false;
+  enableAnimation = false;
 
   constructor(private _slotService: SlotService,
               private _userService: UserService) {
@@ -37,13 +37,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   isContinuation(date: string, time: string, roomId: string): boolean {
-    let index = this.times[date].indexOf(time);
+    const index = this.times[date].indexOf(time);
     if (index == 0) {
       return false;
     }
 
-    for (var i = index - 1; i >= 0; i--) {
-      let slot = this.slotMatrix[date][this.times[date][i]][roomId];
+    for (let i = index - 1; i >= 0; i--) {
+      const slot = this.slotMatrix[date][this.times[date][i]][roomId];
       if (slot != null && (this.getTimeDiff(this.getTime(new Date(Date.parse(slot.endtime))), time) > 0)) {
         return true;
       }
@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     if (slot == null) {
       return false;
     }
-    return this.userSlots.indexOf(slot.id) > -1
+    return this.userSlots.indexOf(slot.id) > -1;
   }
 
   private getSlots() {
@@ -79,7 +79,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       .subscribe(
         roomSlots => {
           roomSlots.first().subscribe((slot: Slot) => {
-            for (let room of this.rooms) {
+            for (const room of this.rooms) {
               if (room.id == slot._embedded.room.id) {
                 return;
               }
@@ -89,10 +89,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
           roomSlots.subscribe(
             (slot: Slot) => {
-              let room: Room = slot._embedded.room;
-              let startDateTime: Date = new Date(Date.parse(slot.starttime));
-              let startDate: string = this.getDate(startDateTime);
-              let startTime: string = this.getTime(startDateTime);
+              const room: Room = slot._embedded.room;
+              const startDateTime: Date = new Date(Date.parse(slot.starttime));
+              const startDate: string = this.getDate(startDateTime);
+              const startTime: string = this.getTime(startDateTime);
 
               if (this.dates.indexOf(startDate) < 0) {
                 this.dates.push(startDate);
@@ -100,7 +100,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                 this.slotMatrix[startDate] = {};
               }
 
-              var found = Object.getOwnPropertyNames(this.slotMatrix[startDate]).some(time => {
+              const found = Object.getOwnPropertyNames(this.slotMatrix[startDate]).some(time => {
                 if (Math.abs(this.getTimeDiff(startTime, time)) < 20 * 60 * 1000) {
                   this.slotMatrix[startDate][time][room.id] = slot;
                   return true;
@@ -113,7 +113,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
                 this.slotMatrix[startDate][startTime][room.id] = slot;
               }
             }
-          )
+          );
         },
         error => this.errorMessage = 'Konnte Slot-Daten nicht vom Backend laden.',
         () => {
@@ -144,7 +144,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this._userService.getUser()
       .subscribe(
         (user: User) => {
-          for (let slot of user._embedded.slots) {
+          for (const slot of user._embedded.slots) {
             this.userSlots.push(slot.id);
           }
         },
@@ -153,21 +153,21 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   private getDateDiff(a: string, b: string) {
-    let aSplit: string[] = a.split('.');
-    let bSplit: string[] = b.split('.');
+    const aSplit: string[] = a.split('.');
+    const bSplit: string[] = b.split('.');
 
-    let aDate = new Date(+aSplit[2], (+aSplit[1]) - 1, +aSplit[0], 0, 0, 0, 0).getTime();
-    let bDate = new Date(+bSplit[2], (+bSplit[1]) - 1, +bSplit[0], 0, 0, 0, 0).getTime();
+    const aDate = new Date(+aSplit[2], (+aSplit[1]) - 1, +aSplit[0], 0, 0, 0, 0).getTime();
+    const bDate = new Date(+bSplit[2], (+bSplit[1]) - 1, +bSplit[0], 0, 0, 0, 0).getTime();
 
     return aDate - bDate;
   }
 
   private getTimeDiff(a: string, b: string) {
-    let aSplit: string[] = a.split(':');
-    let bSplit: string[] = b.split(':');
+    const aSplit: string[] = a.split(':');
+    const bSplit: string[] = b.split(':');
 
-    let aDate = new Date(2015, 0, 1, +aSplit[0], +aSplit[1], 0, 0).getTime();
-    let bDate = new Date(2015, 0, 1, +bSplit[0], +bSplit[1], 0, 0).getTime();
+    const aDate = new Date(2015, 0, 1, +aSplit[0], +aSplit[1], 0, 0).getTime();
+    const bDate = new Date(2015, 0, 1, +bSplit[0], +bSplit[1], 0, 0).getTime();
 
     return aDate - bDate;
   }
