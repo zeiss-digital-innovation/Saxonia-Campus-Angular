@@ -56,7 +56,10 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {},
+    "serve": {
+      "ssl": true
+    }
   },
   "packageManager": "yarn"
 }

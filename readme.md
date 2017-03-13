@@ -29,9 +29,8 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Prepare your local dev environment
 
-1. Copy your SSL certificate and key for your environment to the ssl directory. Name them 
-`server.crt` and `server.key` respectively, replacing the prefix with the hostname of your 
-environment.
+1. Copy your SSL certificate and key for your environment to the `/ssl` directory. Name them 
+`server.crt` and `server.key` respectively.
 2. Make a copy of `environments/environment.ts`, name it `environments/environment.<your_env>.ts` and adjust the 
 properties to your local environment.
 3. Open `.angular-cli.json` and add an environment entry mapping <your_env> to your environements.<your_env>.ts file.
@@ -40,7 +39,7 @@ properties to your local environment.
 
 Run `yarn run proxy -- -e <your_env>` for serving the app and using it with a browser of your choice.
 
-## The following is copied from version 2.0 and should be changed:
+## TODO: The following is copied from version 2.0 and should be changed:
 
 ## Build distribution for environment
 
