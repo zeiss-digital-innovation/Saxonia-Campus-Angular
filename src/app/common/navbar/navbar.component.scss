@@ -1,0 +1,31 @@
+@import "../../../variables";
+
+.navbar {
+  @include breakpoint($breakpoint-medium) {
+    text-align: center !important;
+  }
+
+  @include breakpoint($breakpoint-small) {
+    text-align: left !important;
+  }
+
+  .navbar-brand {
+    &.authenticated {
+      @include breakpoint($breakpoint-medium) {
+        margin-left: 215px;
+      }
+    }
+
+    #logo {
+      display: inline;
+      height: 30px;
+      margin-top: -5px;
+    }
+  }
+
+  #userName {
+    @include breakpoint($breakpoint-small) {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+@import "~breakpoint-sass/stylesheets/breakpoint";
+
+/* breakpoints */
+$breakpoint-small: 'only screen' (orientation portrait) (max-device-width 420px),
+(orientation landscape) (max-device-width 660px);
+$breakpoint-medium: 'only screen' (min-device-width 660px);
+

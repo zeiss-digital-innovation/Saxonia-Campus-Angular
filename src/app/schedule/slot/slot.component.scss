@@ -1,0 +1,36 @@
+@import "../../../variables";
+
+.card-block {
+  padding: 1rem;
+}
+
+.mobile-hidden {
+  @include breakpoint($breakpoint-small) {
+    display: none !important;
+  }
+}
+
+.card-outline-warning {
+  @include breakpoint($breakpoint-small) {
+    width: 92vw;
+  }
+}
+
+.slot-card {
+  cursor: pointer;
+
+  .card-title {
+    padding-bottom: 5px;
+    margin-bottom: 0;
+  }
+
+  .card-footer {
+    padding: 0.75rem 1rem;
+  }
+}
+
+.room-number {
+  @include breakpoint($breakpoint-medium) {
+    display: none;
+  }
+}

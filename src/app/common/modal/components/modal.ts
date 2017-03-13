@@ -3,16 +3,8 @@ import { ModalInstance, ModalResult } from './modal-instance';
 
 @Component({
   selector: 'campus-modal',
-  template: `
-        <div class="modal" [ngClass]="{ fade: animation }" tabindex="-1" role="dialog"
-            [attr.data-keyboard]="keyboard" [attr.data-backdrop]="backdrop">
-            <div class="modal-dialog" [ngClass]="{ 'modal-sm': isSmall(), 'modal-lg': isLarge() }">
-                <div class="modal-content">
-                    <ng-content></ng-content>
-                </div>
-            </div>
-        </div>
-    `
+  templateUrl: './modal.html',
+  styleUrls: ['./modal.scss']
 })
 export class ModalComponent implements AfterViewInit, OnDestroy {
 
