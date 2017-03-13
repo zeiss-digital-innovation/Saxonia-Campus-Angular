@@ -1,17 +1,22 @@
 # Saxonia Campus App built with Angular
 
-Angular client with TypeScript for the Saxonia Campus backend.
-Communicates with backend via REST Hateoas.
+Angular client with TypeScript for the Saxonia Campus conference management.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.0 and 
+requires [Yarn](https://yarnpkg.com) to run. You should install both Yarn and the Angular CLI globally:
+```
+npm install -g yarn
+npm install -g @angular/cli 
+```
 
 ## Download dependencies
 
-Run `yarn install` to resolve dependencies.
+Run `yarn install` or simply `yarn` to resolve dependencies.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+Use the `-prod` flag for a production build.
 
 ## Running unit tests
 
@@ -33,7 +38,7 @@ properties to your local environment.
 
 ## Build and run in dev environment
 
-Run `npm run proxy -- -e <your_env>` for serving the app and using it with a browser of your choice.
+Run `yarn run proxy -- -e <your_env>` for serving the app and using it with a browser of your choice.
 
 ## The following is copied from version 2.0 and should be changed:
 
