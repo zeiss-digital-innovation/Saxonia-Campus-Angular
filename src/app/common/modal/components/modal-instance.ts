@@ -11,7 +11,7 @@ export enum ModalResult {
 
 export class ModalInstance {
 
-    private suffix: string = '.ng2-bs3-modal';
+    private suffix = '.ng2-bs3-modal';
     private shownEventName: string = 'shown.bs.modal' + this.suffix;
     private hiddenEventName: string = 'hidden.bs.modal' + this.suffix;
 
@@ -19,7 +19,7 @@ export class ModalInstance {
     shown: Observable<void>;
     hidden: Observable<ModalResult>;
     result: ModalResult;
-    visible: boolean = false;
+    visible = false;
 
     constructor(private element: ElementRef) {
         this.init();
@@ -49,14 +49,14 @@ export class ModalInstance {
     }
 
     private show() {
-        let promise = toPromise(this.shown);
+        const promise = toPromise(this.shown);
         this.$modal.modal('show');
         return promise;
     }
 
     private hide(): Promise<ModalResult> {
         if (this.$modal && this.visible) {
-            let promise = toPromise(this.hidden);
+            const promise = toPromise(this.hidden);
             this.$modal.modal('hide');
             return promise;
         }
@@ -74,7 +74,7 @@ export class ModalInstance {
 
         this.hidden = Observable.fromEvent(this.$modal, this.hiddenEventName)
             .map(() => {
-                let result = (!this.result || <ModalResult>this.result === ModalResult.None)
+                const result = (!this.result || <ModalResult>this.result === ModalResult.None)
                     ? ModalResult.Dismiss : this.result;
 
                 this.result = ModalResult.None;

@@ -36,8 +36,13 @@ testem.log
 /e2e/*.js
 /e2e/*.map
 
+# SSL certs
+*.saxsys.de.cer
+*.saxsys.de.key
+ssl/*
+!ssl/.gitkeep
+
 #System Files
 .DS_Store
 Thumbs.db
-nb323.saxsys.de.cer
-nb323.saxsys.de.key
+yarn-error.log

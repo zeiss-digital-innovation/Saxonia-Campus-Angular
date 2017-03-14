@@ -28,7 +28,7 @@ export class LoginFailedComponent implements OnInit, AfterViewInit {
   }
 
   retry() {
-    console.log("If you see this, something went wrong with single-sign-on.");
+    console.log('If you see this, something went wrong with single-sign-on.');
     this.oauth2Service.removeTokens();
     window.location.href = this.redirectUrl;
   }

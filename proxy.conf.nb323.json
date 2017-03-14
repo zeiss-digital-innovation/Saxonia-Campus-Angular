@@ -1,7 +1,0 @@
-{
-  "/campus": {
-    "target": "https://nb323.saxsys.de:4200",
-    "secure": false,
-    "ignorePath": true
-  }
-}
