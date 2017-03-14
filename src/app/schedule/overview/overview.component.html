@@ -1,0 +1,37 @@
+<div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
+        <span aria-hidden="true">&#215;</span>
+    </button>
+    {{errorMessage}}
+</div>
+<div>
+    <div id="button-bar" class="text-center">
+        <button *ngFor="let date of dates" class="btn btn-outline-info"
+                (click)="selectedDate = date" [class.active]="date == selectedDate">
+            {{date}}
+        </button>
+    </div>
+    <div id="room-bar" class="flexbox container-fluid">
+        <div *ngFor="let room of rooms">
+            <div class="card bg-faded mb-3">
+                <div class="card-block card-room-block text-center">
+                    <strong>{{room.roomnumber}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let date of dates" class="container-fluid grid smaller float-left"
+         [class.grid-animated]="enableAnimation"
+         [class.future]="isFuture(date)" [class.past]="isPast(date)">
+        <div *ngFor="let time of times[date]" class="flexbox">
+            <div *ngFor="let room of rooms" class="flexbox">
+                <campus-slot class="flexbox mb-2"
+                      (onSlotClick)="slotDetail.showSlot($event, userInSlot($event))"
+                      [slot]="slotMatrix[date][time][room.id]"
+                      [userInSlot]="userInSlot(slotMatrix[date][time][room.id])"
+                      [isContinuation]="isContinuation(date, time, room.id)"></campus-slot>
+            </div>
+        </div>
+    </div>
+</div>
+<slot-detail #slotDetail (close)="getCurrentUser()"></slot-detail>

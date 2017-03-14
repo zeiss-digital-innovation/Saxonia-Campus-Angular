@@ -1,0 +1,7 @@
+{
+  "/campus": {
+    "target": "https://localhost:4200",
+    "secure": false,
+    "ignorePath": true
+  }
+}
