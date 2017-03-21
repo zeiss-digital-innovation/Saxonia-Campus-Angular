@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "webpack-dev-server",
-    "local": "ng serve -e local --proxy-config proxy.conf.json --host 0.0.0.0 --ssl --ssl-key ./$HOSTNAME.saxsys.de.key --ssl-cert ./$HOSTNAME.saxsys.de.cer",
+    "start": "node util/devserver.js",
+    "local": "node util/devserver.js -e dev --proxy-conf proxy.conf.json --host 0.0.0.0 --port 4200 --ssl --ssl-key ./ssl/server.key --ssl-cert ./ssl/server.cert",
     "build": "webpack",
     "test": "karma start ./karma.conf.js",
     "lint": "ng lint",
@@ -66,6 +66,8 @@
     "typescript": "^2.2.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "~2.3.0"
+    "webpack-dev-server": "~2.3.0",
+    "webpack-merge": "^4.1.0",
+    "yargs": "^7.0.2"
   }
 }
