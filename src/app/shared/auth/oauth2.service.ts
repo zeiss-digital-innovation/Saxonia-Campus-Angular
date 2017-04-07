@@ -13,7 +13,7 @@ export class OAuth2Service {
   constructor(private _http: Http, private _configService: ConfigService) {
   }
 
-  public doImplicitFlow(code: string) {
+  public doImplicitFlow(code: string): Observable<any> {
     const config = this._configService.getConfig();
     const clientId: string = config['client.id'];
     const resource: string = config['resource'];
@@ -55,9 +55,9 @@ export class OAuth2Service {
 
     observable.subscribe(
       json => {
-        let access_token = json.access_token;
+        let access_token = json['access_token'];
         try {
-          const decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json.access_token));
+          const decodedToken = JSON.parse(this.jwtHelper.urlBase64Decode(json['access_token']));
           if (decodedToken.proxy_token != null) {
             // this is actually a proxy token wrapper from ADFS not an access token
             // this will also never contain refresh tokens according to Microsoft spec
@@ -67,8 +67,8 @@ export class OAuth2Service {
         }
 
         localStorage.setItem('id_token', access_token);
-        if (localStorage.getItem('refresh_token') == null && json.refresh_token != null) {
-          localStorage.setItem('refresh_token', json.refresh_token);
+        if (localStorage.getItem('refresh_token') == null && json['refresh_token'] != null) {
+          localStorage.setItem('refresh_token', json['refresh_token']);
         }
         console.log('user roles: ' + this.jwtHelper.decodeToken(access_token).role);
         this.onAuthenticate.emit(access_token);
