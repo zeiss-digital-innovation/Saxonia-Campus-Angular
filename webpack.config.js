@@ -289,11 +289,11 @@ module.exports = function config(env) {
         "mainPath": "main.ts",
         "exclude": [],
         "tsConfigPath": "src/tsconfig.app.json",
-        "skipCodeGeneration": true
+        "skipCodeGeneration": env.aot
       }),
       new NormalModuleReplacementPlugin(
         /environments\/environment/,
-        env.env && env.env != 'dev' ? `environments/environment.${env.env}.ts` : "environments/environment.ts"
+        env.env && env.env != 'dev' ? resolve('src', `environments/environment.${env.env}.ts`) : resolve('src', "environments/environment.ts")
       )
     ],
     "node": {
