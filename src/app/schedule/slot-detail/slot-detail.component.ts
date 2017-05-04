@@ -2,6 +2,7 @@ import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { SlotService } from '../services/slot.service';
 import { ModalComponent } from '../../common/modal/components/modal';
 import { Slot } from '../model/slot';
+import { ExportService } from '../services/export.service';
 
 @Component({
   selector: 'slot-detail',
@@ -15,7 +16,7 @@ export class SlotDetailComponent implements AfterViewInit {
   userInSlot: boolean;
   errorMessage: string;
 
-  constructor(private slotService: SlotService) {
+  constructor(private slotService: SlotService, private exportService: ExportService) {
   }
 
   ngAfterViewInit() {
@@ -71,4 +72,9 @@ export class SlotDetailComponent implements AfterViewInit {
         }
       );
   }
+
+  exportToIcs() {
+    this.exportService.exportSlotToIcs(this.slot);
+  }
+
 }
