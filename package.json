@@ -71,6 +71,7 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "~2.3.0",
     "webpack-merge": "^4.1.0",
+    "webpack-war-plugin": "^1.0.0-beta.3",
     "yargs": "^7.0.2"
   }
 }
