@@ -29,5 +29,8 @@
     </button>
     <button *ngIf="isRegisterable() && !userInSlot" type="button" class="btn btn-primary" (click)="register()">Buchen
     </button>
+    <button *ngIf="userInSlot" type="button" class="btn btn-secondary" (click)="exportToIcs()">
+      <i class="fa fa-calendar" aria-hidden="true"></i> In Kalender exportieren
+    </button>
   </modal-footer>
 </campus-modal>
