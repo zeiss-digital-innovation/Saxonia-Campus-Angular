@@ -3,8 +3,10 @@
     <div class="navbar-brand container" [class.authenticated]="isAuthenticated()">
       <img id="logo" src="assets/images/saxonia.png"/> Saxonia Campus
     </div>
-    <div id="userForm" class="form-inline ml-auto flex-nowrap" *ngIf="isAuthenticated()">
-      <label id="userName" class="navbar-text mr-sm-2">{{username}}</label>
-      <button id="logoutButton" (click)="logout()" class="btn btn-outline-info">Logout</button>
+    <div id="userForm" class="form-inline ml-auto flex-nowrap">
+      <ng-container *ngIf="isAuthenticated()">
+        <label id="userName" class="navbar-text mr-sm-2">{{username}}</label>
+        <button id="logoutButton" (click)="logout()" class="btn btn-outline-info">Logout</button>
+      </ng-container>
     </div>
 </nav>
