@@ -4,28 +4,27 @@
     </button>
     {{errorMessage}}
 </div>
-<div>
+<section>
     <div id="button-bar" class="text-center">
         <button *ngFor="let date of dates" class="btn btn-outline-info"
                 (click)="selectedDate = date" [class.active]="date == selectedDate">
             {{date}}
         </button>
     </div>
-    <div id="room-bar" class="flexbox container-fluid">
+    <div id="room-bar" class="flexbox d-flex container-fluid">
         <div *ngFor="let room of rooms">
-            <div class="card bg-faded mb-3">
-                <div class="card-block card-room-block text-center">
+            <div class="card room-card bg-faded mb-3">
+                <div class="card-block text-center">
                     <strong>{{room.roomnumber}}</strong>
                 </div>
             </div>
         </div>
     </div>
     <div *ngFor="let date of dates" class="container-fluid grid smaller float-left"
-         [class.grid-animated]="enableAnimation"
-         [class.future]="isFuture(date)" [class.past]="isPast(date)">
-        <div *ngFor="let time of times[date]" class="flexbox">
-            <div *ngFor="let room of rooms" class="flexbox">
-                <campus-slot class="flexbox mb-2"
+         [class.animated]="enableAnimation" [class.future]="isFuture(date)" [class.past]="isPast(date)">
+        <div *ngFor="let time of times[date]" class="flexbox d-flex">
+            <div *ngFor="let room of rooms" class="flexbox d-flex">
+                <campus-slot class="d-flex mb-2"
                       (onSlotClick)="slotDetail.showSlot($event, userInSlot($event))"
                       [slot]="slotMatrix[date][time][room.id]"
                       [userInSlot]="userInSlot(slotMatrix[date][time][room.id])"
@@ -33,5 +32,5 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 <slot-detail #slotDetail (close)="getCurrentUser()"></slot-detail>

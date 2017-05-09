@@ -1,0 +1,7 @@
+@import "../../../../variables";
+
+.modal-dialog {
+  @include breakpoint($breakpoint-small) {
+    width: 95vw;
+  }
+}

@@ -25,6 +25,7 @@
     "@angular/router": "^4.0.0",
     "angular2-jwt": "^0.2.0",
     "bootstrap": "4.0.0-alpha.6",
+    "breakpoint-sass": "^2.7.1",
     "core-js": "^2.4.1",
     "font-awesome": "^4.6.3",
     "rxjs": "^5.2.0",

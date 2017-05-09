@@ -1,0 +1,42 @@
+@import "../../../variables";
+
+#button-bar {
+  padding-bottom: 1rem;
+}
+
+#button-bar > * {
+  margin-left: 15px;
+}
+
+#room-bar {
+  @include breakpoint($breakpoint-small) {
+    display: none !important;
+  }
+}
+
+.grid {
+  position: absolute;
+  width: 100%;
+
+  &.animated {
+    transition: 0.6s cubic-bezier(0.75, 0, 0.25, 1);
+  }
+
+  &.past {
+    transform: translateX(-110%);
+  }
+
+  &.future {
+    transform: translateX(110%);
+  }
+}
+
+.smaller {
+  font-size: 12px;
+}
+
+.room-card {
+  .card-block {
+    padding: 0.5rem;
+  }
+}

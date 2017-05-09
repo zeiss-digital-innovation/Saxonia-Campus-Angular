@@ -6,10 +6,10 @@
   <modal-body>
     <p>
       <strong>
-        {{slot?.starttime || "" | slice:11:16}} - {{slot?.endtime || "" | slice:11:16}} im Raum
+        {{slot?.starttime || "" | slice:11:16}} &#8211; {{slot?.endtime || "" | slice:11:16}} im Raum
         {{slot?._embedded?.room?.roomnumber}}
       </strong>
-      <span class="label badge float-right"
+      <span class="badge float-right"
             [class.badge-success]="slot?.participants < slot?.capacity"
             [class.badge-warning]="slot?.participants >= (slot?.capacity - 3) && slot?.participants < slot?.capacity"
             [class.badge-danger]="slot?.participants >= slot?.capacity">

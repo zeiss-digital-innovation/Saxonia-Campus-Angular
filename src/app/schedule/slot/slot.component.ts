@@ -4,7 +4,8 @@ import { SlotService } from '../services/slot.service';
 
 @Component({
   selector: 'campus-slot',
-  templateUrl: './slot.component.html'
+  templateUrl: './slot.component.html',
+  styleUrls: ['./slot.component.scss']
 })
 export class SlotComponent {
 

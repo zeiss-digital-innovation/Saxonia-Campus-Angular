@@ -7,7 +7,8 @@ import { UserService } from '../services/user.service';
 import { SlotDetailComponent } from '../slot-detail/slot-detail.component';
 
 @Component({
-  templateUrl: './overview.component.html'
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
 

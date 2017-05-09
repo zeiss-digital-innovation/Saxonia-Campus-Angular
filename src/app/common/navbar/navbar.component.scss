@@ -1,0 +1,37 @@
+@import "../../../variables";
+
+.navbar {
+  @include breakpoint($breakpoint-medium) {
+    text-align: center !important;
+  }
+
+  @include breakpoint($breakpoint-small) {
+    .empty {
+      display: none;
+    }
+  }
+
+  .empty,#userForm {
+    width: 35rem;
+  }
+
+  #userForm {
+    justify-content: flex-end;
+  }
+
+  .navbar-brand {
+    flex-grow: 1;
+
+    #logo {
+      display: inline;
+      height: 30px;
+      margin-top: -5px;
+    }
+  }
+
+  #userName {
+    @include breakpoint($breakpoint-small) {
+      display: none !important;
+    }
+  }
+}

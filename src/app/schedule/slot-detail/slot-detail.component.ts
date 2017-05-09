@@ -6,7 +6,8 @@ import { ExportService } from '../services/export.service';
 
 @Component({
   selector: 'slot-detail',
-  templateUrl: './slot-detail.component.html'
+  templateUrl: './slot-detail.component.html',
+  styleUrls: ['./slot-detail.component.scss']
 })
 export class SlotDetailComponent implements AfterViewInit {
 
