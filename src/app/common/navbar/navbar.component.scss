@@ -6,15 +6,21 @@
   }
 
   @include breakpoint($breakpoint-small) {
-    text-align: left !important;
+    .empty {
+      display: none;
+    }
+  }
+
+  .empty,#userForm {
+    width: 35rem;
+  }
+
+  #userForm {
+    justify-content: flex-end;
   }
 
   .navbar-brand {
-    &.authenticated {
-      @include breakpoint($breakpoint-medium) {
-        margin-left: 215px;
-      }
-    }
+    flex-grow: 1;
 
     #logo {
       display: inline;
