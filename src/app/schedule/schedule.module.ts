@@ -11,6 +11,7 @@ import { ModalModule } from '../common/modal/modal.module';
 import { SlotService } from './services/slot.service';
 import { UserService } from './services/user.service';
 import { ExportService } from './services/export.service';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ExportService } from './services/export.service';
   declarations: [
     OverviewComponent,
     SlotComponent,
-    SlotDetailComponent
+    SlotDetailComponent,
+    ListComponent,
   ],
   exports: [
     OverviewComponent

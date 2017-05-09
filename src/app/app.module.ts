@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { OAuth2Service } from './shared/auth/oauth2.service';
 import { ConfigService } from './shared/config/config.service';
 import { ScheduleModule } from './schedule/schedule.module';
-import { NewlinePipe } from './common/newline.pipe';
 import { RestService } from './shared/rest/rest.service';
 
 @NgModule({
@@ -25,12 +24,12 @@ import { RestService } from './shared/rest/rest.service';
     CampusCommonModule,
     ScheduleModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [
     {provide: OAuth2Service, useClass: OAuth2Service},
     {provide: ConfigService, useClass: ConfigService},
-    {provide: RestService, useClass: RestService}
+    {provide: RestService, useClass: RestService},
   ],
   bootstrap: [AppComponent]
 })

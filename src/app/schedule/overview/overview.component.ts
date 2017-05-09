@@ -18,7 +18,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   dates: string[] = [];
   times: any = {};
   slotMatrix: any = {};
-  userSlots: number[] = [];
+  usersRegisteredSlotIds: number[] = [];
   selectedDate: string = null;
   errorMessage: string;
   enableAnimation = false;
@@ -29,7 +29,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getSlots();
-    this.getCurrentUser();
+    this.getCurrentUsersRegisteredSlots();
   }
 
   ngAfterViewInit() {
@@ -65,11 +65,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     if (slot == null) {
       return false;
     }
-    return this.userSlots.indexOf(slot.id) > -1;
+    return this.usersRegisteredSlotIds.indexOf(slot.id) > -1;
   }
 
   private getSlots() {
-    this.slotService.getSlots()
+    this.slotService.getIndividualSlots()
       .groupBy((slot: Slot) => {
         if (slot._embedded) {
           return slot._embedded.room.id;
@@ -140,15 +140,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     return ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
   }
 
-  private getCurrentUser() {
-    this.userSlots = [];
-    this.userService.getUser()
+  private getCurrentUsersRegisteredSlots() {
+    this.userService.getUsersRegisteredSlots()
       .subscribe(
-        (user: User) => {
-          for (const slot of user._embedded.slots) {
-            this.userSlots.push(slot.id);
-          }
-        },
+        (slots: Slot[]) => this.usersRegisteredSlotIds = slots.map(slot => slot.id),
         error => this.errorMessage = 'Konnte Benutzer-Buchungs-Daten nicht vom Backend laden.'
       );
   }

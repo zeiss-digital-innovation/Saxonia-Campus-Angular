@@ -24,16 +24,18 @@ export class SlotService {
       .flatMap((hypermediaResource: HypermediaResource) => {
         const link = 'slots';
         return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
-          .retryWhen(errors => errors.zip(Observable.range(1, 1), error => error)
-            .flatMap(error => {
-              if (error.status != 401) {
-                return Observable.throw('no automatic retry possible' + error.status);
-              }
-              // this will essentially automatically retry the request if it can
-              console.log('automatic slots retry');
-              return this.oauth2Service.doImplicitFlow(null);
-            }).delay(250)
-          )
+          .retryWhen(this.retryHandler(link))
+          .map(res => <Slot[]> res.json()._embedded.slots);
+      })
+      .catch(SlotService.handleError);
+  }
+
+  getIndividualSlots() {
+    return Observable.defer(() => this.restService.getRest())
+      .flatMap((hypermediaResource: HypermediaResource) => {
+        const link = 'slots';
+        return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
+          .retryWhen(this.retryHandler(link))
           .flatMap(res => Observable.from(<Slot[]> res.json()._embedded.slots));
       })
       .catch(SlotService.handleError);
@@ -42,16 +44,7 @@ export class SlotService {
   getSlot(slot: Slot) {
     const link = 'self';
     return Observable.defer(() => this.http.get(slot._links[link].href, {headers: RestService.getAuthHeader()}))
-      .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
-        .flatMap(error => {
-          if (error.status != 401) {
-            return Observable.throw('no automatic retry possible' + error.status);
-          }
-          // this will essentially automatically retry the request if it can
-          console.log('automatic slot retry');
-          return this.oauth2Service.doImplicitFlow(null);
-        }).delay(250)
-      )
+      .retryWhen(this.retryHandler(link))
       .map(res => <Slot> res.json())
       .catch(SlotService.handleError);
   }
@@ -59,32 +52,40 @@ export class SlotService {
   register(slot: Slot) {
     const link = 'register';
     return Observable.defer(() => this.http.put(slot._links[link].href, '', {headers: RestService.getAuthHeader()}))
-      .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
-        .flatMap(error => {
-          if (error.status != 401) {
-            return Observable.throw('no automatic retry possible' + error.status);
-          }
-          // this will essentially automatically retry the request if it can
-          console.log('automatic register retry');
-          return this.oauth2Service.doImplicitFlow(null);
-        }).delay(250)
-      )
+      .retryWhen(this.retryHandler(link))
       .catch(SlotService.handleError);
   }
 
   unregister(slot: Slot) {
     const link = 'unregister';
     return Observable.defer(() => this.http.delete(slot._links[link].href, {headers: RestService.getAuthHeader()}))
-      .retryWhen(errors => errors.zip(Observable.range(1, 2), error => error)
-        .flatMap(error => {
-          if (error.status != 401) {
-            return Observable.throw('no automatic retry possible' + error.status);
-          }
-          // this will essentially automatically retry the request if it can
-          console.log('automatic unregister retry');
-          return this.oauth2Service.doImplicitFlow(null);
-        }).delay(250)
-      )
+      .retryWhen(this.retryHandler(link))
       .catch(SlotService.handleError);
+  }
+
+  markAsPreferred(slot: Slot) {
+    const link = 'mark_as_preferred';
+    return Observable.defer(() => this.http.put(slot._links[link].href, '', {headers: RestService.getAuthHeader()}))
+      .retryWhen(this.retryHandler(link))
+      .catch(SlotService.handleError);
+  }
+
+  unmarkAsPreferred(slot: Slot) {
+    const link = 'unmark_as_preferred';
+    return Observable.defer(() => this.http.delete(slot._links[link].href, {headers: RestService.getAuthHeader()}))
+      .retryWhen(this.retryHandler(link))
+      .catch(SlotService.handleError);
+  }
+
+  private retryHandler(link: string) {
+    return errors => errors.zip(Observable.range(1, 2), error => error)
+      .flatMap(error => {
+        if (error.status != 401) {
+          return Observable.throw('no automatic retry possible' + error.status);
+        }
+        // this will essentially automatically retry the request if it can
+        console.log(`automatic ${link} retry`);
+        return this.oauth2Service.doImplicitFlow(null);
+      }).delay(250);
   }
 }

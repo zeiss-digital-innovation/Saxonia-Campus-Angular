@@ -32,9 +32,9 @@ export class AppComponent implements OnInit {
             }
           });
           if (isUser) {
-            this.router.navigate(['/overview'])
+            this.router.navigate(['/list']);
           } else {
-            this.router.navigate(['/loginFailed', {reason: 'unauthorized'}])
+            this.router.navigate(['/loginFailed', {reason: 'unauthorized'}]);
           }
         },
         () => this.router.navigate(['/loginFailed', {reason: 'unauthenticated'}])

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../model/user';
-import { EmbeddedSlots } from '../model/embedded-slots';
-import { Slot } from '../model/slot';
 import { HypermediaResource } from '../../shared/rest/hypermedia-resource';
 import { OAuth2Service } from '../../shared/auth/oauth2.service';
 import { RestService } from '../../shared/rest/rest.service';
+import { Slot } from '../model/slot';
 
 @Injectable()
 export class UserService {
@@ -21,32 +20,60 @@ export class UserService {
               private oauth2Service: OAuth2Service) {
   }
 
-  getUser() {
+  getUsersRegisteredSlots(): Observable<Slot[]> {
+    const link = 'registeredSlots';
+    return this.getUser()
+      .flatMap((user: User) => {
+        return Observable.defer(() => this.http.get(user._links[link].href, {headers: RestService.getAuthHeader()}))
+          .retryWhen(this.retryHandler(link))
+          .map(this.mapper)
+      })
+      .catch(UserService.handleError);
+  }
+
+  getUsersPreferredSlots(): Observable<Slot[]> {
+    const link = 'preferredSlots';
+    return this.getUser()
+      .flatMap((user: User) => {
+        return Observable.defer(() => this.http.get(user._links[link].href, {headers: RestService.getAuthHeader()}))
+          .retryWhen(this.retryHandler(link))
+          .map(this.mapper)
+      })
+      .catch(UserService.handleError);
+  }
+
+  private mapper(res): Slot[] {
+    const embedded = res.json()._embedded;
+    if (!embedded || !embedded.slots) {
+      return [];
+    }
+    if (embedded.slots.constructor != Array) {
+      return [embedded.slots];
+    }
+    return embedded.slots;
+  }
+
+  private getUser(): Observable<User> {
     return this.restService.getRest()
       .flatMap((hypermediaResource: HypermediaResource) => {
         const link = 'currentUser';
         return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
-          .retryWhen(errors => errors.zip(Observable.range(1, 1), error => error)
-            .flatMap(error => {
-              if (error.status != 401) {
-                return Observable.throw('no automatic retry possible' + error.status);
-              }
-              // this will essentially automatically retry the request if it can
-              console.log('automatic currentUser retry');
-              return this.oauth2Service.doImplicitFlow(null);
-            }).delay(250)
-          )
-          .map(res => {
-            const user: User = <User> res.json();
-            if (res.json()._embedded == null) {
-              user._embedded = new EmbeddedSlots();
-              user._embedded.slots = [];
-            } else if (res.json()._embedded.slots.constructor != Array) {
-              user._embedded.slots = [<Slot> res.json()._embedded.slots];
-            }
-            return user;
-          });
+          .retryWhen(this.retryHandler(link))
+          .map(res => <User> res.json());
       })
-      .catch(UserService.handleError);
   }
+
+  private retryHandler(link: string) {
+    return errors => errors.zip(Observable.range(1, 1), error => error)
+      .flatMap(error => {
+        if (error.status != 401) {
+          return Observable.throw('no automatic retry possible' + error.status);
+        }
+        // this will essentially automatically retry the request if it can
+        console.log(`automatic ${link} retry`);
+        return this.oauth2Service.doImplicitFlow(null);
+      }).delay(250);
+  }
+
+
 }

@@ -1,0 +1,25 @@
+<p class="description">
+  Um die Raumplanung entsprechend des Interessen an den Slots durchführen zu können, habt ihr hier die Chance 10 Slots als für euch
+  interessant zu markieren. Damit stellt ihr sicher, dass genügend Raum-Kapazitäten für Slots, die für viele interessant sind zur Verfügung stehen.<br>
+  Hierbei handelt es sich noch <b>nicht</b> um die offizielle Buchung!<br>
+  Du hast bereits <span [class.max]="usersPreferredSlotIds.length == 10">{{ usersPreferredSlotIds.length }}/10</span> Slots markiert.
+</p>
+<div class="list-group">
+  <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start margin-bottom" [class.booked]="isBooked(slot)">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{slot.title}}</h5>
+      <small>
+        <button *ngIf="isMarkable(slot)"
+                type="button"
+                class="btn btn-sm btn-success clickable"
+                (click)="markAsPreferred(slot)">Interessiert mich!</button>
+        <button *ngIf="isUnmarkable(slot)"
+                type="button"
+                class="btn btn-sm btn-danger clickable"
+                (click)="unmarkAsPreferred(slot)">Interessiert mich nicht mehr!</button>
+      </small>
+    </div>
+    <p class="mb-1">{{ slot.description }}</p>
+    <small>{{ slot.speaker }}</small>
+  </div>
+</div>
