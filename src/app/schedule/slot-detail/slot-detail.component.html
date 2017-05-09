@@ -18,7 +18,7 @@
     <p class="text-justify" [innerHtml]="slot?.description | newline"></p>
   </modal-body>
   <modal-footer>
-    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show float-left" role="alert">
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
         <span aria-hidden="true">&#215;</span>
       </button>
