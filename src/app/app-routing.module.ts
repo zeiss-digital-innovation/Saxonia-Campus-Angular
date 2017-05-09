@@ -8,15 +8,15 @@ export const appRoutes: Routes = [
   {path: '', redirectTo: 'overview', pathMatch: 'full'},
   {path: 'overview', component: OverviewComponent},
   {path: 'list', component: ListComponent},
-  {path: 'loginFailed', component: LoginFailedComponent}
+  {path: 'loginFailed', component: LoginFailedComponent},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   exports: [
-    RouterModule
+    RouterModule,
   ]
 })
 export class AppRoutingModule {
