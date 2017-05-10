@@ -12,6 +12,7 @@ import { SlotService } from './services/slot.service';
 import { UserService } from './services/user.service';
 import { ExportService } from './services/export.service';
 import { ListComponent } from './list/list.component';
+import { MdSlideToggleModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ListComponent } from './list/list.component';
     HttpModule,
     RouterModule,
     ModalModule,
-    CampusCommonModule
+    CampusCommonModule,
+    MdSlideToggleModule,
   ],
   declarations: [
     OverviewComponent,
@@ -29,7 +31,7 @@ import { ListComponent } from './list/list.component';
     ListComponent,
   ],
   exports: [
-    OverviewComponent
+    OverviewComponent,
   ],
   providers: [
     {provide: SlotService, useClass: SlotService},

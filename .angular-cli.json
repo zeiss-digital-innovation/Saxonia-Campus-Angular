@@ -19,15 +19,19 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "campus",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
       ],
-      "scripts": ["../node_modules/jquery/dist/jquery.js",
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
         "../node_modules/tether/dist/js/tether.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.js"],
+        "../node_modules/bootstrap/dist/js/bootstrap.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
         "nb323": "environments/environment.nb323.ts",
+        "nb299": "environments/environment.nb299.ts",
         "test": "environments/environment.test.ts",
         "prod": "environments/environment.prod.ts"
       }

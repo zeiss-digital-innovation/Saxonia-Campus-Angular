@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import './rxjs-operators';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { CampusCommonModule } from './common/common.module';

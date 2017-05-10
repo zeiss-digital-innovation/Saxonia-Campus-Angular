@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 h5 {
   padding-bottom: 0.7rem;
 }
@@ -9,6 +11,11 @@ h5 {
 
 .list-group-item {
   margin-bottom: 1.25rem;
+  cursor: pointer;
+}
+
+.margin-bottom {
+  margin-bottom: 0.75rem;
 }
 
 .description {
@@ -20,8 +27,20 @@ small {
   text-align: right;
 }
 
-.booked {
-  border: 1px solid #f0ad4e;
+.mobile-hidden {
+  @include breakpoint($breakpoint-small) {
+    display: none !important;
+  }
+}
+
+.mobile {
+  @include breakpoint($breakpoint-medium) {
+    display: none !important;
+  }
+}
+
+.marked-as-interesting {
+  background-color: honeydew;
 }
 
 .max {

@@ -4,16 +4,21 @@
   padding: 1rem;
 }
 
+.margin-right {
+  margin: 1rem;
+}
+
 .mobile-hidden {
   @include breakpoint($breakpoint-small) {
     display: none !important;
   }
 }
 
-.card-outline-warning {
+.booked {
   @include breakpoint($breakpoint-small) {
     width: 92vw;
   }
+  background-color: honeydew;
 }
 
 .slot-card {

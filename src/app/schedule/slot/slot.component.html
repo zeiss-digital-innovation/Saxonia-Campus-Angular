@@ -1,11 +1,8 @@
 <div *ngIf="slot" class="flexbox" [class.mobile-hidden]="!userInSlot">
     <div class="card card-flex slot-card"
-         [class.card-outline-warning]="userInSlot"
-         [class.card-outline-info]="!userInSlot"
+         [class.booked]="userInSlot"
          (click)="showSlotDetail()">
-        <div class="card-title"
-             [class.bg-warning]="userInSlot"
-             [class.bg-info]="!userInSlot">
+        <div class="card-title bg-info">
         </div>
         <div class="card-block">
             <strong>
@@ -15,6 +12,9 @@
                       [class.badge-warning]="slot.participants >= (slot.capacity - 3) && slot.participants < slot.capacity"
                       [class.badge-danger]="slot.participants >= slot.capacity">
                     {{slot.participants}}/{{slot.capacity}}
+                </span>
+                <span class="float-right margin-right" *ngIf="userInSlot">
+                  <b>Gebucht!</b>
                 </span>
                 <br/>
                 <span class="room-number">
