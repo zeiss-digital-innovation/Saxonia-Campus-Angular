@@ -10,8 +10,8 @@ import { MdSlideToggleChange } from '@angular/material';
 })
 export class ListComponent implements OnInit {
 
-  private slots: Array<Slot>;
-  private usersPreferredSlotIds: number[] = [];
+  public slots: Array<Slot>;
+  public usersPreferredSlotIds: number[] = [];
 
   constructor(private slotService: SlotService, private userService: UserService) { }
 

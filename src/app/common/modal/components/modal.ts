@@ -60,11 +60,11 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private isSmall() {
+  public isSmall() {
     return this.overrideSize !== ModalSize.Large && this.size === ModalSize.Small || this.overrideSize === ModalSize.Small;
   }
 
-  private isLarge() {
+  public isLarge() {
     return this.overrideSize !== ModalSize.Small && this.size === ModalSize.Large || this.overrideSize === ModalSize.Large;
   }
 }

@@ -18,7 +18,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   dates: string[] = [];
   times: any = {};
   slotMatrix: any = {};
-  usersRegisteredSlotIds: number[] = [];
+  public usersRegisteredSlotIds: number[] = [];
   selectedDate: string = null;
   errorMessage: string;
   enableAnimation = false;
@@ -140,7 +140,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     return ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
   }
 
-  private getCurrentUsersRegisteredSlots() {
+  public getCurrentUsersRegisteredSlots() {
     this.userService.getUsersRegisteredSlots()
       .subscribe(
         (slots: Slot[]) => this.usersRegisteredSlotIds = slots.map(slot => slot.id),

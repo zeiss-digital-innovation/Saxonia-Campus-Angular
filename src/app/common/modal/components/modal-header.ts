@@ -13,5 +13,5 @@ import {ModalComponent} from './modal';
 })
 export class ModalHeaderComponent {
     @Input('show-close') showClose = false;
-    constructor(private modal: ModalComponent) { }
+    constructor(public modal: ModalComponent) { }
 }
