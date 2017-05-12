@@ -27,6 +27,18 @@ export class ListComponent implements OnInit {
     );
   }
 
+  isMarkable(slot: Slot): boolean {
+    return slot._links.hasOwnProperty('mark_as_preferred');
+  }
+
+  isUnmarkable(slot: Slot): boolean {
+    return slot._links.hasOwnProperty('unmark_as_preferred');
+  }
+
+  isMaximumNumberOfSlotsMarked() {
+    return this.usersPreferredSlotIds.length >= this.maxSlots;
+  }
+
   isMarkedAsInteresting(slot: Slot): boolean {
     return this.usersPreferredSlotIds.indexOf(slot.id) > -1;
   }
@@ -41,9 +53,12 @@ export class ListComponent implements OnInit {
 
   processClick(event: MouseEvent, slot: Slot): void {
     event.preventDefault();
-    if (!this.isMarkedAsInteresting(slot)) {
+    if (!this.isMarkable(slot) && !this.isUnmarkable(slot)) {
+      return;
+    }
+    if (!this.isMaximumNumberOfSlotsMarked() && !this.isMarkedAsInteresting(slot)) {
       this.markAsPreferred(slot);
-    } else {
+    } else if (this.isMaximumNumberOfSlotsMarked() && this.isMarkedAsInteresting(slot)) {
       this.unmarkAsPreferred(slot);
     }
   }

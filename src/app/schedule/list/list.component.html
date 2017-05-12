@@ -13,11 +13,19 @@
   Themen</p>
 <div class="list-group">
   <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start margin-bottom"
+       [class.clickable]="(isMarkable(slot) || isUnmarkable(slot))
+                          && (
+                            (!isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))
+                            || (isMaximumNumberOfSlotsMarked() && isMarkedAsInteresting(slot))
+                          )"
        [class.marked-as-interesting]="isMarkedAsInteresting(slot)"
        (click)="processClick($event, slot)">
     <div class="d-flex w-100 justify-content-end mobile margin-bottom">
       <small>
-        <md-slide-toggle [labelPosition]="'before'" [checked]="isMarkedAsInteresting(slot)" (change)="processSliderChange($event, slot)">
+        <md-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
+                         [labelPosition]="'before'"
+                         [checked]="isMarkedAsInteresting(slot)"
+                         (change)="processSliderChange($event, slot)">
           <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
         </md-slide-toggle>
       </small>
@@ -25,7 +33,10 @@
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{slot.title}}</h5>
       <small class="mobile-hidden">
-        <md-slide-toggle [labelPosition]="'before'" [checked]="isMarkedAsInteresting(slot)" (change)="processSliderChange($event, slot)">
+        <md-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
+                         [labelPosition]="'before'"
+                         [checked]="isMarkedAsInteresting(slot)"
+                         (change)="processSliderChange($event, slot)">
           <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
         </md-slide-toggle>
       </small>
