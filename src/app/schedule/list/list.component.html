@@ -21,7 +21,7 @@
         </md-slide-toggle>
       </small>
     </div>
-    <p class="mb-1">{{ slot.description }}</p>
+    <p class="mb-1" [innerHtml]="slot?.description | newline"></p>
     <div>
       <i class="fa fa-user fa-fw" aria-hidden="true"></i>
       <small>{{ slot.speaker }}</small>
