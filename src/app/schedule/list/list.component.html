@@ -1,7 +1,16 @@
-<p class="description">
-  <b>Klicke an, was dich interessiert.</b> <span [class.max]="usersPreferredSlotIds.length == 10">{{ usersPreferredSlotIds.length }}/10</span> Slots markiert.<br>
-  Hierbei handelt es sich noch <b>nicht</b> um die offizielle Buchung!<br>
-</p>
+<div class="alert alert-info alert-dismissible description" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  Um die Vorträge der Nachfrage entsprechend bestmöglich in die Räume einzuplanen, möchten wir zunächst euer generelles
+  Interesse an den Themen abfragen.
+  Du hast hier die Möglichkeit, bis zu {{maxSlots}} Themen auszuwählen, die dich interessieren. Die Auswahl ist nicht
+  verbindlich, es handelt sich also
+  <strong>nicht</strong> um die offizielle Registrierung. Die Registrierungsphase beginnt voraussichtlich in KW 22,
+  nachdem die Raumplanung abgeschlossen ist.
+</div>
+<p class="selection-counter">Aktuell ausgewählt: <span [class.max]="usersPreferredSlotIds.length == maxSlots">{{ usersPreferredSlotIds.length }}/{{maxSlots}}</span>
+  Themen</p>
 <div class="list-group">
   <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start margin-bottom"
        [class.marked-as-interesting]="isMarkedAsInteresting(slot)"

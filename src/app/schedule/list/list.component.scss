@@ -19,9 +19,16 @@ h5 {
   margin-bottom: 0.75rem;
 }
 
-.description {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+.description.alert {
+  font-size: 0.9rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+
+.selection-counter {
+  font-size: 0.9rem;
+  margin-left: 2.0rem;
+  margin-right: 2.0rem;
 }
 
 small {

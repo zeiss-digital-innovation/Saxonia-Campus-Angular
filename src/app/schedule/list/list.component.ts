@@ -12,6 +12,7 @@ export class ListComponent implements OnInit {
 
   private slots: Array<Slot>;
   private usersPreferredSlotIds: number[] = [];
+  maxSlots: number = 10;
 
   constructor(private slotService: SlotService, private userService: UserService) { }
 
