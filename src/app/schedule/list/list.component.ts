@@ -43,22 +43,13 @@ export class ListComponent implements OnInit {
     return this.usersPreferredSlotIds.indexOf(slot.id) > -1;
   }
 
-  processSliderChange(event: MdSlideToggleChange, slot: Slot): void {
-    if (event.checked === true) {
-      this.markAsPreferred(slot);
-    } else {
-      this.unmarkAsPreferred(slot);
-    }
-  }
-
   processClick(event: MouseEvent, slot: Slot): void {
-    event.preventDefault();
     if (!this.isMarkable(slot) && !this.isUnmarkable(slot)) {
       return;
     }
     if (!this.isMaximumNumberOfSlotsMarked() && !this.isMarkedAsInteresting(slot)) {
       this.markAsPreferred(slot);
-    } else if (this.isMaximumNumberOfSlotsMarked() && this.isMarkedAsInteresting(slot)) {
+    } else if (this.isMarkedAsInteresting(slot)) {
       this.unmarkAsPreferred(slot);
     }
   }

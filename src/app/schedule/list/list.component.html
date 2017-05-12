@@ -13,19 +13,14 @@
   Themen</p>
 <div class="list-group">
   <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start margin-bottom"
-       [class.clickable]="(isMarkable(slot) || isUnmarkable(slot))
-                          && (
-                            (!isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))
-                            || (isMaximumNumberOfSlotsMarked() && isMarkedAsInteresting(slot))
-                          )"
+       [class.clickable]="(isMarkable(slot) || isUnmarkable(slot)) && (!isMaximumNumberOfSlotsMarked() || isMarkedAsInteresting(slot))"
        [class.marked-as-interesting]="isMarkedAsInteresting(slot)"
        (click)="processClick($event, slot)">
     <div class="d-flex w-100 justify-content-end mobile margin-bottom">
       <small>
         <md-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
                          [labelPosition]="'before'"
-                         [checked]="isMarkedAsInteresting(slot)"
-                         (change)="processSliderChange($event, slot)">
+                         [checked]="isMarkedAsInteresting(slot)">
           <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
         </md-slide-toggle>
       </small>
@@ -35,8 +30,7 @@
       <small class="mobile-hidden">
         <md-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
                          [labelPosition]="'before'"
-                         [checked]="isMarkedAsInteresting(slot)"
-                         (change)="processSliderChange($event, slot)">
+                         [checked]="isMarkedAsInteresting(slot)">
           <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
         </md-slide-toggle>
       </small>
