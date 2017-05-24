@@ -17,9 +17,12 @@ modal-footer {
   }
 
   #export-cal-button {
+    .button-text {
+      display: none;
+    }
     @include breakpoint($breakpoint-medium) {
-      i.fa::after {
-        content: " In Kalender exportieren";
+      .button-text {
+        display: inline;
       }
     }
   }
