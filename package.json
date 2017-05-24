@@ -28,6 +28,7 @@
     "bootstrap": "4.0.0-alpha.6",
     "breakpoint-sass": "^2.7.1",
     "core-js": "^2.4.1",
+    "file-saver": "^1.3.3",
     "font-awesome": "^4.6.3",
     "hammerjs": "^2.0.8",
     "rxjs": "^5.2.0",

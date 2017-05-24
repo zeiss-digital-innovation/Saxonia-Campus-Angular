@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Slot } from '../model/slot';
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class ExportService {
 
-  exportSlotToIcs(slot:Slot) {
+  exportSlotToIcs(slot: Slot) {
     const icsString: string = this.createIcsContent(slot);
     this.downloadIcsFile(slot, icsString);
   }
@@ -32,20 +33,7 @@ END:VCALENDAR`;
   }
 
   private downloadIcsFile(slot: Slot, icsString: string) {
-    const blob = new Blob([icsString], {type: "text/calendar;charset=utf-8;"});
-    let fileName = `campus-${slot.id}.ics`;
-
-    if (navigator.msSaveBlob) { // IE 10+
-      navigator.msSaveBlob(blob, fileName)
-    } else {
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(blob);
-      link.setAttribute("href", url);
-      link.setAttribute("download", fileName);
-      link.setAttribute("style", "visibility:hidden");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    const blob = new Blob([icsString], {type: 'text/calendar'});
+    saveAs(blob, `campus-${slot.id}.ics`);
   }
 }
