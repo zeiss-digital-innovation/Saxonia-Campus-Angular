@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OAuth2Service } from './shared/auth/oauth2.service';
 import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'campus-app',
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
             }
           });
           if (isUser) {
-            this.router.navigate(['/list']);
+            this.router.navigate([`/${environment['app.mode']}`]);
           } else {
             this.router.navigate(['/loginFailed', {reason: 'unauthorized'}]);
           }
