@@ -1,5 +1,12 @@
 @import "../../../variables";
 
+modal-header {
+  .modal-title {
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+  }
+}
+
 modal-footer {
   .alert {
     margin-right: auto;
