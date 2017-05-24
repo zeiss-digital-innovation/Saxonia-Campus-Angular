@@ -1,3 +1,5 @@
+@import "../../../variables";
+
 modal-footer {
   .alert {
     margin-right: auto;
@@ -12,5 +14,13 @@ modal-footer {
     padding-top: 0;
     padding-bottom: 0;
     top: 1px !important;
+  }
+
+  #export-cal-button {
+    @include breakpoint($breakpoint-medium) {
+      i.fa::after {
+        content: " In Kalender exportieren";
+      }
+    }
   }
 }
