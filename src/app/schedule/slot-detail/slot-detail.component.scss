@@ -7,6 +7,15 @@ modal-header {
   }
 }
 
+modal-body {
+  .description {
+    font-size: 0.9rem;
+    @include breakpoint($breakpoint-medium) {
+      font-size: 1.0rem;
+    }
+  }
+}
+
 modal-footer {
   .alert {
     margin-right: auto;

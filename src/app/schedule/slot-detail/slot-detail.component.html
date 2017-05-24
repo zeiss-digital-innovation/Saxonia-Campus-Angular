@@ -15,7 +15,7 @@
             [class.badge-danger]="slot?.participants >= slot?.capacity">
             {{slot?.participants}}/{{slot?.capacity}}
         </span></p>
-    <p class="text-justify" [innerHtml]="slot?.description | newline"></p>
+    <p class="text-justify description" [innerHtml]="slot?.description | newline"></p>
   </modal-body>
   <modal-footer>
     <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
