@@ -1,11 +1,15 @@
 @import "../../../variables";
 
+.card {
+  height: 100%;
+}
+
 .card-block {
   padding: 1rem;
 }
 
 .margin-right {
-  margin: 1rem;
+  margin-right: 0.5rem;
 }
 
 .mobile-hidden {
