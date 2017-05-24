@@ -7,5 +7,6 @@ export const environment = {
   'client.id': 'campusapp',
   'resource': 'https://nb323.saxsys.de:8443/adfs-saml',
   'redirect.url': 'https://nb323.saxsys.de:4200/campus',
-  'backend.url': 'https://nb323.saxsys.de:8443/rest/api'
+  'backend.url': 'https://nb323.saxsys.de:8443/rest/api',
+  'app.mode': 'overview'
 };

@@ -7,5 +7,6 @@ export const environment = {
   'client.id': 'campusapp',
   'resource': 'https://campus-dev.saxsys.de/campus',
   'redirect.url': 'https://campus-dev.saxsys.de/campus',
-  'backend.url': 'https://campus-dev.saxsys.de/rest/api'
+  'backend.url': 'https://campus-dev.saxsys.de/rest/api',
+  'app.mode': 'overview'
 };
