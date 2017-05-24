@@ -32,7 +32,7 @@ END:VCALENDAR`;
   }
 
   private downloadIcsFile(slot: Slot, icsString: string) {
-    const blob = new Blob(["\ufeff" + icsString], {type: "text/calendar;charset=utf-8;"});
+    const blob = new Blob([icsString], {type: "text/calendar;charset=utf-8;"});
     let fileName = `campus-${slot.id}.ics`;
 
     if (navigator.msSaveBlob) { // IE 10+
