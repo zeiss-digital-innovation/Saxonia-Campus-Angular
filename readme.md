@@ -2,7 +2,7 @@
 
 Angular client with TypeScript for the Saxonia Campus conference management.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.0 and 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5 and 
 requires [Yarn](https://yarnpkg.com) to run. You should install both Yarn and the Angular CLI globally:
 ```
 npm install -g yarn
@@ -37,7 +37,7 @@ properties to your local environment.
 
 ## Build and run in dev environment
 
-Run `yarn run proxy -- -e <your_env>` for serving the app and using it with a browser of your choice.
+Run `yarn run proxy -e <your_env>` for serving the app and using it with a browser of your choice.
 
 ## TODO: The following is copied from version 2.0 and should be changed:
 
