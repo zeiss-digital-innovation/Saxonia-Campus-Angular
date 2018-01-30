@@ -1,17 +1,18 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { ConfigService } from '../config/config.service';
 import { Jwt } from './jwt';
+import { range } from 'rxjs/observable/range';
+import { publishReplay, refCount } from 'rxjs/operators';
 
 @Injectable()
 export class OAuth2Service {
   @Output()
   onAuthenticate: EventEmitter<any> = new EventEmitter(false);
-  private jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: Http, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService, private jwtHelper: JwtHelperService) {
   }
 
   public doImplicitFlow(code: string) {
@@ -29,7 +30,7 @@ export class OAuth2Service {
       console.log('all authenticated');
       console.log('user roles: ' + this.jwtHelper.decodeToken(id_token).role);
       this.onAuthenticate.emit(id_token);
-      return Observable.range(1, 1);
+      return range(1, 1);
       // access token expired or not available and refresh token available -> get new access token with refresh token
     } else if (refresh_token != null) {
       console.log('using refresh token to get new auth token');
@@ -51,8 +52,10 @@ export class OAuth2Service {
 
   private getToken(adfsTokenUrl: string, payload: string) {
     const observable = this.http.post(adfsTokenUrl, payload)
-      .map(res => res.json())
-      .publishReplay().refCount();
+      .pipe(
+        publishReplay(),
+        refCount()
+      );
 
     observable.subscribe(
       (json: Jwt) => {

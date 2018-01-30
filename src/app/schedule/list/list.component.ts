@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SlotService } from '../services/slot.service';
 import { Slot } from '../model/slot';
 import { UserService } from '../services/user.service';
-import { MdSlideToggleChange } from '@angular/material';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './list.component.html',
@@ -10,11 +10,12 @@ import { MdSlideToggleChange } from '@angular/material';
 })
 export class ListComponent implements OnInit {
 
-  public slots: Array<Slot>;
+  public slots: Slot[];
   public usersPreferredSlotIds: number[] = [];
   public maxSlots: number = 10;
 
-  constructor(private slotService: SlotService, private userService: UserService) { }
+  constructor(private slotService: SlotService, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.slotService.getSlots().subscribe(
@@ -56,19 +57,21 @@ export class ListComponent implements OnInit {
 
   private markAsPreferred(slot: Slot) {
     this.slotService.markAsPreferred(slot)
-      .flatMap(response => this.userService.getUsersPreferredSlots())
-      .subscribe(
-        slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
-        error => console.log(error)
-      );
+      .pipe(
+        mergeMap(response => this.userService.getUsersPreferredSlots())
+      ).subscribe(
+      slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
+      error => console.log(error)
+    );
   }
 
   private unmarkAsPreferred(slot: Slot) {
     this.slotService.unmarkAsPreferred(slot)
-      .flatMap(response => this.userService.getUsersPreferredSlots())
-      .subscribe(
-        slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
-        error => console.log(error)
-      );
+      .pipe(
+        mergeMap(response => this.userService.getUsersPreferredSlots())
+      ).subscribe(
+      slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
+      error => console.log(error)
+    );
   }
 }

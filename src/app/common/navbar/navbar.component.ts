@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { OAuth2Service } from '../../shared/auth/oauth2.service';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'campus-navbar',
@@ -11,9 +10,8 @@ import { JwtHelper } from 'angular2-jwt';
 export class NavbarComponent {
 
   private username = '';
-  private jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private oauth2Service: OAuth2Service) {
+  constructor(private oauth2Service: OAuth2Service, private jwtHelper: JwtHelperService) {
     this.oauth2Service.onAuthenticate.subscribe(token => {
       const decodedToken = this.jwtHelper.decodeToken(token);
       this.username = decodedToken.sub;

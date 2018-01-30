@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
 import { HypermediaResource } from '../../shared/rest/hypermedia-resource';
 import { OAuth2Service } from '../../shared/auth/oauth2.service';
 import { RestService } from '../../shared/rest/rest.service';
 import { Slot } from '../model/slot';
+import { Observable } from 'rxjs/Observable';
+import { catchError, delay, map, mergeMap, retryWhen, zip } from 'rxjs/operators';
+import { defer } from 'rxjs/observable/defer';
+import { range } from 'rxjs/observable/range';
+import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class UserService {
 
   private static handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error || 'Server error');
+    return ErrorObservable.create(error || 'Server error');
   }
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private restService: RestService,
               private oauth2Service: OAuth2Service) {
   }
@@ -23,27 +28,35 @@ export class UserService {
   getUsersRegisteredSlots(): Observable<Slot[]> {
     const link = 'registeredSlots';
     return this.getUser()
-      .flatMap((user: User) => {
-        return Observable.defer(() => this.http.get(user._links[link].href, {headers: RestService.getAuthHeader()}))
-          .retryWhen(this.retryHandler(link))
-          .map(this.mapper)
-      })
-      .catch(UserService.handleError);
+      .pipe(
+        mergeMap((user: User) => {
+          return defer(() => this.http.get(user._links[link].href))
+            .pipe(
+              retryWhen(this.retryHandler(link)),
+              map(this.mapper)
+            )
+        }),
+        catchError(UserService.handleError)
+      );
   }
 
   getUsersPreferredSlots(): Observable<Slot[]> {
     const link = 'preferredSlots';
     return this.getUser()
-      .flatMap((user: User) => {
-        return Observable.defer(() => this.http.get(user._links[link].href, {headers: RestService.getAuthHeader()}))
-          .retryWhen(this.retryHandler(link))
-          .map(this.mapper)
-      })
-      .catch(UserService.handleError);
+      .pipe(
+        mergeMap((user: User) => {
+          return defer(() => this.http.get(user._links[link].href))
+            .pipe(
+              retryWhen(this.retryHandler(link)),
+              map(this.mapper)
+            )
+        }),
+        catchError(UserService.handleError)
+      );
   }
 
   private mapper(res): Slot[] {
-    const embedded = res.json()._embedded;
+    const embedded = res._embedded;
     if (!embedded || !embedded.slots) {
       return [];
     }
@@ -55,24 +68,30 @@ export class UserService {
 
   private getUser(): Observable<User> {
     return this.restService.getRest()
-      .flatMap((hypermediaResource: HypermediaResource) => {
-        const link = 'currentUser';
-        return Observable.defer(() => this.http.get(hypermediaResource._links[link].href, {headers: RestService.getAuthHeader()}))
-          .retryWhen(this.retryHandler(link))
-          .map(res => <User> res.json());
-      })
+      .pipe(
+        mergeMap((hypermediaResource: HypermediaResource) => {
+          const link = 'currentUser';
+          return defer(() => this.http.get<User>(hypermediaResource._links[link].href))
+            .pipe(
+              retryWhen(this.retryHandler(link))
+            );
+        })
+      );
   }
 
   private retryHandler(link: string) {
-    return errors => errors.zip(Observable.range(1, 1), error => error)
-      .flatMap(error => {
+    return errors => errors.pipe(
+      zip(range(1, 1), error => error),
+      mergeMap((error: HttpErrorResponse) => {
         if (error.status != 401) {
-          return Observable.throw('no automatic retry possible' + error.status);
+          return ErrorObservable.create('no automatic retry possible' + error.status);
         }
         // this will essentially automatically retry the request if it can
         console.log(`automatic ${link} retry`);
         return this.oauth2Service.doImplicitFlow(null);
-      }).delay(250);
+      }),
+      delay(250)
+    );
   }
 
 

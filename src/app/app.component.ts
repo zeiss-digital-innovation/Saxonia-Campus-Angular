@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuth2Service } from './shared/auth/oauth2.service';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { environment } from '../environments/environment';
 
@@ -11,9 +11,7 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
 
-  private jwtHelper: JwtHelper = new JwtHelper();
-
-  constructor(private router: Router, private oauth2Service: OAuth2Service) {
+  constructor(private router: Router, private oauth2Service: OAuth2Service, private jwtHelper: JwtHelperService) {
   }
 
   ngOnInit() {

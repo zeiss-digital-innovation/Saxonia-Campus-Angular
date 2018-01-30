@@ -5,6 +5,7 @@ import { Room } from '../model/room';
 import { User } from '../model/user';
 import { UserService } from '../services/user.service';
 import { SlotDetailComponent } from '../slot-detail/slot-detail.component';
+import { first, groupBy } from 'rxjs/operators';
 
 @Component({
   templateUrl: './overview.component.html',
@@ -70,16 +71,17 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   private getSlots() {
     this.slotService.getIndividualSlots()
-      .groupBy((slot: Slot) => {
+      .pipe(
+      groupBy((slot: Slot) => {
         if (slot._embedded) {
           return slot._embedded.room.id;
         } else {
           return -1;
         }
       }, slot => slot)
-      .subscribe(
+      ).subscribe(
         roomSlots => {
-          roomSlots.first().subscribe((slot: Slot) => {
+          roomSlots.pipe(first()).subscribe((slot: Slot) => {
             for (const room of this.rooms) {
               if (room.id == slot._embedded.room.id) {
                 return;

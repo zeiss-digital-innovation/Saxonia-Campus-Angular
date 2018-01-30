@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CampusCommonModule } from '../common/common.module';
 import { OverviewComponent } from './overview/overview.component';
@@ -12,17 +12,17 @@ import { SlotService } from './services/slot.service';
 import { UserService } from './services/user.service';
 import { ExportService } from './services/export.service';
 import { ListComponent } from './list/list.component';
-import { MdSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule,
     ModalModule,
     CampusCommonModule,
-    MdSlideToggleModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     OverviewComponent,
