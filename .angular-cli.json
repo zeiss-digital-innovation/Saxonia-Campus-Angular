@@ -31,8 +31,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "nb323": "environments/environment.nb323.ts",
         "nb299": "environments/environment.nb299.ts",
+        "nb550": "environments/environment.nb550.ts",
         "test": "environments/environment.test.ts",
         "prod": "environments/environment.prod.ts"
       }
