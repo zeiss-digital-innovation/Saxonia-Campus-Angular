@@ -6,7 +6,7 @@ import { OAuth2Service } from '../../shared/auth/oauth2.service';
 import { HypermediaResource } from '../../shared/rest/hypermedia-resource';
 import { RestService } from '../../shared/rest/rest.service';
 import { HttpClient } from '@angular/common/http';
-import { catchError, delay, map, mergeMap, retryWhen, zip } from 'rxjs/operators';
+import { catchError, delay, map, mergeMap, retryWhen, tap, zip } from 'rxjs/operators';
 import { defer } from 'rxjs/observable/defer';
 import { from } from 'rxjs/observable/from';
 import { range } from 'rxjs/observable/range';
@@ -96,6 +96,16 @@ export class SlotService {
     const link = 'unmark_as_preferred';
     return defer(() => this.http.delete(slot._links[link].href))
       .pipe(
+        retryWhen(this.retryHandler(link)),
+        catchError(SlotService.handleError)
+      );
+  }
+
+  isRegistrationPhase() {
+    const link = 'self';
+    return this.restService.getRest()
+      .pipe(
+        map(root => root.registrationPhase !== undefined && root.registrationPhase === true),
         retryWhen(this.retryHandler(link)),
         catchError(SlotService.handleError)
       );

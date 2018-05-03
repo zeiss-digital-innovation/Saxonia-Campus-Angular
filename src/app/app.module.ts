@@ -14,6 +14,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { RestService } from './shared/rest/rest.service';
 import { AuthTokenInterceptor } from './shared/auth/auth-token-interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { OverviewGuard } from './schedule/overview/overview.guard';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
       provide: JWT_OPTIONS,
       useValue: {}
     },
-
+    OverviewGuard,
   ],
   bootstrap: [AppComponent]
 })
