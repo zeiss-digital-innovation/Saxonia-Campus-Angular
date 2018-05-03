@@ -1,0 +1,1 @@
+7z a -tzip campus.war .\dist\* WEB-INF
