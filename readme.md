@@ -38,11 +38,10 @@ properties to your local environment.
 ## Build and run in dev environment
 
 Run `yarn run proxy -e <your_env>` for serving the app and using it with a browser of your choice.
-
-## TODO: The following is copied from version 2.0 and should be changed:
-
+.
 ## Build distribution for environment
 
-Run `npm run gulp -- war --env=test` to build a WAR file for test environment. See app/config folder for environment
-configurations.
+Run `yarn run build -e <target_env> --prod` to build a distribution into dist folder.
+Run `create-campus.war.cmd` to pack a WAR file from this distribution. This command requires 7zip on the %PATH%.
+
 
