@@ -1,7 +1,7 @@
 <campus-modal #slotModal>
   <modal-header [show-close]="true">
+    <span class="speaker"><small>{{slot?.speaker}}</small></span>
     <h5 class="modal-title">{{slot?.title}}</h5>
-    <small>{{slot?.speaker}}</small>
   </modal-header>
   <modal-body>
     <p>

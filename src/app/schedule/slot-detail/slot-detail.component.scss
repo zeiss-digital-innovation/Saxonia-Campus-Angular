@@ -2,8 +2,11 @@
 
 modal-header {
   .modal-title {
-    margin-left: 0.7rem;
-    margin-right: 0.7rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .speaker {
+    align-self: center;
   }
 }
 
