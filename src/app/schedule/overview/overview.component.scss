@@ -42,6 +42,8 @@
 }
 
 .room-card {
+  /* to have equal width of room cards */
+  word-break: break-word;
   .card-block {
     padding: 0.5rem;
   }

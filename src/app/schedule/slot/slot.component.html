@@ -1,5 +1,5 @@
-<div *ngIf="slot" class="flexbox" [class.mobile-hidden]="!userInSlot">
-    <div class="card card-flex slot-card"
+<ng-container *ngIf="slot">
+    <div class="card slot-card" [class.mobile-hidden]="!userInSlot"
          [class.booked]="userInSlot"
          (click)="showSlotDetail()">
         <div class="card-title bg-info">
@@ -28,11 +28,11 @@
             <small class="text-muted">{{slot.speaker}}</small>
         </div>
     </div>
-</div>
-<div *ngIf="isContinuation" class="d-flex" [class.mobile-hidden]="!userInSlot">
-    <div class="card justify-content-center align-items-center">
-        <div class="card-block d-flex align-items-center">
+</ng-container>
+<ng-container *ngIf="isContinuation">
+    <div class="card justify-content-center align-items-center" [class.mobile-hidden]="!userInSlot">
+        <div class="card-block align-items-center">
             <p class="card-text text-muted"><i>Fortsetzung...</i></p>
         </div>
     </div>
-</div>
+</ng-container>

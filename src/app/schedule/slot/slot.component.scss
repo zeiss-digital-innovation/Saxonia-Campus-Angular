@@ -35,6 +35,9 @@
 
   .card-block {
     flex: 1 1 auto;
+    /* to have equal width of room cards */
+    word-break: break-word;
+    text-overflow: ellipsis;
   }
 
   .card-footer {

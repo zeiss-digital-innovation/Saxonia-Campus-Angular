@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* bootstrap 4 */
+$grid-gutter-width: 1rem !default;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "variables.scss";
 
@@ -13,21 +17,4 @@ body {
 
 .btn {
   cursor: pointer;
-}
-
-.d-flex > * {
-  padding-left: 0;
-  min-width: 0;
-
-  @include breakpoint($breakpoint-medium) {
-    padding-left: 15px;
-    flex: 1 12.5%;
-    min-width: 0;
-  }
-}
-
-.d-flex > *:first-child {
-  @include breakpoint($breakpoint-medium) {
-    padding-left: 0;
-  }
 }

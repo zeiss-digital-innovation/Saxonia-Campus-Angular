@@ -17,20 +17,22 @@
             {{date}}
         </button>
     </div>
-    <div id="room-bar" class="flexbox d-flex container-fluid">
-        <div *ngFor="let room of rooms">
+    <div id="room-bar" class="container-fluid">
+      <div class="row">
+        <div *ngFor="let room of rooms" class="col">
             <div class="card room-card bg-light mb-3">
                 <div class="card-block text-center">
                     <strong>{{room.roomnumber}}</strong>
                 </div>
             </div>
         </div>
+      </div>
     </div>
     <div *ngFor="let date of dates" class="container-fluid grid smaller float-left"
          [class.animated]="enableAnimation" [class.future]="isFuture(date)" [class.past]="isPast(date)">
-        <div *ngFor="let time of times[date]" class="flexbox d-flex">
-            <div *ngFor="let room of rooms" class="flexbox d-flex">
-                <campus-slot class="d-flex mb-2"
+        <div *ngFor="let time of times[date]" class="row">
+            <div *ngFor="let room of rooms" class="col mb-2">
+                <campus-slot
                       (onSlotClick)="slotDetail.showSlot($event, userInSlot($event))"
                       [slot]="slotMatrix[date][time][room.id]"
                       [userInSlot]="userInSlot(slotMatrix[date][time][room.id])"
