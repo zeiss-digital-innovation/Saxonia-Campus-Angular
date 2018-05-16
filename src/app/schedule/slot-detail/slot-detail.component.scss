@@ -1,17 +1,11 @@
 @import "../../../variables";
 
-modal-header {
-  .modal-title {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .speaker {
-    align-self: center;
-  }
-}
-
 modal-body {
+  .room {
+    margin-left: 1.1rem;
+  }
   .description {
+    margin-top: 0.9rem;
     font-size: 0.9rem;
     @include media-breakpoint-up(md) {
       font-size: 1.0rem;

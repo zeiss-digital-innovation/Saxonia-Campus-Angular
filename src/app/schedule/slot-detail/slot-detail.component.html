@@ -1,20 +1,26 @@
 <campus-modal #slotModal>
   <modal-header [show-close]="true">
-    <span class="speaker"><small>{{slot?.speaker}}</small></span>
     <h5 class="modal-title">{{slot?.title}}</h5>
   </modal-header>
   <modal-body>
-    <p>
+    <div>
       <strong>
-        {{slot?.starttime || "" | slice:11:16}} &#8211; {{slot?.endtime || "" | slice:11:16}} im Raum
-        {{slot?._embedded?.room?.roomnumber}}
+        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
+        {{slot?.starttime || "" | slice:11:16}} &#8211; {{slot?.endtime || "" | slice:11:16}}
+        <span class="room"><i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+        {{slot?._embedded?.room?.roomnumber}}</span>
       </strong>
       <span class="badge float-right"
             [class.badge-success]="slot?.participants < slot?.capacity"
             [class.badge-warning]="slot?.participants >= (slot?.capacity - 3) && slot?.participants < slot?.capacity"
             [class.badge-danger]="slot?.participants >= slot?.capacity">
             {{slot?.participants}}/{{slot?.capacity}}
-        </span></p>
+        </span>
+    </div>
+    <div>
+      <i class="fa fa-user fa-fw" aria-hidden="true"></i>
+      <small>{{ slot.speaker }}</small>
+    </div>
     <p class="text-justify description" [innerHtml]="slot?.description | newline"></p>
   </modal-body>
   <modal-footer>
