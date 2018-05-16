@@ -2,6 +2,13 @@
 
 .card {
   height: 100%;
+
+  &:not(.booked) {
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
+  }
 }
 
 .card-block {
@@ -12,21 +19,16 @@
   margin-right: 0.5rem;
 }
 
-.mobile-hidden {
-  @include breakpoint($breakpoint-small) {
-    display: none !important;
-  }
-}
-
-.booked {
-  @include breakpoint($breakpoint-small) {
-    width: 92vw;
-  }
-  background-color: honeydew;
-}
-
 .slot-card {
   cursor: pointer;
+
+  &.booked {
+    width: 92vw;
+    @include media-breakpoint-up(md) {
+      width: auto;
+    }
+    background-color: honeydew;
+  }
 
   .card-title {
     padding-bottom: 5px;
@@ -45,8 +47,13 @@
   }
 }
 
+.continuation-card {
+  justify-content: center;
+  align-items: center;
+}
+
 .room-number {
-  @include breakpoint($breakpoint-medium) {
+  @include media-breakpoint-up(md) {
     display: none;
   }
 }

@@ -13,7 +13,7 @@ modal-header {
 modal-body {
   .description {
     font-size: 0.9rem;
-    @include breakpoint($breakpoint-medium) {
+    @include media-breakpoint-up(md) {
       font-size: 1.0rem;
     }
   }
@@ -39,7 +39,7 @@ modal-footer {
     .button-text {
       display: none;
     }
-    @include breakpoint($breakpoint-medium) {
+    @include media-breakpoint-up(md) {
       .button-text {
         display: inline;
       }

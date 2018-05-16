@@ -1,12 +1,7 @@
-@import "~breakpoint-sass/stylesheets/breakpoint";
 /* bootstrap 4 */
 $grid-gutter-width: 1rem !default;
 $badge-font-size: 90%;
 
-/* breakpoints */
-$breakpoint-small: 'only screen' (orientation portrait) (max-device-width 420px),
-(orientation landscape) (max-device-width 660px);
-$breakpoint-medium: 'only screen' (min-device-width 660px);
 @import "~bootstrap/scss/bootstrap";
 
 /* further variables */

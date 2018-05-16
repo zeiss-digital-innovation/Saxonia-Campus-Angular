@@ -12,30 +12,20 @@
 <p class="selection-counter">Aktuell ausgewählt: <span [class.max]="usersPreferredSlotIds.length == maxSlots">{{ usersPreferredSlotIds.length }}/{{maxSlots}}</span>
   Themen</p>
 <div class="list-group">
-  <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start margin-bottom"
+  <div *ngFor="let slot of slots" class="list-group-item flex-column align-items-start"
        [class.clickable]="(isMarkable(slot) || isUnmarkable(slot)) && (!isMaximumNumberOfSlotsMarked() || isMarkedAsInteresting(slot))"
        [class.marked-as-interesting]="isMarkedAsInteresting(slot)"
        (click)="processClick($event, slot)">
-    <div class="d-flex w-100 justify-content-end mobile margin-bottom">
-      <small>
-        <mat-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
-                         [labelPosition]="'before'"
-                         [checked]="isMarkedAsInteresting(slot)">
-          <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
-        </mat-slide-toggle>
-      </small>
+    <div class="slot-header">
+      <mat-slide-toggle class="toggle"
+        [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
+        [labelPosition]="'before'"
+        [checked]="isMarkedAsInteresting(slot)">
+        <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
+      </mat-slide-toggle>
+      <h5>{{slot.title}}</h5>
     </div>
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{slot.title}}</h5>
-      <small class="mobile-hidden">
-        <mat-slide-toggle [disabled]="(!isMarkable(slot) && !isUnmarkable(slot)) || (isMaximumNumberOfSlotsMarked() && !isMarkedAsInteresting(slot))"
-                         [labelPosition]="'before'"
-                         [checked]="isMarkedAsInteresting(slot)">
-          <span>&nbsp;<b *ngIf="isMarkedAsInteresting(slot)">Interessiert mich!</b></span>
-        </mat-slide-toggle>
-      </small>
-    </div>
-    <p class="mb-1 w-100" [innerHtml]="slot?.description | newline"></p>
+    <p class="slot-description" [innerHtml]="slot?.description | newline"></p>
     <div>
       <i class="fa fa-user fa-fw" aria-hidden="true"></i>
       <small>{{ slot.speaker }}</small>

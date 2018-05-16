@@ -15,8 +15,9 @@
 }
 
 #room-bar {
-  @include breakpoint($breakpoint-small) {
-    display: none !important;
+  display: none;
+  @include media-breakpoint-up(md) {
+    display: block;
   }
 }
 

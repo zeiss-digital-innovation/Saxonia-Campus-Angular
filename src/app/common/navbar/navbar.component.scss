@@ -1,17 +1,11 @@
 @import "../../../variables";
 
 .navbar {
-  @include breakpoint($breakpoint-medium) {
-    text-align: center !important;
+  .empty, #userName {
+    display: none;
   }
 
-  @include breakpoint($breakpoint-small) {
-    .empty {
-      display: none;
-    }
-  }
-
-  .empty,#userForm {
+  .empty, #userForm {
     width: 35rem;
   }
 
@@ -29,9 +23,11 @@
     }
   }
 
-  #userName {
-    @include breakpoint($breakpoint-small) {
-      display: none !important;
+  @include media-breakpoint-up(sm) {
+    text-align: center;
+
+    .empty, #userName {
+      display: block;
     }
   }
 }

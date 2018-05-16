@@ -1,7 +1,5 @@
 <ng-container *ngIf="slot">
-    <div class="card slot-card" [class.mobile-hidden]="!userInSlot"
-         [class.booked]="userInSlot"
-         (click)="showSlotDetail()">
+    <div class="card slot-card" [class.booked]="userInSlot" (click)="showSlotDetail()">
         <div class="card-title bg-info">
         </div>
         <div class="card-block">
@@ -30,7 +28,7 @@
     </div>
 </ng-container>
 <ng-container *ngIf="isContinuation">
-    <div class="card justify-content-center align-items-center" [class.mobile-hidden]="!userInSlot">
+    <div class="card continuation-card" [class.booked]="userInSlot">
         <div class="card-block align-items-center">
             <p class="card-text text-muted"><i>Fortsetzung...</i></p>
         </div>

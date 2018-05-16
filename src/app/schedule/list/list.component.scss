@@ -1,9 +1,5 @@
 @import "../../../variables";
 
-h5 {
-  padding-bottom: 0.7rem;
-}
-
 .list-group {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -15,10 +11,6 @@ h5 {
 
 .clickable {
   cursor: pointer;
-}
-
-.margin-bottom {
-  margin-bottom: 0.75rem;
 }
 
 .description.alert {
@@ -33,19 +25,32 @@ h5 {
   margin-right: 2.0rem;
 }
 
-small {
-  text-align: right;
-}
+.slot-header {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  @include media-breakpoint-up(sm) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  width: 100%;
+  margin-bottom: 0.75rem;
 
-.mobile-hidden {
-  @include breakpoint($breakpoint-small) {
-    display: none !important;
+  .toggle {
+    margin-left: auto;
+    padding-left: 0.4rem;
+    @include media-breakpoint-up(sm) {
+      order: 1;
+    }
   }
 }
 
-.mobile {
-  @include breakpoint($breakpoint-medium) {
-    display: none !important;
+.slot-description {
+  margin-bottom: 0.25rem;
+  width: 100%;
+  font-size: 0.9rem;
+  @include media-breakpoint-up(sm) {
+    font-size: 1.0rem;
   }
 }
 
