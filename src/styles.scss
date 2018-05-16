@@ -1,20 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* bootstrap 4 */
-$grid-gutter-width: 1rem !default;
-
-@import "../node_modules/bootstrap/scss/bootstrap";
 @import "variables.scss";
 
 /* Default stylesheet */
 body {
   overflow-x: hidden;
-}
-
-.badge {
-  font-size: 100%;
-}
-
-.btn {
-  cursor: pointer;
 }
