@@ -13,6 +13,8 @@
 
 .card-block {
   padding: 1rem;
+  /* to have equal width of cards */
+  word-break: break-word;
 }
 
 .margin-right {
@@ -37,8 +39,6 @@
 
   .card-block {
     flex: 1 1 auto;
-    /* to have equal width of room cards */
-    word-break: break-word;
     text-overflow: ellipsis;
   }
 
