@@ -11,7 +11,7 @@ import { ExportService } from '../services/export.service';
 })
 export class SlotDetailComponent implements AfterViewInit {
 
-  @ViewChild('slotModal')
+  @ViewChild('slotModal', {static: false})
   modal: ModalComponent;
   slot: Slot;
   userInSlot: boolean;

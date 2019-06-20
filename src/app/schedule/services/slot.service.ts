@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
-import { Observable, throwError } from 'rxjs';
-import { catchError, delay, map, mergeMap, retryWhen, tap, zip } from 'rxjs/operators';
-import { defer, from, range } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { defer, from, range, throwError } from 'rxjs';
+import { catchError, delay, map, mergeMap, retryWhen, zip } from 'rxjs/operators';
 
 import { Slot } from '../model/slot';
 import { OAuth2Service } from '../../shared/auth/oauth2.service';

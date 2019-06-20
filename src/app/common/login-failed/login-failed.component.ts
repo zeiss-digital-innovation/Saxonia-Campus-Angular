@@ -9,7 +9,7 @@ import { ModalComponent } from '../modal/components/modal';
 })
 export class LoginFailedComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('loginModal')
+  @ViewChild('loginModal', {static: false})
   modal: ModalComponent;
   redirectUrl: string;
   reason: string;

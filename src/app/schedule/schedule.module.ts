@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CampusCommonModule } from '../common/common.module';
 import { OverviewComponent } from './overview/overview.component';
 import { SlotComponent } from './slot/slot.component';
@@ -12,7 +13,6 @@ import { SlotService } from './services/slot.service';
 import { UserService } from './services/user.service';
 import { ExportService } from './services/export.service';
 import { ListComponent } from './list/list.component';
-import { MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
   imports: [

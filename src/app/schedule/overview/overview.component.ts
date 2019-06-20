@@ -13,7 +13,7 @@ import { first, groupBy } from 'rxjs/operators';
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('slotDetail')
+  @ViewChild('slotDetail', {static: false})
   slotDetailComponent: SlotDetailComponent;
   rooms: Room[] = [];
   dates: string[] = [];

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, defer, range, throwError } from 'rxjs';
 import { catchError, delay, map, mergeMap, retryWhen, zip } from 'rxjs/operators';
 import { User } from '../model/user';
