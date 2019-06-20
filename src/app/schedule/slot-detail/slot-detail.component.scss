@@ -36,6 +36,7 @@ campus-modal-footer {
     @include media-breakpoint-up(md) {
       .button-text {
         display: inline;
+        margin-left: 0.5rem;
       }
     }
   }
