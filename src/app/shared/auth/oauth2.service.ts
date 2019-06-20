@@ -35,15 +35,13 @@ export class OAuth2Service {
       console.log('using refresh token to get new auth token');
       const payload = `client_id=${clientId}&refresh_token=${localStorage.getItem('refresh_token')}&grant_type=refresh_token`;
       return this.getToken(config['adfs.token.url'], payload);
-    }
-    // process callback via redirect URI with authorization code -> get access token and refresh token with code
-    else if (code != null) {
+      // process callback via redirect URI with authorization code -> get access token and refresh token with code
+    } else if (code != null) {
       console.log('using authorization code to get new auth and refresh tokens');
       const payload = `client_id=${clientId}&code=${code}&redirect_uri=${encodeURIComponent(redirectUrl)}&grant_type=authorization_code`;
       return this.getToken(config['adfs.token.url'], payload);
-    }
-    // completely unauthenticated -> initiate OAuth2 flow by redirecting to ADFS
-    else {
+      // completely unauthenticated -> initiate OAuth2 flow by redirecting to ADFS
+    } else {
       console.log('redirecting to ADFS');
       window.location.href = `${adfsAuthUrl}?response_type=code&client_id=${clientId}&resource=${resource}&redirect_uri=${redirectUrl}`;
     }

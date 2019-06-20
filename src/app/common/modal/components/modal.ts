@@ -1,6 +1,15 @@
 import { Component, AfterViewInit, OnDestroy, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { ModalInstance, ModalResult } from './modal-instance';
 
+export class ModalSize {
+  static Small = 'sm';
+  static Large = 'lg';
+
+  static validSize(size: string) {
+    return size && (size === ModalSize.Small || size === ModalSize.Large);
+  }
+}
+
 @Component({
   selector: 'campus-modal',
   templateUrl: './modal.html',
@@ -66,14 +75,5 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
 
   public isLarge() {
     return this.overrideSize !== ModalSize.Small && this.size === ModalSize.Large || this.overrideSize === ModalSize.Large;
-  }
-}
-
-export class ModalSize {
-  static Small = 'sm';
-  static Large = 'lg';
-
-  static validSize(size: string) {
-    return size && (size === ModalSize.Small || size === ModalSize.Large);
   }
 }
