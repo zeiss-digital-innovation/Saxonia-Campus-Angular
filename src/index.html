@@ -16,12 +16,16 @@
       && search['code'] == null) {
       window.location.href = 'https://adfs.saxsys.de/adfs/oauth2/authorize' +
         '?response_type=code' +
-        '&client_id=campusapp' +
           // FIXME Ersetzen durch Platzhalter oder am besten ganz raus [SB]
-        //       '&resource=' + encodeURIComponent('https://nb299.saxsys.de:8443/adfs-saml') +
-        //       '&redirect_uri=' + encodeURIComponent('https://nb299.saxsys.de:8443/campus');
-        '&resource=' + encodeURIComponent('https://nb550.saxsys.de:8443/adfs-saml') +
-        '&redirect_uri=' + encodeURIComponent('https://nb550.saxsys.de:4200/campus');
+        '&client_id=campuslive' +
+        '&resource=' + encodeURIComponent('https://campus.saxsys.de/campus') +
+        '&redirect_uri=' + encodeURIComponent('https://campus.saxsys.de/campus');
+        // '&client_id=campusapp' +
+        // '&resource=' + encodeURIComponent('https://campus-dev.saxsys.de/campus') +
+        // '&redirect_uri=' + encodeURIComponent('https://campus-dev.saxsys.de/campus');
+        // '&client_id=campusapp' +
+        // '&resource=' + encodeURIComponent('https://nb550.saxsys.de:8443/adfs-saml') +
+        // '&redirect_uri=' + encodeURIComponent('https://nb550.saxsys.de:4200/campus');
     }
   </script>
   <style>

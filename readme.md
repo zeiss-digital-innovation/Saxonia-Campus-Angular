@@ -33,7 +33,7 @@ Before running the tests make sure you are serving the app via `ng serve`.
 `server.crt` and `server.key` respectively.
 2. Make a copy of `environments/environment.ts`, name it `environments/environment.<your_env>.ts` and adjust the 
 properties to your local environment.
-3. Open `.angular-cli.json` and add an environment entry mapping <your_env> to your environements.<your_env>.ts file.
+3. Open `angular.json` and add an environment entry mapping <your_env> to your environements.<your_env>.ts file.
 
 ## Build and run in dev environment
 

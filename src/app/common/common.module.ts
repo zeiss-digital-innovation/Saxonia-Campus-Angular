@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginFailedComponent } from './login-failed/login-failed.component';
@@ -12,7 +11,6 @@ import { NewlinePipe } from './newline.pipe';
   imports: [
     CommonModule,
     FormsModule,
-    HttpModule,
     RouterModule,
     ModalModule
   ],

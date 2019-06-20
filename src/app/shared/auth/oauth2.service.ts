@@ -1,11 +1,10 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, range } from 'rxjs';
+import { publishReplay, refCount } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ConfigService } from '../config/config.service';
 import { Jwt } from './jwt';
-import { range } from 'rxjs/observable/range';
-import { publishReplay, refCount } from 'rxjs/operators';
 
 @Injectable()
 export class OAuth2Service {

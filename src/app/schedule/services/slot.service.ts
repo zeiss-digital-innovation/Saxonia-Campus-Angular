@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { Observable, throwError } from 'rxjs';
+import { catchError, delay, map, mergeMap, retryWhen, tap, zip } from 'rxjs/operators';
+import { defer, from, range } from 'rxjs';
+
 import { Slot } from '../model/slot';
 import { OAuth2Service } from '../../shared/auth/oauth2.service';
 import { HypermediaResource } from '../../shared/rest/hypermedia-resource';
 import { RestService } from '../../shared/rest/rest.service';
-import { HttpClient } from '@angular/common/http';
-import { catchError, delay, map, mergeMap, retryWhen, tap, zip } from 'rxjs/operators';
-import { defer } from 'rxjs/observable/defer';
-import { from } from 'rxjs/observable/from';
-import { range } from 'rxjs/observable/range';
-import { HttpErrorResponse } from '@angular/common/http/src/response';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class SlotService {
 
   private static handleError(error: Response) {
     console.error(error);
-    return ErrorObservable.create(error || 'Server error');
+    return throwError(error || 'Server error');
   }
 
   constructor(private http: HttpClient,
@@ -105,7 +102,7 @@ export class SlotService {
     const link = 'self';
     return this.restService.getRest()
       .pipe(
-        map(root => root.registrationPhase !== undefined && root.registrationPhase === true),
+        map((root: any) => root.registrationPhase !== undefined && root.registrationPhase === true),
         retryWhen(this.retryHandler(link)),
         catchError(SlotService.handleError)
       );
@@ -116,7 +113,7 @@ export class SlotService {
       zip(range(1, 2), error => error),
       mergeMap((error: HttpErrorResponse) => {
         if (error.status != 401) {
-          return ErrorObservable.create('no automatic retry possible' + error.status);
+          return throwError('no automatic retry possible' + error.status);
         }
         // this will essentially automatically retry the request if it can
         console.log(`automatic ${link} retry`);

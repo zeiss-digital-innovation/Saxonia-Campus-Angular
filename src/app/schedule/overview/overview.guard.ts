@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { SlotService } from '../services/slot.service';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { SlotService } from '../services/slot.service';
 
 @Injectable()
 export class OverviewGuard implements CanActivate {
