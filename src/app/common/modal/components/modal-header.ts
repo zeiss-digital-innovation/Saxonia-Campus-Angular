@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { ModalComponent } from './modal';
 
 @Component({
-  selector: 'modal-header',
+  selector: 'campus-modal-header',
   templateUrl: './modal-header.html'
 })
 export class ModalHeaderComponent {
-  @Input('show-close') showClose = false;
+  @Input() showClose = false;
 
   constructor(public modal: ModalComponent) {
   }

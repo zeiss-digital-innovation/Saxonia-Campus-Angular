@@ -1,8 +1,8 @@
 <campus-modal #slotModal>
-  <modal-header [show-close]="true">
+  <campus-modal-header [showClose]="true">
     <h5 class="modal-title">{{slot?.title}}</h5>
-  </modal-header>
-  <modal-body>
+  </campus-modal-header>
+  <campus-modal-body>
     <div>
       <strong>
         <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>
@@ -22,8 +22,8 @@
       <small>{{ slot?.speaker }}</small>
     </div>
     <p class="text-justify description" [innerHtml]="slot?.description | newline"></p>
-  </modal-body>
-  <modal-footer>
+  </campus-modal-body>
+  <campus-modal-footer>
     <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null">
         <span aria-hidden="true">&#215;</span>
@@ -38,5 +38,5 @@
     <button *ngIf="userInSlot" id="export-cal-button" type="button" class="btn btn-secondary" (click)="exportToIcs()">
       <i class="fa fa-calendar" aria-hidden="true"></i> <span class="button-text">In Kalender exportieren</span>
     </button>
-  </modal-footer>
+  </campus-modal-footer>
 </campus-modal>

@@ -11,7 +11,7 @@ export class ExportService {
   }
 
   private createIcsContent(slot: Slot) {
-    const icsString: string =
+    const icsString =
       `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//SAXONIA CAMPUS APP/${window.location.host}

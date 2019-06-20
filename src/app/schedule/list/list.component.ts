@@ -10,9 +10,9 @@ import { mergeMap } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit {
 
-  public slots: Slot[];
-  public usersPreferredSlotIds: number[] = [];
-  public maxSlots: number = 10;
+  slots: Slot[];
+  usersPreferredSlotIds: number[] = [];
+  maxSlots = 10;
 
   constructor(private slotService: SlotService, private userService: UserService) {
   }
@@ -60,7 +60,7 @@ export class ListComponent implements OnInit {
       .pipe(
         mergeMap(response => this.userService.getUsersPreferredSlots())
       ).subscribe(
-      slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
+      slots => this.usersPreferredSlotIds = slots.map(s => s.id),
       error => console.log(error)
     );
   }
@@ -70,7 +70,7 @@ export class ListComponent implements OnInit {
       .pipe(
         mergeMap(response => this.userService.getUsersPreferredSlots())
       ).subscribe(
-      slots => this.usersPreferredSlotIds = slots.map(slot => slot.id),
+      slots => this.usersPreferredSlotIds = slots.map(s => s.id),
       error => console.log(error)
     );
   }

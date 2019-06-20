@@ -5,7 +5,7 @@ import { Slot } from '../model/slot';
 import { ExportService } from '../services/export.service';
 
 @Component({
-  selector: 'slot-detail',
+  selector: 'campus-slot-detail',
   templateUrl: './slot-detail.component.html',
   styleUrls: ['./slot-detail.component.scss']
 })

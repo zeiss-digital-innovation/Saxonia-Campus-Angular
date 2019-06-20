@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { ModalComponent } from './modal';
 
 @Component({
-  selector: 'modal-footer',
+  selector: 'campus-modal-footer',
   templateUrl: './modal-footer.html',
   styleUrls: ['./modal-footer.scss']
 })
 export class ModalFooterComponent {
-  @Input('show-default-buttons') showDefaultButtons = false;
+  @Input() showDefaultButtons = false;
 
   constructor(private modal: ModalComponent) {
   }
