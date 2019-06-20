@@ -37,11 +37,11 @@ properties to your local environment.
 
 ## Build and run in dev environment
 
-Run `yarn run proxy -e <your_env>` for serving the app and using it with a browser of your choice.
+Run `yarn run proxy -c <your_env>` for serving the app and using it with a browser of your choice.
 .
 ## Build distribution for environment
 
-Run `yarn run build -e <target_env> --prod` to build a distribution into dist folder.
+Run `yarn run build -c <target_env> --prod` to build a distribution into dist folder.
 Run `create-campus.war.cmd` to pack a WAR file from this distribution. This command requires 7zip on the %PATH%.
 
 

@@ -1,11 +1,11 @@
 {
   "name": "saxonia-campus-angular",
   "version": "2.2.1",
-  "license": "MIT",
+  "license": "private",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "proxy": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check",
+    "proxy": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check --ssl true --ssl-cert=ssl/server.crt --ssl-key=ssl/server.key",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
