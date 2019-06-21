@@ -25,7 +25,7 @@
       </mat-slide-toggle>
       <h5>{{slot.title}}</h5>
     </div>
-    <p class="slot-description" [innerHtml]="slot?.description | newline"></p>
+    <p class="slot-description" [innerHTML]="slot?.description | newline"></p>
     <div>
       <i class="fa fa-user fa-fw" aria-hidden="true"></i>
       <small>{{ slot.speaker }}</small>

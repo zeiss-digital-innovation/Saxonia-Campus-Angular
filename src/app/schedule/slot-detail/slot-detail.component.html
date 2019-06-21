@@ -21,7 +21,7 @@
       <i class="fa fa-user fa-fw" aria-hidden="true"></i>
       <small>{{ slot?.speaker }}</small>
     </div>
-    <p class="text-justify description" [innerHtml]="slot?.description | newline"></p>
+    <p class="text-justify description" [innerHTML]="slot?.description | newline"></p>
   </campus-modal-body>
   <campus-modal-footer>
     <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
