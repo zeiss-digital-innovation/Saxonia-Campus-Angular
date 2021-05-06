@@ -31,7 +31,7 @@
     "file-saver": "^1.3.3",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "rxjs": "^6.5.2",
     "tether": "^1.4.6",
     "zone.js": "^0.9.1"
